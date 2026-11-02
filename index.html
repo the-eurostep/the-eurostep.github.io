@@ -34,12 +34,12 @@
             pointer-events: none;
         }
 
-        /* Header con Logo, Scritta a Sinistra e Navigazione Orizzontale */
+        /* Header con Logo, Scritta e Navigazione Orizzontale Spaziosa */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 40px;
+            padding: 18px 45px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             background: rgba(3, 5, 8, 0.92);
             backdrop-filter: blur(15px);
@@ -79,11 +79,11 @@
             text-transform: uppercase;
         }
 
-        /* Navigazione Orizzontale */
+        /* Navigazione Orizzontale più grande e ben spaziata */
         .nav-menu {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 45px;
             list-style: none;
         }
 
@@ -95,9 +95,9 @@
             color: #d1d5db;
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            letter-spacing: 1.2px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             padding: 10px 0;
             transition: color 0.3s ease;
@@ -108,7 +108,7 @@
             color: #ffffff;
         }
 
-        /* Sottotenda (Dropdown) centrati perfettamente sotto la voce */
+        /* Sottotenda (Dropdown) centrati perfettamente e con testo centrato */
         .dropdown-content {
             position: absolute;
             top: 100%;
@@ -117,7 +117,7 @@
             background: rgba(5, 8, 15, 0.96);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
-            min-width: 200px;
+            min-width: 210px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px);
             opacity: 0;
@@ -135,11 +135,12 @@
 
         .dropdown-content a {
             display: block;
-            padding: 8px 20px;
+            padding: 10px 20px;
             color: #9ca3af;
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
+            text-align: center; /* Voci del sottomenu centrate */
             transition: all 0.2s ease;
             font-family: 'Plus Jakarta Sans', sans-serif;
             text-transform: none;
@@ -149,7 +150,7 @@
         .dropdown-content a:hover {
             background: rgba(255, 255, 255, 0.08);
             color: #ffffff;
-            padding-left: 25px;
+            padding-left: 20px; /* Evita scatti laterali in hover essendo centrato */
         }
 
         /* Main Container Magazine Style */
@@ -358,7 +359,7 @@
 
     <div id="webgl-container"></div>
 
-    <!-- Header con Logo, Scritta e 5 Macrosezioni -->
+    <!-- Header con Logo, Scritta e 5 Macrosezioni Spaziate -->
     <header>
         <!-- Logo e Testo a Sinistra con link alla Home -->
         <a href="#" class="brand-container" title="The Eurostep Home">
@@ -420,7 +421,7 @@
         </ul>
     </header>
 
-    <!-- Contenuto Home Magazine -->
+    <!-- Contenuto Home Magazine Completo -->
     <main class="magazine-container">
         
         <!-- Sezione Superiore: Articolo Principale + Articoli Laterali -->
@@ -431,4 +432,129 @@
                 <div class="article-img-placeholder">[ FEATURED ARTICLE IMAGE ]</div>
                 <div class="article-content">
                     <div class="article-tag">Deep Analysis &bull; NBA</div>
-                    <h2 class="article-title">Decoding defensive switches and high-screen strategies in the modern Western
+                    <h2 class="article-title">Decoding defensive switches and high-screen strategies in the modern Western Conference finals.</h2>
+                    <p class="article-snippet">An exhaustive tactical breakdown of how elite defenses counter heavy pick-and-roll systems, altering spatial geometry on the perimeter.</p>
+                </div>
+            </article>
+
+            <!-- Colonna Articoli in Evidenza Laterali -->
+            <div class="side-articles-column">
+                <div class="side-article-card">
+                    <div class="article-tag">Euroleague</div>
+                    <h3 class="side-article-title">The tactical evolution of drop coverages across European powerhouses.</h3>
+                </div>
+                <div class="side-article-card">
+                    <div class="article-tag">Scouting</div>
+                    <h3 class="side-article-title">Next-gen metrics: Evaluating off-ball gravity and tracking defensive impact.</h3>
+                </div>
+                <div class="side-article-card">
+                    <div class="article-tag">Opinion</div>
+                    <h3 class="side-article-title">Why pacing mechanics are rewriting regular season offensive ceilings.</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sezione Inferiore: Griglia di Articoli -->
+        <div class="secondary-articles-grid">
+            
+            <div class="grid-article-card">
+                <div class="grid-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
+                <div class="grid-content">
+                    <div class="article-tag">NBA Analytics</div>
+                    <h3 class="grid-title">Pacing the floor: Corner three frequencies in transition offense.</h3>
+                </div>
+            </div>
+
+            <div class="grid-article-card">
+                <div class="grid-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
+                <div class="grid-content">
+                    <div class="article-tag">Euroleague Focus</div>
+                    <h3 class="grid-title">Decoding defensive rotations inside the paint in tight clutch moments.</h3>
+                </div>
+            </div>
+
+            <div class="grid-article-card">
+                <div class="grid-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
+                <div class="grid-content">
+                    <div class="article-tag">Special Feature</div>
+                    <h3 class="grid-title">The blueprint of modern playmaking: Point guards masterclasses.</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tasto See More Articles -->
+        <div class="see-more-container">
+            <a href="#" class="see-more-btn">See more articles &rarr;</a>
+        </div>
+
+    </main>
+
+    <footer>
+        &copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.
+    </footer>
+
+    <!-- Motore 3D Particelle di Sfondo -->
+    <script>
+        const container = document.getElementById('webgl-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.015,
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.6
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 3;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - window.innerWidth / 2) / 500;
+            mouseY = (event.clientY - window.innerHeight / 2) / 500;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            targetX = mouseX * 0.5;
+            targetY = mouseY * 0.5;
+
+            particlesMesh.rotation.y += 0.001 + (targetX - particlesMesh.rotation.y) * 0.05;
+            particlesMesh.rotation.x += 0.001 + (targetY - particlesMesh.rotation.x) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
