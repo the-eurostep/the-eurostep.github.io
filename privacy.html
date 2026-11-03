@@ -35,7 +35,6 @@
             pointer-events: none;
         }
 
-        /* Header standard ripreso dalla home */
         header {
             display: flex;
             justify-content: space-between;
@@ -59,7 +58,7 @@
 
         .brand-container:hover {
             transform: scale(1.02);
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
         }
 
         .brand-logo {
@@ -86,10 +85,6 @@
             list-style: none;
         }
 
-        .nav-item {
-            position: relative;
-        }
-
         .nav-link {
             color: #d1d5db;
             text-decoration: none;
@@ -107,7 +102,6 @@
             color: #ffffff;
         }
 
-        /* Contenuto della Privacy Policy stile articolo/documento */
         .policy-container {
             max-width: 900px;
             margin: 60px auto;
@@ -195,7 +189,6 @@
 
     <div id="webgl-container"></div>
 
-    <!-- Header -->
     <header>
         <a href="index.html" class="brand-container" title="The Eurostep Home">
             <img src="the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
@@ -206,7 +199,6 @@
         </ul>
     </header>
 
-    <!-- Contenuto Privacy Policy -->
     <main class="policy-container">
         <h1 class="policy-title">Privacy Policy</h1>
         <p class="policy-subtitle">Last updated: November 2026</p>
@@ -247,7 +239,6 @@
         &copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.
     </footer>
 
-    <!-- Motore 3D Particelle di Sfondo -->
     <script>
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
