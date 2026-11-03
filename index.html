@@ -34,7 +34,7 @@
             pointer-events: none;
         }
 
-        /* Header con Logo, Scritta e Navigazione Orizzontale Spaziosa */
+        /* Header con Logo, Scritta, Navigazione e Barra di Ricerca */
         header {
             display: flex;
             justify-content: space-between;
@@ -79,11 +79,11 @@
             text-transform: uppercase;
         }
 
-        /* Navigazione Orizzontale più grande e ben spaziata */
+        /* Navigazione Centrale */
         .nav-menu {
             display: flex;
             align-items: center;
-            gap: 45px;
+            gap: 35px;
             list-style: none;
         }
 
@@ -95,7 +95,7 @@
             color: #d1d5db;
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -108,7 +108,7 @@
             color: #ffffff;
         }
 
-        /* Sottotenda (Dropdown) centrati perfettamente e con testo centrato */
+        /* Sottotenda (Dropdown) */
         .dropdown-content {
             position: absolute;
             top: 100%;
@@ -153,6 +153,52 @@
             padding-left: 20px;
         }
 
+        /* Sezione Destra: Barra di Ricerca */
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 7px 12px;
+            gap: 8px;
+            width: 180px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar-container:focus-within {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.07);
+            width: 210px;
+        }
+
+        .search-icon {
+            color: #6b7280;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #f3f4f6;
+            font-size: 0.85rem;
+            width: 100%;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .search-input::placeholder {
+            color: #6b7280;
+            letter-spacing: 0.5px;
+        }
+
         /* Main Container Magazine Style */
         .magazine-container {
             max-width: 1300px;
@@ -165,7 +211,6 @@
             gap: 40px;
         }
 
-        /* Sezione Principale: Articolo Grande + Articoli Laterali perfettamente allineati in altezza */
         .hero-magazine-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -173,7 +218,6 @@
             align-items: stretch;
         }
 
-        /* Articolo Principale in Evidenza */
         .main-featured-article {
             background: rgba(11, 15, 25, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -232,7 +276,6 @@
             font-weight: 400;
         }
 
-        /* Colonna Articoli in Evidenza Laterali (con miniature e altezza bilanciata) */
         .side-articles-column {
             display: flex;
             flex-direction: column;
@@ -284,7 +327,6 @@
             line-height: 1.3;
         }
 
-        /* Griglia Articoli Inferiori */
         .secondary-articles-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -330,7 +372,6 @@
             line-height: 1.3;
         }
 
-        /* Pulsante "See more articles" in fondo alla pagina */
         .see-more-container {
             display: flex;
             justify-content: center;
@@ -374,6 +415,52 @@
             letter-spacing: 1px;
             z-index: 1;
             margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        footer a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: #ffffff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-magazine-grid {
+                grid-template-columns: 1fr;
+            }
+            .secondary-articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            header {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .nav-menu {
+                gap: 20px;
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .secondary-articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .search-bar-container {
+                width: 150px;
+            }
         }
     </style>
 </head>
@@ -381,24 +468,26 @@
 
     <div id="webgl-container"></div>
 
-    <!-- Header con Logo, Scritta e 5 Macrosezioni Spaziate -->
+    <!-- Header Aggiornato -->
     <header>
-        <!-- Logo e Testo a Sinistra con link alla Home -->
+        <!-- Logo e Testo a Sinistra -->
         <a href="#" class="brand-container" title="The Eurostep Home">
             <img src="the eurostep no background.png" alt="The Eurostep Logo" class="brand-logo">
             <span class="brand-title-text">The Eurostep</span>
         </a>
 
-        <!-- Barra di Navigazione Orizzontale -->
+        <!-- Barra di Navigazione con le nuove voci -->
         <ul class="nav-menu">
             <!-- 1. NBA -->
             <li class="nav-item">
                 <a href="#" class="nav-link">NBA</a>
                 <div class="dropdown-content">
                     <a href="#">Articles</a>
-                    <a href="#">Scores & Box Scores</a>
-                    <a href="#">Stats & Leaders</a>
-                    <a href="#">Rosters</a>
+                    <a href="#">Fantasy</a>
+                    <a href="#">Stats</a>
+                    <a href="#">Standings</a>
+                    <a href="#">Games</a>
+                    <a href="#">Teams & Players</a>
                 </div>
             </li>
 
@@ -407,9 +496,11 @@
                 <a href="#" class="nav-link">Euroleague</a>
                 <div class="dropdown-content">
                     <a href="#">Articles</a>
-                    <a href="#">Scores & Box Scores</a>
-                    <a href="#">Stats & Leaders</a>
-                    <a href="#">Rosters</a>
+                    <a href="#">Fantasy</a>
+                    <a href="#">Stats</a>
+                    <a href="#">Standings</a>
+                    <a href="#">Games</a>
+                    <a href="#">Teams & Players</a>
                 </div>
             </li>
 
@@ -417,39 +508,44 @@
             <li class="nav-item">
                 <a href="#" class="nav-link">Minigames</a>
                 <div class="dropdown-content">
-                    <a href="#">NBA Hoops Grid</a>
-                    <a href="#">Euroleague Predictor</a>
-                    <a href="#">Daily Trivia</a>
+                    <a href="#">Bracket Challenge</a>
+                    <a href="#">Who Am I?</a>
                 </div>
             </li>
 
-            <!-- 4. About Me -->
-            <li class="nav-item">
-                <a href="#" class="nav-link">About Me</a>
-                <div class="dropdown-content">
-                    <a href="#">Our Vision</a>
-                    <a href="#">The Experts</a>
-                </div>
-            </li>
-
-            <!-- 5. Contact -->
+            <!-- 4. Contact (Senza tendina) -->
             <li class="nav-item">
                 <a href="#" class="nav-link">Contact</a>
+            </li>
+
+            <!-- 5. Other -->
+            <li class="nav-item">
+                <a href="#" class="nav-link">Other</a>
                 <div class="dropdown-content">
-                    <a href="#">Get in Touch</a>
-                    <a href="#">Partnerships</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Patreon</a>
+                    <a href="#">Gumroad</a>
                 </div>
             </li>
         </ul>
+
+        <!-- Barra di Ricerca a Destra -->
+        <div class="header-right">
+            <div class="search-bar-container">
+                <span class="search-icon">&#128269;</span>
+                <input type="text" class="search-input" placeholder="Search">
+            </div>
+        </div>
     </header>
 
-    <!-- Contenuto Home Magazine Completo -->
+    <!-- Contenuto Home Magazine -->
     <main class="magazine-container">
         
         <!-- Sezione Superiore: Articolo Principale + Articoli Laterali -->
         <div class="hero-magazine-grid">
             
-            <!-- Articolo Principale in Evidenza (Grande) -->
+            <!-- Articolo Principale in Evidenza (Ultimo Uscito) -->
             <article class="main-featured-article">
                 <div class="article-img-placeholder">[ FEATURED ARTICLE IMAGE ]</div>
                 <div class="article-content">
@@ -459,7 +555,7 @@
                 </div>
             </article>
 
-            <!-- Colonna Articoli in Evidenza Laterali (Con Miniature e Altezza Bilanciata) -->
+            <!-- Colonna Articoli Laterali (I 3 successivi) -->
             <div class="side-articles-column">
                 <div class="side-article-card">
                     <div class="side-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
@@ -486,7 +582,7 @@
 
         </div>
 
-        <!-- Sezione Inferiore: Griglia di Articoli -->
+        <!-- Sezione Inferiore: Griglia di Articoli (I 3 precedenti ancora) -->
         <div class="secondary-articles-grid">
             
             <div class="grid-article-card">
@@ -523,7 +619,8 @@
     </main>
 
     <footer>
-        &copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.
+        <span>&copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.</span>
+        <a href="privacy.html">Privacy Policy</a>
     </footer>
 
     <!-- Motore 3D Particelle di Sfondo -->
