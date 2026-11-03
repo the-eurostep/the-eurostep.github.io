@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Eurostep | Basketball Analysis</title>
+    <!-- Favicon del sito (usa il tuo logo) -->
+    <link rel="icon" type="image/png" href="the eurostep rounded.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
@@ -34,7 +37,7 @@
             pointer-events: none;
         }
 
-        /* Header con Logo, Scritta, Navigazione e Barra di Ricerca */
+        /* Header */
         header {
             display: flex;
             justify-content: space-between;
@@ -48,7 +51,6 @@
             z-index: 1000;
         }
 
-        /* Gruppo Logo + Scritta a Sinistra */
         .brand-container {
             display: flex;
             align-items: center;
@@ -79,7 +81,6 @@
             text-transform: uppercase;
         }
 
-        /* Navigazione Centrale */
         .nav-menu {
             display: flex;
             align-items: center;
@@ -108,7 +109,6 @@
             color: #ffffff;
         }
 
-        /* Sottotenda (Dropdown) */
         .dropdown-content {
             position: absolute;
             top: 100%;
@@ -153,7 +153,7 @@
             padding-left: 20px;
         }
 
-        /* Sezione Destra: Barra di Ricerca */
+        /* Barra di Ricerca con nuova icona SVG discreta e intonata */
         .header-right {
             display: flex;
             align-items: center;
@@ -162,26 +162,33 @@
         .search-bar-container {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             padding: 7px 12px;
             gap: 8px;
-            width: 180px;
+            width: 170px;
             transition: all 0.3s ease;
         }
 
         .search-bar-container:focus-within {
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.07);
-            width: 210px;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+            width: 200px;
         }
 
         .search-icon {
-            color: #6b7280;
-            font-size: 0.9rem;
             display: flex;
             align-items: center;
+            color: #9ca3af; /* Grigio tenue coordinato */
+        }
+
+        .search-icon svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
         }
 
         .search-input {
@@ -431,7 +438,6 @@
             color: #ffffff;
         }
 
-        /* Responsive Design */
         @media (max-width: 1024px) {
             .hero-magazine-grid {
                 grid-template-columns: 1fr;
@@ -459,7 +465,7 @@
                 grid-template-columns: 1fr;
             }
             .search-bar-container {
-                width: 150px;
+                width: 140px;
             }
         }
     </style>
@@ -468,17 +474,14 @@
 
     <div id="webgl-container"></div>
 
-    <!-- Header Aggiornato -->
+    <!-- Header -->
     <header>
-        <!-- Logo e Testo a Sinistra -->
         <a href="#" class="brand-container" title="The Eurostep Home">
             <img src="the eurostep no background.png" alt="The Eurostep Logo" class="brand-logo">
             <span class="brand-title-text">The Eurostep</span>
         </a>
 
-        <!-- Barra di Navigazione con le nuove voci -->
         <ul class="nav-menu">
-            <!-- 1. NBA -->
             <li class="nav-item">
                 <a href="#" class="nav-link">NBA</a>
                 <div class="dropdown-content">
@@ -491,7 +494,6 @@
                 </div>
             </li>
 
-            <!-- 2. Euroleague -->
             <li class="nav-item">
                 <a href="#" class="nav-link">Euroleague</a>
                 <div class="dropdown-content">
@@ -504,7 +506,6 @@
                 </div>
             </li>
 
-            <!-- 3. Minigames -->
             <li class="nav-item">
                 <a href="#" class="nav-link">Minigames</a>
                 <div class="dropdown-content">
@@ -513,12 +514,10 @@
                 </div>
             </li>
 
-            <!-- 4. Contact (Senza tendina) -->
             <li class="nav-item">
                 <a href="#" class="nav-link">Contact</a>
             </li>
 
-            <!-- 5. Other -->
             <li class="nav-item">
                 <a href="#" class="nav-link">Other</a>
                 <div class="dropdown-content">
@@ -530,10 +529,15 @@
             </li>
         </ul>
 
-        <!-- Barra di Ricerca a Destra -->
+        <!-- Barra di Ricerca con icona SVG pulita -->
         <div class="header-right">
             <div class="search-bar-container">
-                <span class="search-icon">&#128269;</span>
+                <span class="search-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
                 <input type="text" class="search-input" placeholder="Search">
             </div>
         </div>
@@ -542,10 +546,8 @@
     <!-- Contenuto Home Magazine -->
     <main class="magazine-container">
         
-        <!-- Sezione Superiore: Articolo Principale + Articoli Laterali -->
         <div class="hero-magazine-grid">
             
-            <!-- Articolo Principale in Evidenza (Ultimo Uscito) -->
             <article class="main-featured-article">
                 <div class="article-img-placeholder">[ FEATURED ARTICLE IMAGE ]</div>
                 <div class="article-content">
@@ -555,7 +557,6 @@
                 </div>
             </article>
 
-            <!-- Colonna Articoli Laterali (I 3 successivi) -->
             <div class="side-articles-column">
                 <div class="side-article-card">
                     <div class="side-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
@@ -582,7 +583,6 @@
 
         </div>
 
-        <!-- Sezione Inferiore: Griglia di Articoli (I 3 precedenti ancora) -->
         <div class="secondary-articles-grid">
             
             <div class="grid-article-card">
@@ -611,7 +611,6 @@
 
         </div>
 
-        <!-- Tasto See More Articles -->
         <div class="see-more-container">
             <a href="#" class="see-more-btn">See more articles &rarr;</a>
         </div>
@@ -623,7 +622,7 @@
         <a href="privacy.html">Privacy Policy</a>
     </footer>
 
-    <!-- Motore 3D Particelle di Sfondo -->
+    <!-- Motore 3D Particelle -->
     <script>
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
