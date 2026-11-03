@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | The Eurostep</title>
+    <link rel="icon" type="image/png" href="the eurostep rounded.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #030508;
+            color: #f3f4f6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #webgl-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header standard ripreso dalla home */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 45px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(3, 5, 8, 0.92);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .brand-container:hover {
+            transform: scale(1.02);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        .brand-logo {
+            height: 52px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-title-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #9ca3af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #d1d5db;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 10px 0;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+        }
+
+        /* Contenuto della Privacy Policy stile articolo/documento */
+        .policy-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px;
+            background: rgba(11, 15, 25, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            z-index: 1;
+            width: 90%;
+        }
+
+        .policy-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .policy-subtitle {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 15px;
+        }
+
+        .policy-section {
+            margin-bottom: 25px;
+        }
+
+        .policy-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: #60a5fa;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .policy-section p, .policy-section li {
+            color: #d1d5db;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .policy-section ul {
+            padding-left: 20px;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .back-home-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #4b5563;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            z-index: 1;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="webgl-container"></div>
+
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="brand-container" title="The Eurostep Home">
+            <img src="the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
+            <span class="brand-title-text">The Eurostep</span>
+        </a>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        </ul>
+    </header>
+
+    <!-- Contenuto Privacy Policy -->
+    <main class="policy-container">
+        <h1 class="policy-title">Privacy Policy</h1>
+        <p class="policy-subtitle">Last updated: June 2026</p>
+
+        <div class="policy-section">
+            <h3>1. Introduction</h3>
+            <p>Welcome to <strong>The Eurostep</strong> ("we", "our", or "us"). We respect your privacy and are committed to protecting any information you may share while visiting our website. This Privacy Policy outlines how we handle data on our platform.</p>
+        </div>
+
+        <div class="policy-section">
+            <h3>2. Data Collection</h3>
+            <p>Since The Eurostep is an independent basketball analysis platform hosted statically via GitHub Pages:</p>
+            <ul>
+                <li>We do not require user registration or account creation to read our articles.</li>
+                <li>We do not actively collect personal sensitive data (such as names, addresses, or phone numbers) unless voluntarily provided through future contact channels.</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h3>3. Cookies and Tracking</h3>
+            <p>Currently, this website operates strictly using technical cookies necessary for core functionality and layout rendering. We do not use intrusive profiling or tracking cookies for advertising purposes.</p>
+        </div>
+
+        <div class="policy-section">
+            <h3>4. External Links</h3>
+            <p>Our website may contain links to external platforms (such as YouTube, Instagram, Patreon, Gumroad). Once you leave our site via these links, we are not responsible for the privacy practices or content of those third-party services.</p>
+        </div>
+
+        <div class="policy-section">
+            <h3>5. Contact Us</h3>
+            <p>If you have any questions regarding this Privacy Policy, you can reach out through our official channels listed in the "Contact" section of the website.</p>
+        </div>
+
+        <a href="index.html" class="back-home-btn">&larr; Back to Home</a>
+    </main>
+
+    <footer>
+        &copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.
+    </footer>
+
+    <!-- Motore 3D Particelle di Sfondo -->
+    <script>
+        const container = document.getElementById('webgl-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.015,
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.6
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 3;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - window.innerWidth / 2) / 500;
+            mouseY = (event.clientY - window.innerHeight / 2) / 500;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            targetX = mouseX * 0.5;
+            targetY = mouseY * 0.5;
+
+            particlesMesh.rotation.y += 0.001 + (targetX - particlesMesh.rotation.y) * 0.05;
+            particlesMesh.rotation.x += 0.001 + (targetY - particlesMesh.rotation.x) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
