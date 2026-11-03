@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Eurostep | Basketball Analysis</title>
-    <!-- Favicon del sito (usa il tuo logo) -->
+    <!-- Favicon del sito aggiornata -->
     <link rel="icon" type="image/png" href="the eurostep rounded.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -51,6 +51,7 @@
             z-index: 1000;
         }
 
+        /* Gruppo Logo + Scritta con effetto luce e zoom uniforme al passaggio del mouse */
         .brand-container {
             display: flex;
             align-items: center;
@@ -61,7 +62,7 @@
 
         .brand-container:hover {
             transform: scale(1.02);
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
         }
 
         .brand-logo {
@@ -153,7 +154,7 @@
             padding-left: 20px;
         }
 
-        /* Barra di Ricerca con nuova icona SVG discreta e intonata */
+        /* Barra di Ricerca */
         .header-right {
             display: flex;
             align-items: center;
@@ -180,7 +181,7 @@
         .search-icon {
             display: flex;
             align-items: center;
-            color: #9ca3af; /* Grigio tenue coordinato */
+            color: #9ca3af;
         }
 
         .search-icon svg {
@@ -477,7 +478,7 @@
     <!-- Header -->
     <header>
         <a href="#" class="brand-container" title="The Eurostep Home">
-            <img src="the eurostep no background.png" alt="The Eurostep Logo" class="brand-logo">
+            <img src="the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
             <span class="brand-title-text">The Eurostep</span>
         </a>
 
@@ -529,7 +530,7 @@
             </li>
         </ul>
 
-        <!-- Barra di Ricerca con icona SVG pulita -->
+        <!-- Barra di Ricerca -->
         <div class="header-right">
             <div class="search-bar-container">
                 <span class="search-icon">
@@ -602,6 +603,7 @@
             </div>
 
             <div class="grid-article-card">
+                <div class="grid-img-placeholder">[ ARTICLE THUMBNA_... ]</div>
                 <div class="grid-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
                 <div class="grid-content">
                     <div class="article-tag">Special Feature</div>
