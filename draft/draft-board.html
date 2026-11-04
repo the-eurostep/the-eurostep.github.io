@@ -79,7 +79,6 @@
             text-transform: uppercase;
         }
 
-        /* Tasto BACK con effetto di illuminazione al passaggio del mouse */
         .back-link {
             color: #9ca3af;
             text-decoration: none;
@@ -509,21 +508,24 @@
             }
         }
 
-        // Funzione avanzata per normalizzare il testo (rimuove accenti tipo č, ć, ñ, ecc. e gestisce i suffissi)
+        // Funzione ultra-potenziata: pulisce accenti, diacritici e caratteri corrotti del JSON (es. Ä, )
         function normalizeString(str) {
             if (!str) return "";
             return str.toLowerCase()
                 .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "") // Rimuove tutti i diacritici/accenti (es. Dončić -> doncic)
+                .replace(/[\u0300-\u036f]/g, "") // Rimuove accenti standard
+                .replace(/[ÄÂÀÁÃÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãåæçèéêëìíîïñòóôõöøùúûüýþÿ]/g, "") // Rimuove caratteri corrotti o strani
+                .replace(/[^a-z0-9\s]/g, "") // Tiene solo lettere e numeri
+                .replace(/\s+/g, ' ')
                 .trim();
         }
 
         function extractCleanLastName(fullName) {
             let normalized = normalizeString(fullName);
             let parts = normalized.split(' ');
-            let suffixes = ['jr.', 'jr', 'ii', 'iii', 'iv', 'v'];
+            let suffixes = ['jr', 'ii', 'iii', 'iv', 'v'];
             if (parts.length > 1 && suffixes.includes(parts[parts.length - 1])) {
-                parts.pop(); // Rimuove il suffisso se presente
+                parts.pop(); 
             }
             return parts[parts.length - 1];
         }
