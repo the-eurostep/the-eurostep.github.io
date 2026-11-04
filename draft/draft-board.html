@@ -79,20 +79,20 @@
             text-transform: uppercase;
         }
 
-        /* Stile semplice per il link Back coerente con il sito */
+        /* Stile coerente con l'immagine di riferimento per il tasto BACK */
         .back-link {
-            color: #9ca3af;
+            color: #f3f4f6;
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            transition: color 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
         .back-link:hover {
-            color: #ffffff;
+            opacity: 0.7;
         }
 
         .main-container {
@@ -147,6 +147,17 @@
 
         .game-card.active {
             display: block;
+        }
+
+        .instructions-box {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            background: rgba(3, 5, 8, 0.4);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border-left: 3px solid #38bdf8;
+            margin-bottom: 20px;
+            line-height: 1.5;
         }
 
         .hud-top {
@@ -279,7 +290,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-family: 'Orbitron', sans-serif;
             font-size: 1rem;
         }
@@ -288,7 +299,7 @@
             font-size: 1.3rem;
             font-family: 'Orbitron', sans-serif;
             color: #ffffff;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             line-height: 1.5;
             background: rgba(3, 5, 8, 0.5);
             padding: 25px;
@@ -357,7 +368,7 @@
             <img src="../the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
             <span class="brand-title-text">The Eurostep</span>
         </a>
-        <a href="../index.html" class="back-link">&larr; Back</a>
+        <a href="../index.html" class="back-link">Back</a>
     </header>
 
     <main class="main-container">
@@ -368,6 +379,10 @@
 
         <!-- MODALITÀ A -->
         <div id="modeA-card" class="game-card active">
+            <div class="instructions-box">
+                <strong>Draft Recall:</strong> Choose a specific year or select a random one, then click Start. Type the players' names or last names to recall all draft picks before time runs out!
+            </div>
+
             <div class="hud-top">
                 <div>
                     <label style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; font-family: 'Orbitron';">Year:</label>
@@ -398,27 +413,37 @@
 
         <!-- MODALITÀ B -->
         <div id="modeB-card" class="game-card">
-            <div class="mysterio-hud">
-                <div id="mysterio-score" style="color: #38bdf8;">Score: 0</div>
-                <div id="lives-display">❤️❤️❤️❤️❤️</div>
+            <div class="instructions-box">
+                <strong>Pick Mysterio:</strong> Test your knowledge on top-10 lottery picks from 2000 to 2026. Guess the player correctly to score points, but watch out—you only have 5 lives!
             </div>
 
-            <div id="mysterio-game-content">
-                <div class="clue-display" id="mysterio-clue">Loading challenge...</div>
-                <div class="input-group">
-                    <input type="text" id="mysterio-input" placeholder="Who is the player? (Last name is enough)" autocomplete="off">
-                    <button class="action-btn" onclick="checkMysterioInput()">Guess</button>
+            <div id="mysterio-pre-start" style="text-align: center; padding: 30px;">
+                <button class="action-btn" style="font-size: 1rem; padding: 12px 30px;" onclick="startMysterioGame()">Start Challenge</button>
+            </div>
+
+            <div id="mysterio-game-container" style="display:none;">
+                <div class="mysterio-hud">
+                    <div id="mysterio-score" style="color: #38bdf8;">Score: 0</div>
+                    <div id="lives-display">❤️❤️❤️❤️❤️</div>
                 </div>
-                <div style="text-align: right;">
-                    <button class="secondary-btn" onclick="skipMysterio()">Skip (-1 Life)</button>
+
+                <div id="mysterio-game-content">
+                    <div class="clue-display" id="mysterio-clue">Ready?</div>
+                    <div class="input-group">
+                        <input type="text" id="mysterio-input" placeholder="Who is the player? (Last name is enough)" autocomplete="off">
+                        <button class="action-btn" onclick="checkMysterioInput()">Guess</button>
+                    </div>
+                    <div style="text-align: right;">
+                        <button class="secondary-btn" onclick="skipMysterio()">Skip (-1 Life)</button>
+                    </div>
                 </div>
             </div>
 
             <div id="mysterio-game-over" class="game-over-screen" style="display:none;">
                 <h2>Game Over</h2>
-                <p id="final-score-text">You scored 0 points!</p>
+                <p id="final-score-text">Final Score: 0</p>
                 <div class="btn-flex">
-                    <button class="action-btn" onclick="initModeB()">Try Again</button>
+                    <button class="action-btn" onclick="startMysterioGame()">Try Again</button>
                     <a href="../index.html" class="back-link" style="font-size: 0.85rem;">Go Home</a>
                 </div>
             </div>
@@ -437,7 +462,6 @@
         let timerInterval;
         let timeLeft = 900;
 
-        // Corretto il percorso del file JSON all'interno della stessa cartella draft
         fetch('nba-drafts.json')
             .then(response => {
                 if (!response.ok) throw new Error("HTTP error " + response.status);
@@ -446,11 +470,9 @@
             .then(data => {
                 draftsData = data;
                 initModeASelect();
-                initModeB();
             })
             .catch(error => {
                 console.error("Error loading drafts:", error);
-                document.getElementById('mysterio-clue').textContent = "Error loading JSON data. Please check nba-drafts.json.";
                 document.getElementById('draft-table-body').innerHTML = '<tr><td colspan="3" style="text-align:center; color:#f43f5e; padding:20px;">Error loading nba-drafts.json.</td></tr>';
             });
 
@@ -486,6 +508,16 @@
             }
         }
 
+        // Funzione intelligente per estrarre il vero cognome escludendo suffissi come Jr., II, III
+        function extractCleanLastName(fullName) {
+            let parts = fullName.trim().toLowerCase().split(' ');
+            let suffixes = ['jr.', 'jr', 'ii', 'iii', 'iv', 'v'];
+            if (parts.length > 1 && suffixes.includes(parts[parts.length - 1])) {
+                parts.pop(); // Rimuove il suffisso
+            }
+            return parts[parts.length - 1];
+        }
+
         function startDraftGame() {
             if(Object.keys(draftsData).length === 0) {
                 alert("Data is still loading or failed to load.");
@@ -496,6 +528,7 @@
             if(selectedYear === 'random') {
                 const years = Object.keys(draftsData);
                 selectedYear = years[Math.floor(Math.random() * years.length)];
+                document.getElementById('year-select').value = selectedYear; // Mostra l'anno random scelto
             }
 
             currentYearPicks = JSON.parse(JSON.stringify(draftsData[selectedYear] || []));
@@ -567,8 +600,7 @@
             currentYearPicks.forEach((p, index) => {
                 if(p.status === 'hidden') {
                     const fullName = p.player.toLowerCase();
-                    const nameParts = fullName.split(' ');
-                    const lastName = nameParts[nameParts.length - 1];
+                    const lastName = extractCleanLastName(p.player);
 
                     if(fullName === inputVal || lastName === inputVal) {
                         p.status = 'user';
@@ -618,14 +650,22 @@
             }
         }
 
+        // --- MODALITÀ B LOGIC ---
         let mysterioPool = [];
         let currentMysterio = null;
         let mysterioScore = 0;
         let lives = 5;
 
-        function initModeB() {
+        function startMysterioGame() {
+            if(Object.keys(draftsData).length === 0) {
+                alert("Data is still loading or failed to load.");
+                return;
+            }
+
+            document.getElementById('mysterio-pre-start').style.display = 'none';
             document.getElementById('mysterio-game-over').style.display = 'none';
-            document.getElementById('mysterio-game-content').style.display = 'block';
+            document.getElementById('mysterio-game-container').style.display = 'block';
+
             mysterioScore = 0;
             lives = 5;
             updateLivesDisplay();
@@ -660,11 +700,10 @@
             if(!val || !currentMysterio) return;
 
             const fullName = currentMysterio.player.toLowerCase();
-            const nameParts = fullName.split(' ');
-            const lastName = nameParts[nameParts.length - 1];
+            const lastName = extractCleanLastName(currentMysterio.player);
 
             if(fullName === val || lastName === val) {
-                mysterioScore += 10;
+                mysterioScore += 1; // Punteggio incrementale +1 punto per ogni risposta corretta
                 updateScoreDisplay();
                 nextMysterio();
             } else {
@@ -680,7 +719,7 @@
             lives--;
             updateLivesDisplay();
             if(lives <= 0) {
-                triggerGameOver(`Out of lives! Final Score: ${mysterioScore} pts`);
+                triggerGameOver(`Out of lives!`);
             } else {
                 nextMysterio();
             }
@@ -696,9 +735,9 @@
         }
 
         function triggerGameOver(msg) {
-            document.getElementById('mysterio-game-content').style.display = 'none';
+            document.getElementById('mysterio-game-container').style.display = 'none';
             document.getElementById('mysterio-game-over').style.display = 'block';
-            document.getElementById('final-score-text').textContent = `${msg} Total Score: ${mysterioScore} points.`;
+            document.getElementById('final-score-text').textContent = `${msg} Final Score: ${mysterioScore}`;
         }
 
         document.getElementById('player-input').addEventListener('keypress', function(e) {
