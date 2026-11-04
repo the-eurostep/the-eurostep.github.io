@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Eurostep - Draft Board</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0b0e;
+            --panel-bg: #12151c;
+            --accent-neon: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.2);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #f43f5e;
+            --success: #10b981;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+
+        header { text-align: center; margin-bottom: 30px; margin-top: 10px; }
+        header h1 { font-size: 2.2rem; color: var(--text-main); text-shadow: 0 0 15px var(--accent-glow); }
+        header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 5px; }
+
+        .mode-selector { display: flex; gap: 20px; margin-bottom: 30px; }
+        .mode-btn { background: var(--panel-bg); border: 1px solid var(--border-color); color: var(--text-muted); padding: 12px 24px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-weight: 700; cursor: pointer; transition: all 0.3s ease; }
+        .mode-btn.active { background: var(--accent-glow); border-color: var(--accent-neon); color: var(--accent-neon); box-shadow: 0 0 20px var(--accent-glow); }
+
+        .game-container { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 12px; width: 100%; max-width: 800px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; }
+        .game-container.active { display: block; }
+
+        .input-group { display: flex; gap: 10px; margin-bottom: 20px; position: relative; }
+        input[type="text"] { flex: 1; background: var(--bg-dark); border: 1px solid var(--border-color); color: var(--text-main); padding: 12px 16px; border-radius: 6px; font-size: 1rem; outline: none; }
+        input[type="text"]:focus { border-color: var(--accent-neon); box-shadow: 0 0 10px var(--accent-glow); }
+
+        button.action-btn { background: var(--accent-neon); color: var(--bg-dark); border: none; padding: 0 20px; border-radius: 6px; font-family: 'Orbitron', sans-serif; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+        button.action-btn:hover { opacity: 0.9; }
+
+        .hud-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--bg-dark); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .timer { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent-neon); }
+        .draft-table { width: 100%; border-collapse: collapse; max-height: 400px; overflow-y: auto; display: block; }
+        .draft-table tr { display: flex; border-bottom: 1px solid var(--border-color); padding: 10px; align-items: center; width: 100%; }
+        .draft-table td { padding: 5px 10px; }
+        .col-pick { width: 15%; font-family: 'Orbitron', sans-serif; color: var(--text-muted); }
+        .col-team { width: 25%; font-weight: 600; }
+        .col-player { width: 60%; font-size: 1.1rem; color: var(--text-muted); }
+        .draft-table tr.guessed { background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--success); }
+        .draft-table tr.guessed .col-player { color: var(--success); font-weight: 700; }
+
+        .mysterio-card { text-align: center; padding: 20px; }
+        .mysterio-info { font-size: 1.4rem; font-family: 'Orbitron', sans-serif; margin-bottom: 25px; color: var(--text-main); }
+        .lives-container { font-size: 1.5rem; color: var(--danger); margin-bottom: 15px; letter-spacing: 5px; text-align: center; }
+        .skip-btn { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: 'Orbitron', sans-serif; margin-top: 15px; transition: all 0.2s; }
+        .skip-btn:hover { background: rgba(244, 63, 94, 0.1); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Draft Board</h1>
+        <p>La storia dei Draft NBA nelle tue mani</p>
+    </header>
+
+    <div class="mode-selector">
+        <button class="mode-btn active" onclick="switchMode('A')">Mod. A: Draft Recall</button>
+        <button class="mode-btn" onclick="switchMode('B')">Mod. B: Pick Mysterio</button>
+    </div>
+
+    <!-- MODALITÀ A -->
+    <div id="modeA-container" class="game-container active">
+        <div class="hud-top">
+            <div>
+                <label for="year-select" style="font-size: 0.85rem; color: var(--text-muted);">Anno:</label>
+                <select id="year-select" style="background: var(--panel-bg); color: var(--text-main); border: 1px solid var(--border-color); padding: 5px 10px; border-radius: 4px; margin-left: 5px;" onchange="loadDraftYear()">
+                </select>
+            </div>
+            <div class="timer" id="timer-display">15:00</div>
+            <button class="skip-btn" style="margin:0; border-color: var(--danger); color: var(--danger);" onclick="giveUpDraft()">Give Up</button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="player-input" placeholder="Digita il nome di un giocatore..." autocomplete="off">
+            <button class="action-btn" onclick="checkDraftInput()">Invio</button>
+        </div>
+
+        <div style="max-height: 400px; overflow-y: auto;">
+            <table class="draft-table" id="draft-table-body">
+            </table>
+        </div>
+    </div>
+
+    <!-- MODALITÀ B -->
+    <div id="modeB-container" class="game-container">
+        <div class="lives-container" id="lives-display">❤️❤️❤️❤️❤️</div>
+        <div class="mysterio-card">
+            <div class="mysterio-info" id="mysterio-clue">Caricamento in corso...</div>
+            <div class="input-group">
+                <input type="text" id="mysterio-input" placeholder="Chi è il giocatore?" autocomplete="off">
+                <button class="action-btn" onclick="checkMysterioInput()">Indovina</button>
+            </div>
+            <button class="skip-btn" onclick="skipMysterio()">Salta (-1 Vita)</button>
+        </div>
+    </div>
+
+    <script>
+        let draftsData = {};
+
+        fetch('nba-drafts.json')
+            .then(response => response.json())
+            .then(data => {
+                draftsData = data;
+                initModeA();
+                initModeB();
+            })
+            .catch(error => console.error("Errore nel caricamento dei draft:", error));
+
+        function switchMode(mode) {
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.game-container').forEach(cont => cont.classList.remove('active'));
+
+            if(mode === 'A') {
+                document.querySelector('.mode-btn:nth-child(1)').classList.add('active');
+                document.getElementById('modeA-container').classList.add('active');
+            } else {
+                document.querySelector('.mode-btn:nth-child(2)').classList.add('active');
+                document.getElementById('modeB-container').classList.add('active');
+            }
+        }
+
+        let currentYearPicks = [];
+        let timerInterval;
+        let timeLeft = 900;
+
+        function initModeA() {
+            const select = document.getElementById('year-select');
+            select.innerHTML = '';
+            for (let year = 2026; year >= 1988; year--) {
+                let opt = document.createElement('option');
+                opt.value = year;
+                opt.textContent = `Draft ${year}`;
+                select.appendChild(opt);
+            }
+            loadDraftYear();
+        }
+
+        function loadDraftYear() {
+            const year = document.getElementById('year-select').value;
+            currentYearPicks = draftsData[year] || [];
+            currentYearPicks.forEach(p => p.guessed = false);
+            renderDraftTable();
+            resetTimer();
+        }
+
+        function renderDraftTable() {
+            const tbody = document.getElementById('draft-table-body');
+            tbody.innerHTML = '';
+            currentYearPicks.forEach((p, index) => {
+                let tr = document.createElement('tr');
+                tr.id = `pick-row-${index}`;
+                tr.innerHTML = `
+                    <td class="col-pick">#${p.pick}</td>
+                    <td class="col-team">${p.team}</td>
+                    <td class="col-player">${p.guessed ? p.player : '••••••••••••'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 900;
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if(timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    giveUpDraft();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            document.getElementById('timer-display').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function checkDraftInput() {
+            const inputVal = document.getElementById('player-input').value.trim().toLowerCase();
+            if(!inputVal) return;
+
+            currentYearPicks.forEach((p, index) => {
+                if(p.player.toLowerCase() === inputVal && !p.guessed) {
+                    p.guessed = true;
+                    document.getElementById(`pick-row-${index}`).classList.add('guessed');
+                    document.getElementById(`pick-row-${index}`).querySelector('.col-player').textContent = p.player;
+                    document.getElementById('player-input').value = '';
+                }
+            });
+        }
+
+        function giveUpDraft() {
+            clearInterval(timerInterval);
+            currentYearPicks.forEach((p, index) => {
+                p.guessed = true;
+                let row = document.getElementById(`pick-row-${index}`);
+                row.classList.add('guessed');
+                row.querySelector('.col-player').textContent = p.player;
+            });
+        }
+
+        let mysterioPool = [];
+        let currentMysterio = null;
+        let lives = 5;
+
+        function initModeB() {
+            mysterioPool = [];
+            for (let year = 2000; year <= 2026; year++) {
+                let yearPicks = draftsData[year] || [];
+                yearPicks.forEach(p => {
+                    if (p.pick <= 10) {
+                        mysterioPool.push({ year: year, ...p });
+                    }
+                });
+            }
+            nextMysterio();
+        }
+
+        function nextMysterio() {
+            if(lives <= 0 || mysterioPool.length === 0) {
+                document.getElementById('mysterio-clue').textContent = "Game Over! Ricarica per giocare ancora.";
+                return;
+            }
+            let randomIndex = Math.floor(Math.random() * mysterioPool.length);
+            currentMysterio = mysterioPool.splice(randomIndex, 1)[0];
+            document.getElementById('mysterio-clue').textContent = `Draft ${currentMysterio.year} — Pick #${currentMysterio.pick} (${currentMysterio.team})`;
+            document.getElementById('mysterio-input').value = '';
+        }
+
+        function checkMysterioInput() {
+            const val = document.getElementById('mysterio-input').value.trim().toLowerCase();
+            if(!val || !currentMysterio) return;
+
+            if(val === currentMysterio.player.toLowerCase()) {
+                nextMysterio();
+            } else {
+                loseLife();
+            }
+        }
+
+        function skipMysterio() {
+            loseLife();
+        }
+
+        function loseLife() {
+            lives--;
+            updateLivesDisplay();
+            if(lives > 0) {
+                nextMysterio();
+            }
+        }
+
+        function updateLivesDisplay() {
+            let hearts = "❤️".repeat(lives) + "🖤".repeat(5 - lives);
+            document.getElementById('lives-display').textContent = hearts;
+        }
+
+        document.getElementById('player-input').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') checkDraftInput();
+        });
+        document.getElementById('mysterio-input').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') checkMysterioInput();
+        });
+    </script>
+</body>
+</html>
