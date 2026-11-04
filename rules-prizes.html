@@ -38,12 +38,12 @@
 <body>
     <div id="webgl-container"></div>
     <header>
-        <a href="bracket-challenge.html" class="brand-container" title="The Eurostep Home">
+        <a href="nba-bracket.html" class="brand-container" title="The Eurostep Back">
             <img src="the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
             <span class="brand-title-text">The Eurostep</span>
         </a>
         <ul class="nav-menu">
-            <li><a href="bracket-challenge.html" class="nav-link">Back</a></li>
+            <li><a href="nba-bracket.html" class="nav-link">Back</a></li>
         </ul>
     </header>
     <main class="rules-container">
@@ -85,7 +85,7 @@
             In case of controversies or unconsidered situations, the decision of the administrator of The Eurostep is final.
         </div>
         <div class="back-container">
-            <a href="bracket-challenge.html" class="back-btn">&larr; Back to Bracket Challenge</a>
+            <a href="nba-bracket.html" class="back-btn">&larr; Back to NBA Playoffs</a>
         </div>
     </main>
     <footer>
@@ -108,11 +108,13 @@
         const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particlesMesh);
         camera.position.z = 3;
+
         let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
         document.addEventListener('mousemove', (event) => {
             mouseX = (event.clientX - window.innerWidth / 2) / 500;
             mouseY = (event.clientY - window.innerHeight / 2) / 500;
         });
+
         function animate() {
             requestAnimationFrame(animate);
             targetX = mouseX * 0.5;
@@ -122,6 +124,7 @@
             renderer.render(scene, camera);
         }
         animate();
+
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
