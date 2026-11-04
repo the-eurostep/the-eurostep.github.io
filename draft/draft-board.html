@@ -79,20 +79,21 @@
             text-transform: uppercase;
         }
 
-        /* Stile coerente con l'immagine di riferimento per il tasto BACK */
+        /* Tasto BACK con effetto di illuminazione al passaggio del mouse */
         .back-link {
-            color: #f3f4f6;
+            color: #9ca3af;
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
             font-size: 0.95rem;
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
-            transition: opacity 0.3s ease;
+            transition: color 0.3s ease, filter 0.3s ease;
         }
 
         .back-link:hover {
-            opacity: 0.7;
+            color: #ffffff;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
         }
 
         .main-container {
@@ -508,12 +509,21 @@
             }
         }
 
-        // Funzione intelligente per estrarre il vero cognome escludendo suffissi come Jr., II, III
+        // Funzione avanzata per normalizzare il testo (rimuove accenti tipo č, ć, ñ, ecc. e gestisce i suffissi)
+        function normalizeString(str) {
+            if (!str) return "";
+            return str.toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "") // Rimuove tutti i diacritici/accenti (es. Dončić -> doncic)
+                .trim();
+        }
+
         function extractCleanLastName(fullName) {
-            let parts = fullName.trim().toLowerCase().split(' ');
+            let normalized = normalizeString(fullName);
+            let parts = normalized.split(' ');
             let suffixes = ['jr.', 'jr', 'ii', 'iii', 'iv', 'v'];
             if (parts.length > 1 && suffixes.includes(parts[parts.length - 1])) {
-                parts.pop(); // Rimuove il suffisso
+                parts.pop(); // Rimuove il suffisso se presente
             }
             return parts[parts.length - 1];
         }
@@ -528,7 +538,7 @@
             if(selectedYear === 'random') {
                 const years = Object.keys(draftsData);
                 selectedYear = years[Math.floor(Math.random() * years.length)];
-                document.getElementById('year-select').value = selectedYear; // Mostra l'anno random scelto
+                document.getElementById('year-select').value = selectedYear; 
             }
 
             currentYearPicks = JSON.parse(JSON.stringify(draftsData[selectedYear] || []));
@@ -593,16 +603,16 @@
 
         function checkDraftInput() {
             if(!gameActive) return;
-            const inputVal = document.getElementById('player-input').value.trim().toLowerCase();
+            const inputVal = normalizeString(document.getElementById('player-input').value);
             if(!inputVal) return;
 
             let found = false;
             currentYearPicks.forEach((p, index) => {
                 if(p.status === 'hidden') {
-                    const fullName = p.player.toLowerCase();
-                    const lastName = extractCleanLastName(p.player);
+                    const fullNameNorm = normalizeString(p.player);
+                    const lastNameNorm = extractCleanLastName(p.player);
 
-                    if(fullName === inputVal || lastName === inputVal) {
+                    if(fullNameNorm === inputVal || lastNameNorm === inputVal) {
                         p.status = 'user';
                         found = true;
                         renderDraftTable();
@@ -696,14 +706,14 @@
         }
 
         function checkMysterioInput() {
-            const val = document.getElementById('mysterio-input').value.trim().toLowerCase();
+            const val = normalizeString(document.getElementById('mysterio-input').value);
             if(!val || !currentMysterio) return;
 
-            const fullName = currentMysterio.player.toLowerCase();
-            const lastName = extractCleanLastName(currentMysterio.player);
+            const fullNameNorm = normalizeString(currentMysterio.player);
+            const lastNameNorm = extractCleanLastName(currentMysterio.player);
 
-            if(fullName === val || lastName === val) {
-                mysterioScore += 1; // Punteggio incrementale +1 punto per ogni risposta corretta
+            if(fullNameNorm === val || lastNameNorm === val) {
+                mysterioScore += 1;
                 updateScoreDisplay();
                 nextMysterio();
             } else {
