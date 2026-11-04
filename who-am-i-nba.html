@@ -21,15 +21,18 @@
         .nav-link:hover { color: #ffffff; }
 
         .game-container { max-width: 950px; margin: 40px auto; padding: 30px; background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; backdrop-filter: blur(12px); z-index: 1; width: 92%; display: flex; flex-direction: column; gap: 25px; align-items: center; }
-        .game-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; text-align: center; }
+        .game-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 15px; }
+        .game-title { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; }
         
-        /* Area Silhouette / Player Reveal */
+        /* Selettore History (Data) */
+        .history-selector { display: flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; font-size: 0.85rem; color: #d1d5db; }
+        .history-selector input[type="date"] { background: transparent; border: none; color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; outline: none; cursor: pointer; }
+
         .silhouette-box { width: 140px; height: 140px; background: rgba(255, 255, 255, 0.03); border: 2px dashed rgba(255, 255, 255, 0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
         .silhouette-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0); transition: filter 0.5s ease; }
         .silhouette-box.revealed img { filter: brightness(1); }
         .placeholder-text { font-size: 0.8rem; color: #9ca3af; text-align: center; padding: 10px; font-family: 'Orbitron', sans-serif; }
 
-        /* Search input area */
         .search-wrapper { position: relative; width: 100%; max-width: 500px; }
         .search-input { width: 100%; padding: 14px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px; color: #ffffff; font-size: 1rem; outline: none; transition: all 0.3s ease; }
         .search-input:focus { border-color: #60a5fa; box-shadow: 0 0 15px rgba(96, 165, 250, 0.2); }
@@ -37,18 +40,15 @@
         .suggestion-item { padding: 10px 15px; cursor: pointer; color: #d1d5db; font-size: 0.9rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); transition: background 0.2s; }
         .suggestion-item:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; }
 
-        /* Messaggio di stato (Hai vinto / Hai perso) */
         .game-status-msg { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; text-align: center; min-height: 30px; }
         .msg-win { color: #34d399; }
         .msg-loss { color: #f87171; }
 
-        /* Tabella dei tentativi */
         .attempts-table-container { width: 100%; overflow-x: auto; }
         .attempts-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; }
         .attempts-table th { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: #9ca3af; text-transform: uppercase; padding: 10px 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); }
         .attempts-table td { padding: 12px 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-weight: 500; }
         
-        /* Celle colorate (Verde / Grigio / Frecce) */
         .cell-box { padding: 8px 4px; border-radius: 6px; display: inline-block; width: 100%; font-weight: 600; }
         .correct { background-color: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
         .incorrect { background-color: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
@@ -71,7 +71,13 @@
     </header>
     
     <main class="game-container">
-        <h1 class="game-title">Who Am I? (NBA)</h1>
+        <div class="game-header-row">
+            <h1 class="game-title">Who Am I? (NBA)</h1>
+            <div class="history-selector">
+                <label for="gameDate">History:</label>
+                <input type="date" id="gameDate">
+            </div>
+        </div>
         
         <div class="silhouette-box" id="silhouetteBox">
             <div class="placeholder-text" id="placeholderText">Mystery Player</div>
@@ -100,7 +106,7 @@
                     </tr>
                 </thead>
                 <tbody id="attemptsTableBody">
-                    <!-- I tentativi inseriti appariranno qui -->
+                    <!-- Tentativi -->
                 </tbody>
             </table>
         </div>
@@ -112,7 +118,6 @@
     </footer>
 
     <script>
-        // Sfondo 3D con Three.js
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -151,8 +156,6 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // --- LOGICA DEL GIOCO POELTL (NBA) ---
-        // (Esempio di database provvisorio con alcuni giocatori chiave)
         const nbaPlayers = [
             { name: "LeBron James", team: "LAL", conference: "West", position: "F", height: "6'9\"", weight: "250", nationality: "USA", number: 23, image: "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png" },
             { name: "Stephen Curry", team: "GSW", conference: "West", position: "G", height: "6'3\"", weight: "185", nationality: "USA", number: 30, image: "https://cdn.nba.com/headshots/nba/latest/1040x760/201939.png" },
@@ -161,16 +164,21 @@
             { name: "Jayson Tatum", team: "BOS", conference: "East", position: "F", height: "6'8\"", weight: "210", nationality: "USA", number: 0, image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1628369.png" }
         ];
 
-        // Selezione del giocatore giornaliero basata sulla data corrente
-        function getDailyPlayer() {
-            const now = new Date();
-            const start = new Date(now.getFullYear(), 0, 0);
-            const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+        // Gestione data odierna e storico
+        const gameDateInput = document.getElementById('gameDate');
+        
+        function getPlayerForDate(dateObj) {
+            const start = new Date(dateObj.getFullYear(), 0, 0);
+            const diff = (dateObj - start) + ((start.getTimezoneOffset() - dateObj.getTimezoneOffset()) * 60 * 1000);
             const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
             return nbaPlayers[dayOfYear % nbaPlayers.length];
         }
 
-        const mysteryPlayer = getDailyPlayer();
+        const todayStr = new Date().toISOString().split('T')[0];
+        gameDateInput.value = todayStr;
+        gameDateInput.max = todayStr;
+
+        let mysteryPlayer = getPlayerForDate(new Date());
         let attemptsLeft = 8;
         let gameOver = false;
 
@@ -182,7 +190,26 @@
         const playerImage = document.getElementById('playerImage');
         const placeholderText = document.getElementById('placeholderText');
 
-        // Mostra suggerimenti durante la digitazione
+        // Cambio data tramite il selettore History
+        gameDateInput.addEventListener('change', (e) => {
+            const selectedDate = new Date(e.target.value);
+            mysteryPlayer = getPlayerForDate(selectedDate);
+            resetGame();
+        });
+
+        function resetGame() {
+            attemptsLeft = 8;
+            gameOver = false;
+            attemptsTableBody.innerHTML = '';
+            statusMsg.textContent = '';
+            statusMsg.className = 'game-status-msg';
+            playerInput.disabled = false;
+            document.getElementById('searchWrapper').style.display = 'block';
+            playerImage.style.display = 'none';
+            placeholderText.style.display = 'block';
+            silhouetteBox.classList.remove('revealed');
+        }
+
         playerInput.addEventListener('input', () => {
             if (gameOver) return;
             const val = playerInput.value.toLowerCase();
@@ -216,7 +243,6 @@
 
             const row = document.createElement('tr');
 
-            // Funzione di supporto per creare le celle con colori e frecce
             function createCell(value, isCorrect, arrow = '') {
                 const td = document.createElement('td');
                 const box = document.createElement('div');
@@ -226,7 +252,6 @@
                 return td;
             }
 
-            // Confronti
             const nameCorrect = guessedPlayer.name === mysteryPlayer.name;
             const teamCorrect = guessedPlayer.team === mysteryPlayer.team;
             const confCorrect = guessedPlayer.conference === mysteryPlayer.conference;
@@ -236,7 +261,6 @@
             const natCorrect = guessedPlayer.nationality === mysteryPlayer.nationality;
             const numCorrect = guessedPlayer.number === mysteryPlayer.number;
 
-            // Frecce per peso e numero (semplificate)
             let weightArrow = '';
             if (!weightCorrect) {
                 weightArrow = parseInt(guessedPlayer.weight) < parseInt(mysteryPlayer.weight) ? '&uarr;' : '&darr;';
@@ -257,7 +281,6 @@
 
             attemptsTableBody.prepend(row);
 
-            // Verifica vittoria
             if (nameCorrect) {
                 endGame(true);
             } else if (attemptsLeft <= 0) {
@@ -268,9 +291,8 @@
         function endGame(won) {
             gameOver = true;
             playerInput.disabled = true;
-            searchWrapper.style.display = 'none';
+            document.getElementById('searchWrapper').style.display = 'none';
 
-            // Rivela immagine
             playerImage.src = mysteryPlayer.image;
             playerImage.style.display = 'block';
             placeholderText.style.display = 'none';
