@@ -79,25 +79,20 @@
             text-transform: uppercase;
         }
 
-        .back-btn {
+        /* Stile semplice per il link Back coerente con il sito */
+        .back-link {
+            color: #9ca3af;
+            text-decoration: none;
             font-family: 'Orbitron', sans-serif;
             font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: #d1d5db;
-            text-decoration: none;
-            padding: 8px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 8px;
-            background: rgba(11, 15, 25, 0.8);
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
 
-        .back-btn:hover {
+        .back-link:hover {
             color: #ffffff;
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.08);
         }
 
         .main-container {
@@ -324,6 +319,7 @@
             display: flex;
             justify-content: center;
             gap: 15px;
+            align-items: center;
         }
 
         footer {
@@ -335,6 +331,20 @@
             letter-spacing: 1px;
             z-index: 1;
             margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        footer a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: #ffffff;
         }
     </style>
 </head>
@@ -347,7 +357,7 @@
             <img src="../the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
             <span class="brand-title-text">The Eurostep</span>
         </a>
-        <a href="../index.html" class="back-btn">&larr; Back</a>
+        <a href="../index.html" class="back-link">&larr; Back</a>
     </header>
 
     <main class="main-container">
@@ -409,7 +419,7 @@
                 <p id="final-score-text">You scored 0 points!</p>
                 <div class="btn-flex">
                     <button class="action-btn" onclick="initModeB()">Try Again</button>
-                    <a href="../index.html" class="back-btn" style="display:inline-block; line-height: normal; text-align: center;">Go Home</a>
+                    <a href="../index.html" class="back-link" style="font-size: 0.85rem;">Go Home</a>
                 </div>
             </div>
         </div>
@@ -417,6 +427,7 @@
 
     <footer>
         <span>&copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.</span>
+        <a href="../privacy.html">Privacy Policy</a>
     </footer>
 
     <script>
@@ -426,8 +437,8 @@
         let timerInterval;
         let timeLeft = 900;
 
-        // Caricamento dati JSON con gestione errori
-        fetch('../nba-drafts.json')
+        // Corretto il percorso del file JSON all'interno della stessa cartella draft
+        fetch('nba-drafts.json')
             .then(response => {
                 if (!response.ok) throw new Error("HTTP error " + response.status);
                 return response.json();
@@ -439,8 +450,8 @@
             })
             .catch(error => {
                 console.error("Error loading drafts:", error);
-                document.getElementById('mysterio-clue').textContent = "Error: Please run via a local server or GitHub Pages to load JSON data.";
-                document.getElementById('draft-table-body').innerHTML = '<tr><td colspan="3" style="text-align:center; color:#f43f5e; padding:20px;">Error: JSON data could not be loaded locally without a web server.</td></tr>';
+                document.getElementById('mysterio-clue').textContent = "Error loading JSON data. Please check nba-drafts.json.";
+                document.getElementById('draft-table-body').innerHTML = '<tr><td colspan="3" style="text-align:center; color:#f43f5e; padding:20px;">Error loading nba-drafts.json.</td></tr>';
             });
 
         function switchMode(mode) {
