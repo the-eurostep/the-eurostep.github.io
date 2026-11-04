@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Am I? (Euroleague Edition) | The Eurostep</title>
+    <link rel="icon" type="image/png" href="the eurostep rounded.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: #030508; color: #f3f4f6; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+        #webgl-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 18px 45px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(3, 5, 8, 0.92); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000; }
+        .brand-container { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.3s ease, filter 0.3s ease; }
+        .brand-container:hover { transform: scale(1.02); filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)); }
+        .brand-logo { height: 52px; width: auto; object-fit: contain; }
+        .brand-title-text { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 1.5px; background: linear-gradient(135deg, #ffffff 30%, #9ca3af 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+        .nav-menu { display: flex; align-items: center; gap: 35px; list-style: none; }
+        .nav-link { color: #d1d5db; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 0; transition: color 0.3s ease; display: block; }
+        .nav-link:hover { color: #ffffff; }
+
+        .game-container { max-width: 950px; margin: 40px auto; padding: 30px; background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; backdrop-filter: blur(12px); z-index: 1; width: 92%; display: flex; flex-direction: column; gap: 25px; align-items: center; }
+        .game-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; text-align: center; }
+        
+        .silhouette-box { width: 140px; height: 140px; background: rgba(255, 255, 255, 0.03); border: 2px dashed rgba(255, 255, 255, 0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        .silhouette-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0); transition: filter 0.5s ease; }
+        .silhouette-box.revealed img { filter: brightness(1); }
+        .placeholder-text { font-size: 0.8rem; color: #9ca3af; text-align: center; padding: 10px; font-family: 'Orbitron', sans-serif; }
+
+        .search-wrapper { position: relative; width: 100%; max-width: 500px; }
+        .search-input { width: 100%; padding: 14px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px; color: #ffffff; font-size: 1rem; outline: none; transition: all 0.3s ease; }
+        .search-input:focus { border-color: #60a5fa; box-shadow: 0 0 15px rgba(96, 165, 250, 0.2); }
+        .suggestions-list { position: absolute; top: 100%; left: 0; width: 100%; background: #0b0f19; border: 1px solid rgba(255, 255, 255, 0.15); border-top: none; border-radius: 0 0 10px 10px; max-height: 200px; overflow-y: auto; z-index: 50; display: none; }
+        .suggestion-item { padding: 10px 15px; cursor: pointer; color: #d1d5db; font-size: 0.9rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); transition: background 0.2s; }
+        .suggestion-item:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; }
+
+        .game-status-msg { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; text-align: center; min-height: 30px; }
+        .msg-win { color: #34d399; }
+        .msg-loss { color: #f87171; }
+
+        .attempts-table-container { width: 100%; overflow-x: auto; }
+        .attempts-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; }
+        .attempts-table th { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: #9ca3af; text-transform: uppercase; padding: 10px 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); }
+        .attempts-table td { padding: 12px 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-weight: 500; }
+        
+        .cell-box { padding: 8px 4px; border-radius: 6px; display: inline-block; width: 100%; font-weight: 600; }
+        .correct { background-color: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
+        .incorrect { background-color: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        footer { text-align: center; padding: 25px; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #4b5563; font-size: 0.85rem; letter-spacing: 1px; z-index: 1; display: flex; justify-content: center; gap: 20px; align-items: center; margin-top: 40px; }
+        footer a { color: #6b7280; text-decoration: none; transition: color 0.2s ease; }
+        footer a:hover { color: #ffffff; }
+    </style>
+</head>
+<body>
+    <div id="webgl-container"></div>
+    <header>
+        <a href="who-am-i.html" class="brand-container" title="The Eurostep Back">
+            <img src="the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
+            <span class="brand-title-text">The Eurostep</span>
+        </a>
+        <ul class="nav-menu">
+            <li><a href="who-am-i.html" class="nav-link">Back</a></li>
+        </ul>
+    </header>
+    
+    <main class="game-container">
+        <h1 class="game-title">Who Am I? (Euroleague)</h1>
+        
+        <div class="silhouette-box" id="silhouetteBox">
+            <div class="placeholder-text" id="placeholderText">Mystery Player</div>
+            <img id="playerImage" src="" alt="" style="display:none;">
+        </div>
+
+        <div id="statusMsg" class="game-status-msg"></div>
+
+        <div class="search-wrapper" id="searchWrapper">
+            <input type="text" id="playerInput" class="search-input" placeholder="Type a player name..." autocomplete="off">
+            <div id="suggestionsList" class="suggestions-list"></div>
+        </div>
+
+        <div class="attempts-table-container">
+            <table class="attempts-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Team</th>
+                        <th>Club Country</th>
+                        <th>Position</th>
+                        <th>Height</th>
+                        <th>Weight</th>
+                        <th>Nationality</th>
+                        <th>Number</th>
+                    </tr>
+                </thead>
+                <tbody id="attemptsTableBody">
+                    <!-- I tentativi inseriti appariranno qui -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <span>&copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.</span>
+        <a href="privacy.html">Privacy Policy</a>
+    </footer>
+
+    <script>
+        const container = document.getElementById('webgl-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+        const posArray = new Float32Array(particlesCount * 3);
+        for(let i = 0; i < particlesCount * 3; i++) { posArray[i] = (Math.random() - 0.5) * 10; }
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({ size: 0.015, color: 0xffffff, transparent: true, opacity: 0.6 });
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        camera.position.z = 3;
+
+        let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - window.innerWidth / 2) / 500;
+            mouseY = (event.clientY - window.innerHeight / 2) / 500;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            targetX = mouseX * 0.5;
+            targetY = mouseY * 0.5;
+            particlesMesh.rotation.y += 0.001 + (targetX - particlesMesh.rotation.y) * 0.05;
+            particlesMesh.rotation.x += 0.001 + (targetY - particlesMesh.rotation.x) * 0.05;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- DATABASE EUROLEAGUE PROVVISORIO ---
+        const euroleaguePlayers = [
+            { name: "Mike James", team: "AS Monaco", clubCountry: "France", position: "G", height: "6'1\"", weight: "195", nationality: "USA", number: 0, image: "https://euroleaguebasketball.net/media/icgjwx10/mike-james.png" },
+            { name: "Kendrick Nunn", team: "Panathinaikos", clubCountry: "Greece", position: "G", height: "6'3\"", weight: "190", nationality: "USA", number: 25, image: "https://euroleaguebasketball.net/media/v25fbj12/kendrick-nunn.png" },
+            { name: "Walter Tavares", team: "Real Madrid", clubCountry: "Spain", position: "C", height: "7'3\"", weight: "260", nationality: "Cape Verde", number: 22, image: "https://euroleaguebasketball.net/media/tavares.png" },
+            { name: "Tornike Shengelia", team: "Virtus Bologna", clubCountry: "Italy", position: "F", height: "6'9\"", weight: "249", nationality: "Georgia", number: 23, image: "https://euroleaguebasketball.net/media/shengelia.png" }
+        ];
+
+        function getDailyPlayer() {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+            const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+            return euroleaguePlayers[dayOfYear % euroleaguePlayers.length];
+        }
+
+        const mysteryPlayer = getDailyPlayer();
+        let attemptsLeft = 8;
+        let gameOver = false;
+
+        const playerInput = document.getElementById('playerInput');
+        const suggestionsList = document.getElementById('suggestionsList');
+        const attemptsTableBody = document.getElementById('attemptsTableBody');
+        const statusMsg = document.getElementById('statusMsg');
+        const silhouetteBox = document.getElementById('silhouetteBox');
+        const playerImage = document.getElementById('playerImage');
+        const placeholderText = document.getElementById('placeholderText');
+
+        playerInput.addEventListener('input', () => {
+            if (gameOver) return;
+            const val = playerInput.value.toLowerCase();
+            suggestionsList.innerHTML = '';
+            if (!val) {
+                suggestionsList.style.display = 'none';
+                return;
+            }
+            const filtered = euroleaguePlayers.filter(p => p.name.toLowerCase().includes(val));
+            if (filtered.length > 0) {
+                suggestionsList.style.display = 'block';
+                filtered.forEach(p => {
+                    const div = document.createElement('div');
+                    div.classList.add('suggestion-item');
+                    div.textContent = p.name;
+                    div.addEventListener('click', () => {
+                        makeGuess(p);
+                        playerInput.value = '';
+                        suggestionsList.style.display = 'none';
+                    });
+                    suggestionsList.appendChild(div);
+                });
+            } else {
+                suggestionsList.style.display = 'none';
+            }
+        });
+
+        function makeGuess(guessedPlayer) {
+            if (gameOver) return;
+            attemptsLeft--;
+
+            const row = document.createElement('tr');
+
+            function createCell(value, isCorrect, arrow = '') {
+                const td = document.createElement('td');
+                const box = document.createElement('div');
+                box.classList.add('cell-box', isCorrect ? 'correct' : 'incorrect');
+                box.innerHTML = `${value} ${arrow}`;
+                td.appendChild(box);
+                return td;
+            }
+
+            const nameCorrect = guessedPlayer.name === mysteryPlayer.name;
+            const teamCorrect = guessedPlayer.team === mysteryPlayer.team;
+            const clubCountryCorrect = guessedPlayer.clubCountry === mysteryPlayer.clubCountry;
+            const posCorrect = guessedPlayer.position === mysteryPlayer.position;
+            const heightCorrect = guessedPlayer.height === mysteryPlayer.height;
+            const weightCorrect = guessedPlayer.weight === mysteryPlayer.weight;
+            const natCorrect = guessedPlayer.nationality === mysteryPlayer.nationality;
+            const numCorrect = guessedPlayer.number === mysteryPlayer.number;
+
+            let weightArrow = '';
+            if (!weightCorrect) {
+                weightArrow = parseInt(guessedPlayer.weight) < parseInt(mysteryPlayer.weight) ? '&uarr;' : '&darr;';
+            }
+            let numArrow = '';
+            if (!numCorrect) {
+                numArrow = guessedPlayer.number < mysteryPlayer.number ? '&uarr;' : '&darr;';
+            }
+
+            row.appendChild(createCell(guessedPlayer.name, nameCorrect));
+            row.appendChild(createCell(guessedPlayer.team, teamCorrect));
+            row.appendChild(createCell(guessedPlayer.clubCountry, clubCountryCorrect));
+            row.appendChild(createCell(guessedPlayer.position, posCorrect));
+            row.appendChild(createCell(guessedPlayer.height, heightCorrect));
+            row.appendChild(createCell(guessedPlayer.weight, weightCorrect, weightArrow));
+            row.appendChild(createCell(guessedPlayer.nationality, natCorrect));
+            row.appendChild(createCell(guessedPlayer.number, colNum = numCorrect, numArrow));
+
+            attemptsTableBody.prepend(row);
+
+            if (nameCorrect) {
+                endGame(true);
+            } else if (attemptsLeft <= 0) {
+                endGame(false);
+            }
+        }
+
+        function endGame(won) {
+            gameOver = true;
+            playerInput.disabled = true;
+            searchWrapper.style.display = 'none';
+
+            playerImage.src = mysteryPlayer.image;
+            playerImage.style.display = 'block';
+            placeholderText.style.display = 'none';
+            silhouetteBox.classList.add('revealed');
+
+            if (won) {
+                statusMsg.textContent = `Hai vinto! The mystery player was ${mysteryPlayer.name}.`;
+                statusMsg.classList.add('msg-win');
+            } else {
+                statusMsg.textContent = `Hai perso. The mystery player was ${mysteryPlayer.name}.`;
+                statusMsg.classList.add('msg-loss');
+            }
+        }
+    </script>
+</body>
+</html>
