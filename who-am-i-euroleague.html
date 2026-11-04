@@ -21,8 +21,12 @@
         .nav-link:hover { color: #ffffff; }
 
         .game-container { max-width: 950px; margin: 40px auto; padding: 30px; background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; backdrop-filter: blur(12px); z-index: 1; width: 92%; display: flex; flex-direction: column; gap: 25px; align-items: center; }
-        .game-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; text-align: center; }
+        .game-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 15px; }
+        .game-title { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; }
         
+        .history-selector { display: flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; font-size: 0.85rem; color: #d1d5db; }
+        .history-selector input[type="date"] { background: transparent; border: none; color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; outline: none; cursor: pointer; }
+
         .silhouette-box { width: 140px; height: 140px; background: rgba(255, 255, 255, 0.03); border: 2px dashed rgba(255, 255, 255, 0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
         .silhouette-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0); transition: filter 0.5s ease; }
         .silhouette-box.revealed img { filter: brightness(1); }
@@ -66,7 +70,13 @@
     </header>
     
     <main class="game-container">
-        <h1 class="game-title">Who Am I? (Euroleague)</h1>
+        <div class="game-header-row">
+            <h1 class="game-title">Who Am I? (Euroleague)</h1>
+            <div class="history-selector">
+                <label for="gameDate">History:</label>
+                <input type="date" id="gameDate">
+            </div>
+        </div>
         
         <div class="silhouette-box" id="silhouetteBox">
             <div class="placeholder-text" id="placeholderText">Mystery Player</div>
@@ -95,7 +105,7 @@
                     </tr>
                 </thead>
                 <tbody id="attemptsTableBody">
-                    <!-- I tentativi inseriti appariranno qui -->
+                    <!-- Tentativi -->
                 </tbody>
             </table>
         </div>
@@ -145,7 +155,6 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // --- DATABASE EUROLEAGUE PROVVISORIO ---
         const euroleaguePlayers = [
             { name: "Mike James", team: "AS Monaco", clubCountry: "France", position: "G", height: "6'1\"", weight: "195", nationality: "USA", number: 0, image: "https://euroleaguebasketball.net/media/icgjwx10/mike-james.png" },
             { name: "Kendrick Nunn", team: "Panathinaikos", clubCountry: "Greece", position: "G", height: "6'3\"", weight: "190", nationality: "USA", number: 25, image: "https://euroleaguebasketball.net/media/v25fbj12/kendrick-nunn.png" },
@@ -153,15 +162,20 @@
             { name: "Tornike Shengelia", team: "Virtus Bologna", clubCountry: "Italy", position: "F", height: "6'9\"", weight: "249", nationality: "Georgia", number: 23, image: "https://euroleaguebasketball.net/media/shengelia.png" }
         ];
 
-        function getDailyPlayer() {
-            const now = new Date();
-            const start = new Date(now.getFullYear(), 0, 0);
-            const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+        const gameDateInput = document.getElementById('gameDate');
+        
+        function getPlayerForDate(dateObj) {
+            const start = new Date(dateObj.getFullYear(), 0, 0);
+            const diff = (dateObj - start) + ((start.getTimezoneOffset() - dateObj.getTimezoneOffset()) * 60 * 1000);
             const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
             return euroleaguePlayers[dayOfYear % euroleaguePlayers.length];
         }
 
-        const mysteryPlayer = getDailyPlayer();
+        const todayStr = new Date().toISOString().split('T')[0];
+        gameDateInput.value = todayStr;
+        gameDateInput.max = todayStr;
+
+        let mysteryPlayer = getPlayerForDate(new Date());
         let attemptsLeft = 8;
         let gameOver = false;
 
@@ -172,6 +186,25 @@
         const silhouetteBox = document.getElementById('silhouetteBox');
         const playerImage = document.getElementById('playerImage');
         const placeholderText = document.getElementById('placeholderText');
+
+        gameDateInput.addEventListener('change', (e) => {
+            const selectedDate = new Date(e.target.value);
+            mysteryPlayer = getPlayerForDate(selectedDate);
+            resetGame();
+        });
+
+        function resetGame() {
+            attemptsLeft = 8;
+            gameOver = false;
+            attemptsTableBody.innerHTML = '';
+            statusMsg.textContent = '';
+            statusMsg.className = 'game-status-msg';
+            playerInput.disabled = false;
+            document.getElementById('searchWrapper').style.display = 'block';
+            playerImage.style.display = 'none';
+            placeholderText.style.display = 'block';
+            silhouetteBox.classList.remove('revealed');
+        }
 
         playerInput.addEventListener('input', () => {
             if (gameOver) return;
@@ -240,7 +273,7 @@
             row.appendChild(createCell(guessedPlayer.height, heightCorrect));
             row.appendChild(createCell(guessedPlayer.weight, weightCorrect, weightArrow));
             row.appendChild(createCell(guessedPlayer.nationality, natCorrect));
-            row.appendChild(createCell(guessedPlayer.number, colNum = numCorrect, numArrow));
+            row.appendChild(createCell(guessedPlayer.number, numCorrect, numArrow));
 
             attemptsTableBody.prepend(row);
 
@@ -254,7 +287,7 @@
         function endGame(won) {
             gameOver = true;
             playerInput.disabled = true;
-            searchWrapper.style.display = 'none';
+            document.getElementById('searchWrapper').style.display = 'none';
 
             playerImage.src = mysteryPlayer.image;
             playerImage.style.display = 'block';
