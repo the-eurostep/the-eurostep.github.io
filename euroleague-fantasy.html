@@ -21,7 +21,7 @@
         .nav-link:hover { color: #ffffff; }
         .content-container { max-width: 750px; margin: auto; padding: 50px 30px; text-align: center; z-index: 1; display: flex; flex-direction: column; gap: 24px; align-items: center; }
         .page-title { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; }
-        .page-subtitle { color: #9ca3af; font-size: 1.05rem; line-height: 1.6; max-width: 620px; }
+        .page-subtitle { color: #9ca3af; font-size: 1.05rem; line-height: 1.6; max-width: 650px; }
         .buttons-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
         .action-btn { display: inline-block; padding: 12px 24px; background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.4); border-radius: 10px; color: #60a5fa; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; transition: all 0.3s ease; }
         .action-btn:hover { background: rgba(96, 165, 250, 0.2); border-color: #60a5fa; color: #ffffff; transform: translateY(-2px); box-shadow: 0 0 15px rgba(96, 165, 250, 0.2); }
@@ -46,54 +46,4 @@
     </header>
     <main class="content-container">
         <h1 class="page-title">Euroleague Fantasy</h1>
-        <p class="page-subtitle">The Euroleague Fantasy League is an exclusive experience reserved for the financial supporters of The Eurostep project (YouTube, Patreon, Instagram, or Gumroad; you'll find the links on the "Other" section of this website). To get info or join the league, feel free to send a message to the admin.</p>
-        <div class="buttons-group">
-            <a href="contact.html" class="action-btn">Contact Admin &rarr;</a>
-            <a href="index.html" class="back-btn">&larr; Back to Home</a>
-        </div>
-    </main>
-    <footer>
-        <span>&copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.</span>
-        <a href="privacy.html">Privacy Policy</a>
-    </footer>
-    <script>
-        const container = document.getElementById('webgl-container');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        container.appendChild(renderer.domElement);
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 1500;
-        const posArray = new Float32Array(particlesCount * 3);
-        for(let i = 0; i < particlesCount * 3; i++) { posArray[i] = (Math.random() - 0.5) * 10; }
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMaterial = new THREE.PointsMaterial({ size: 0.015, color: 0xffffff, transparent: true, opacity: 0.6 });
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-        camera.position.z = 3;
-
-        let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX - window.innerWidth / 2) / 500;
-            mouseY = (event.clientY - window.innerHeight / 2) / 500;
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-            targetX = mouseX * 0.5;
-            targetY = mouseY * 0.5;
-            particlesMesh.rotation.y += 0.001 + (targetX - particlesMesh.rotation.y) * 0.05;
-            particlesMesh.rotation.x += 0.001 + (targetY - particlesMesh.rotation.x) * 0.05;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
-</body>
-</html>
+        <p class="page-subtitle">The Euroleague Fantasy League
