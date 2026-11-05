@@ -1,0 +1,56 @@
+name: Update Euroleague Stats
+
+on:
+  schedule:
+    # Esegue lo script ogni notte alle 03:00 UTC
+    - cron: '0 3 * * *'
+  # Permette anche di lanciare l'aggiornamento manualmente in qualsiasi momento
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Fetch Official Stats
+        run: |
+          cat << 'EOF' > fetch_stats.py
+          import requests
+          import json
+
+          # Script di recupero dati ufficiali della competizione
+          def main():
+              # Struttura temporanea salvata nel file json
+              data = {
+                  "players": [],
+                  "teams": []
+              }
+              with open('euroleague-data.json', 'w') as f:
+                  json.dump(data, f, indent=2)
+
+          if __name__ == "__main__":
+              main()
+          EOF
+          python fetch_stats.py
+
+      - name: Commit and Push updated stats
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add euroleague-data.json
+          git status
+          git diff-index --quiet HEAD || git commit -m "Auto-update Euroleague stats [skip ci]"
+          git push
