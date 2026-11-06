@@ -35,21 +35,33 @@
         .search-box input { background: transparent; border: none; outline: none; color: #f3f4f6; font-size: 0.9rem; width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; }
         .search-box input::placeholder { color: #6b7280; }
 
-        /* Wrapper Tabella con altezza massima e scrollbar visibile ovunque */
+        /* Wrapper Tabella con scroll orizzontale */
         .table-wrapper { background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; overflow-x: auto; overflow-y: auto; max-height: 650px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); position: relative; }
-        .table-wrapper::-webkit-scrollbar { height: 10px; width: 10px; }
-        .table-wrapper::-webkit-scrollbar-track { background: rgba(3, 5, 8, 0.8); border-radius: 0 0 16px 16px; }
-        .table-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); border-radius: 5px; transition: background 0.3s ease; }
-        .table-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(96, 165, 250, 0.7); }
+        .table-wrapper::-webkit-scrollbar { height: 14px; width: 10px; }
+        .table-wrapper::-webkit-scrollbar-track { background: rgba(15, 22, 36, 0.95); border-radius: 0 0 16px 16px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        .table-wrapper::-webkit-scrollbar-thumb { background: rgba(96, 165, 250, 0.4); border-radius: 7px; border: 3px solid rgba(15, 22, 36, 0.95); transition: background 0.3s ease; }
+        .table-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(96, 165, 250, 0.8); }
 
         table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; font-size: 0.85rem; }
+        
+        /* Intestazioni fisse in alto */
         th { font-family: 'Orbitron', sans-serif; background: rgba(15, 22, 36, 0.95); position: sticky; top: 0; z-index: 10; color: #9ca3af; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; padding: 14px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; user-select: none; transition: color 0.2s ease; }
         th:hover { color: #ffffff; }
         th span { margin-left: 5px; font-size: 0.65rem; color: #60a5fa; }
-        td { padding: 12px; color: #d1d5db; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+
+        td { padding: 12px; color: #d1d5db; border-bottom: 1px solid rgba(255, 255, 255, 0.04); background: rgba(11, 15, 25, 0.8); }
         tbody tr { transition: background 0.2s ease; }
-        tbody tr:hover { background: rgba(255, 255, 255, 0.05); }
-        tbody tr:hover td { color: #ffffff; }
+        tbody tr:hover td { background: rgba(255, 255, 255, 0.05); color: #ffffff; }
+
+        /* BLOCCO COLONNA GIOCATORE (Sticky a sinistra) */
+        th:first-child, td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 5;
+            background: rgba(15, 22, 36, 0.98);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        th:first-child { z-index: 15; } /* Per stare sopra l'intestazione generale */
 
         .table-section { display: none; }
         .table-section.active { display: block; }
@@ -111,21 +123,24 @@
                             <th onclick="sortTable('playersTable', 9)">STL <span>↕</span></th>
                             <th onclick="sortTable('playersTable', 10)">BLK <span>↕</span></th>
                             <th onclick="sortTable('playersTable', 11)">PF <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 12)">3PM <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 13)">3PA <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 14)">3P% <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 15)">FGM <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 16)">FGA <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 17)">FG% <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 18)">FTM <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 19)">FTA <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 20)">FT% <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 21)">TO <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 22)">PIR <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 12)">2PM <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 13)">2PA <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 14)">2P% <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 15)">3PM <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 16)">3PA <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 17)">3P% <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 18)">FGM <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 19)">FGA <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 20)">FG% <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 21)">FTM <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 22)">FTA <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 23)">FT% <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 24)">TO <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 25)">PIR <span>↕</span></th>
                         </tr>
                     </thead>
                     <tbody id="playersBody">
-                        <tr><td colspan="23" class="loading-text">Syncing official Euroleague dataset...</td></tr>
+                        <tr><td colspan="26" class="loading-text">Syncing official Euroleague dataset...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -146,20 +161,23 @@
                             <th onclick="sortTable('teamsTable', 7)">STL <span>↕</span></th>
                             <th onclick="sortTable('teamsTable', 8)">BLK <span>↕</span></th>
                             <th onclick="sortTable('teamsTable', 9)">PF <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 10)">3PM <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 11)">3PA <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 12)">3P% <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 13)">FGM <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 14)">FGA <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 15)">FG% <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 16)">FTM <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 17)">FTA <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 18)">FT% <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 19)">TO <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 10)">2PM <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 11)">2PA <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 12)">2P% <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 13)">3PM <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 14)">3PA <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 15)">3P% <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 16)">FGM <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 17)">FGA <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 18)">FG% <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 19)">FTM <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 20)">FTA <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 21)">FT% <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 22)">TO <span>↕</span></th>
                         </tr>
                     </thead>
                     <tbody id="teamsBody">
-                        <tr><td colspan="20" class="loading-text">Syncing official Euroleague teams...</td></tr>
+                        <tr><td colspan="23" class="loading-text">Syncing official Euroleague teams...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -197,15 +215,15 @@
                 renderTeams(rawTeamsData);
             } catch (err) {
                 console.error("Errore caricamento dati:", err);
-                document.getElementById('playersBody').innerHTML = '<tr><td colspan="23" class="loading-text">Live feed sync in progress...</td></tr>';
-                document.getElementById('teamsBody').innerHTML = '<tr><td colspan="20" class="loading-text">Live feed sync in progress...</td></tr>';
+                document.getElementById('playersBody').innerHTML = '<tr><td colspan="26" class="loading-text">Live feed sync in progress...</td></tr>';
+                document.getElementById('teamsBody').innerHTML = '<tr><td colspan="23" class="loading-text">Live feed sync in progress...</td></tr>';
             }
         }
 
         function renderPlayers(data) {
             const tbody = document.getElementById('playersBody');
             if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="23" class="loading-text">No player statistics available.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="26" class="loading-text">No player statistics available.</td></tr>';
                 return;
             }
             tbody.innerHTML = "";
@@ -223,9 +241,12 @@
                     <td>${typeof p.STL === 'number' ? p.STL.toFixed(1) : (p.STL || 0)}</td>
                     <td>${typeof p.BLK === 'number' ? p.BLK.toFixed(1) : (p.BLK || 0)}</td>
                     <td>${typeof p.PF === 'number' ? p.PF.toFixed(1) : (p.PF || 0)}</td>
-                    <td>${typeof p.S3PM === 'number' ? p.S3PM.toFixed(1) : (p['3PM'] || 0)}</td>
-                    <td>${typeof p.S3PA === 'number' ? p.S3PA.toFixed(1) : (p['3PA'] || 0)}</td>
-                    <td>${calcPct(p['3PM'] || p.S3PM, p['3PA'] || p.S3PA)}</td>
+                    <td>${typeof p['2PM'] === 'number' ? p['2PM'].toFixed(1) : (p['2PM'] || 0)}</td>
+                    <td>${typeof p['2PA'] === 'number' ? p['2PA'].toFixed(1) : (p['2PA'] || 0)}</td>
+                    <td>${calcPct(p['2PM'], p['2PA'])}</td>
+                    <td>${typeof p['3PM'] === 'number' ? p['3PM'].toFixed(1) : (p['3PM'] || 0)}</td>
+                    <td>${typeof p['3PA'] === 'number' ? p['3PA'].toFixed(1) : (p['3PA'] || 0)}</td>
+                    <td>${calcPct(p['3PM'], p['3PA'])}</td>
                     <td>${typeof p.FGM === 'number' ? p.FGM.toFixed(1) : (p.FGM || 0)}</td>
                     <td>${typeof p.FGA === 'number' ? p.FGA.toFixed(1) : (p.FGA || 0)}</td>
                     <td>${calcPct(p.FGM, p.FGA)}</td>
@@ -242,7 +263,7 @@
         function renderTeams(data) {
             const tbody = document.getElementById('teamsBody');
             if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="20" class="loading-text">No team statistics available.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="23" class="loading-text">No team statistics available.</td></tr>';
                 return;
             }
             tbody.innerHTML = "";
@@ -258,6 +279,9 @@
                     <td>${t.STL || 0}</td>
                     <td>${t.BLK || 0}</td>
                     <td>${t.PF || 0}</td>
+                    <td>${t['2PM'] || 0}</td>
+                    <td>${t['2PA'] || 0}</td>
+                    <td>${calcPct(t['2PM'], t['2PA'])}</td>
                     <td>${t['3PM'] || 0}</td>
                     <td>${t['3PA'] || 0}</td>
                     <td>${calcPct(t['3PM'], t['3PA'])}</td>
