@@ -37,18 +37,22 @@ def fetch_euroleague_data():
 
                 team_code = person.get("team", {}).get("code", "")
 
+                # Estrazione tiri da 2 e da 3
+                t2m = p.get("twoPointersMade", 0)
+                t2a = p.get("twoPointersAttempted", 0)
+                t3m = p.get("threePointersMade", 0)
+                t3a = p.get("threePointersAttempted", 0)
+                
+                # Calcolo tiri totali (Field Goals)
+                fgm = round(t2m + t3m, 1)
+                fga = round(t2a + t3a, 1)
+
                 player_entry = {
                     "Player": name,
                     "Team": team_code,
                     "GP": p.get("gamesPlayed", 0),
                     "MIN": p.get("minutesPlayed", 0),
                     "PTS": p.get("pointsScored", 0),
-                    "FGM": p.get("fieldGoalsMade", 0),
-                    "FGA": p.get("fieldGoalsAttempted", 0),
-                    "3PM": p.get("threePointersMade", 0),
-                    "3PA": p.get("threePointersAttempted", 0),
-                    "FTM": p.get("freeThrowsMade", 0),
-                    "FTA": p.get("freeThrowsAttempted", 0),
                     "OREB": p.get("offensiveRebounds", 0),
                     "DREB": p.get("defensiveRebounds", 0),
                     "REB": p.get("totalRebounds", 0),
@@ -56,6 +60,15 @@ def fetch_euroleague_data():
                     "STL": p.get("steals", 0),
                     "BLK": p.get("blocks", 0),
                     "PF": p.get("foulsCommited", 0),
+                    "2PM": t2m,
+                    "2PA": t2a,
+                    "3PM": t3m,
+                    "3PA": t3a,
+                    "FGM": fgm,
+                    "FGA": fga,
+                    "FTM": p.get("freeThrowsMade", 0),
+                    "FTA": p.get("freeThrowsAttempted", 0),
+                    "TO": p.get("turnovers", 0),
                     "PIR": p.get("pir", 0)
                 }
                 players_data.append(player_entry)
