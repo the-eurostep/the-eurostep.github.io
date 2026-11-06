@@ -30,21 +30,20 @@
         .tab-btn { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; padding: 10px 20px; background: rgba(11, 15, 25, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; color: #9ca3af; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; }
         .tab-btn.active, .tab-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.25); color: #ffffff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.05); }
 
-        /* Search Bar con espansione fluida e glow */
         .search-box { background: rgba(11, 15, 25, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 8px 15px; display: flex; align-items: center; gap: 10px; width: 280px; backdrop-filter: blur(12px); transition: all 0.3s ease; }
         .search-box:focus-within { width: 340px; border-color: rgba(96, 165, 250, 0.6); box-shadow: 0 0 15px rgba(96, 165, 250, 0.25); background: rgba(15, 22, 36, 0.9); }
         .search-box input { background: transparent; border: none; outline: none; color: #f3f4f6; font-size: 0.9rem; width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; }
         .search-box input::placeholder { color: #6b7280; }
 
-        /* Wrapper Tabella con Scrollbar scura integrata */
-        .table-wrapper { background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; overflow-x: auto; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
-        .table-wrapper::-webkit-scrollbar { height: 8px; }
-        .table-wrapper::-webkit-scrollbar-track { background: rgba(3, 5, 8, 0.5); border-radius: 0 0 16px 16px; }
-        .table-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; transition: background 0.3s ease; }
-        .table-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(96, 165, 250, 0.5); }
+        /* Wrapper Tabella con altezza massima e scrollbar visibile ovunque */
+        .table-wrapper { background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; overflow-x: auto; overflow-y: auto; max-height: 650px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); position: relative; }
+        .table-wrapper::-webkit-scrollbar { height: 10px; width: 10px; }
+        .table-wrapper::-webkit-scrollbar-track { background: rgba(3, 5, 8, 0.8); border-radius: 0 0 16px 16px; }
+        .table-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); border-radius: 5px; transition: background 0.3s ease; }
+        .table-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(96, 165, 250, 0.7); }
 
         table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; font-size: 0.85rem; }
-        th { font-family: 'Orbitron', sans-serif; background: rgba(255, 255, 255, 0.03); color: #9ca3af; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; padding: 14px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; user-select: none; transition: color 0.2s ease; }
+        th { font-family: 'Orbitron', sans-serif; background: rgba(15, 22, 36, 0.95); position: sticky; top: 0; z-index: 10; color: #9ca3af; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; padding: 14px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; user-select: none; transition: color 0.2s ease; }
         th:hover { color: #ffffff; }
         th span { margin-left: 5px; font-size: 0.65rem; color: #60a5fa; }
         td { padding: 12px; color: #d1d5db; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
@@ -112,18 +111,21 @@
                             <th onclick="sortTable('playersTable', 9)">STL <span>↕</span></th>
                             <th onclick="sortTable('playersTable', 10)">BLK <span>↕</span></th>
                             <th onclick="sortTable('playersTable', 11)">PF <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 12)">3PM-A <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 13)">3P% <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 14)">FG M-A <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 15)">FG% <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 16)">FT M-A <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 17)">FT% <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 18)">TO <span>↕</span></th>
-                            <th onclick="sortTable('playersTable', 19)">PIR <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 12)">3PM <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 13)">3PA <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 14)">3P% <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 15)">FGM <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 16)">FGA <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 17)">FG% <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 18)">FTM <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 19)">FTA <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 20)">FT% <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 21)">TO <span>↕</span></th>
+                            <th onclick="sortTable('playersTable', 22)">PIR <span>↕</span></th>
                         </tr>
                     </thead>
                     <tbody id="playersBody">
-                        <tr><td colspan="20" class="loading-text">Syncing official Euroleague dataset...</td></tr>
+                        <tr><td colspan="23" class="loading-text">Syncing official Euroleague dataset...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -137,25 +139,27 @@
                             <th onclick="sortTable('teamsTable', 0)">Team <span>↕</span></th>
                             <th onclick="sortTable('teamsTable', 1)">GP <span>↕</span></th>
                             <th onclick="sortTable('teamsTable', 2)">PTS <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 3)">OPP PTS <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 4)">OREB <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 5)">DREB <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 6)">REB <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 7)">AST <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 8)">STL <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 9)">BLK <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 10)">PF <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 11)">3PM-A <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 3)">OREB <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 4)">DREB <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 5)">REB <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 6)">AST <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 7)">STL <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 8)">BLK <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 9)">PF <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 10)">3PM <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 11)">3PA <span>↕</span></th>
                             <th onclick="sortTable('teamsTable', 12)">3P% <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 13)">FG M-A <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 14)">FG% <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 15)">FT M-A <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 16)">FT% <span>↕</span></th>
-                            <th onclick="sortTable('teamsTable', 17)">TO <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 13)">FGM <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 14)">FGA <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 15)">FG% <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 16)">FTM <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 17)">FTA <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 18)">FT% <span>↕</span></th>
+                            <th onclick="sortTable('teamsTable', 19)">TO <span>↕</span></th>
                         </tr>
                     </thead>
                     <tbody id="teamsBody">
-                        <tr><td colspan="18" class="loading-text">Syncing official Euroleague teams...</td></tr>
+                        <tr><td colspan="20" class="loading-text">Syncing official Euroleague teams...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -180,7 +184,6 @@
             return ((m / a) * 100).toFixed(1) + "%";
         }
 
-        // Caricamento dinamico del dataset sincronizzato
         async function loadEuroleagueData() {
             try {
                 const response = await fetch('euroleague-data.json?v=' + new Date().getTime());
@@ -194,40 +197,43 @@
                 renderTeams(rawTeamsData);
             } catch (err) {
                 console.error("Errore caricamento dati:", err);
-                document.getElementById('playersBody').innerHTML = '<tr><td colspan="20" class="loading-text">Live feed sync in progress...</td></tr>';
-                document.getElementById('teamsBody').innerHTML = '<tr><td colspan="18" class="loading-text">Live feed sync in progress...</td></tr>';
+                document.getElementById('playersBody').innerHTML = '<tr><td colspan="23" class="loading-text">Live feed sync in progress...</td></tr>';
+                document.getElementById('teamsBody').innerHTML = '<tr><td colspan="20" class="loading-text">Live feed sync in progress...</td></tr>';
             }
         }
 
         function renderPlayers(data) {
             const tbody = document.getElementById('playersBody');
             if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="20" class="loading-text">No player statistics available.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="23" class="loading-text">No player statistics available.</td></tr>';
                 return;
             }
             tbody.innerHTML = "";
             data.forEach(p => {
                 const row = `<tr>
-                    <td><strong>${p.name}</strong></td>
-                    <td>${p.team}</td>
-                    <td>${p.gp}</td>
-                    <td>${p.min}</td>
-                    <td><strong>${p.pts}</strong></td>
-                    <td>${p.oreb}</td>
-                    <td>${p.dreb}</td>
-                    <td><strong>${p.reb}</strong></td>
-                    <td>${p.ast}</td>
-                    <td>${p.stl}</td>
-                    <td>${p.blk}</td>
-                    <td>${p.pf}</td>
-                    <td>${p.fg3m}-${p.fg3a}</td>
-                    <td>${calcPct(p.fg3m, p.fg3a)}</td>
-                    <td>${p.fgm}-${p.fga}</td>
-                    <td>${calcPct(p.fgm, p.fga)}</td>
-                    <td>${p.ftm}-${p.fta}</td>
-                    <td>${calcPct(p.ftm, p.fta)}</td>
-                    <td>${p.to}</td>
-                    <td><strong>${p.pir}</strong></td>
+                    <td><strong>${p.Player || 'Unknown'}</strong></td>
+                    <td>${p.Team || ''}</td>
+                    <td>${p.GP !== undefined ? p.GP : 0}</td>
+                    <td>${typeof p.MIN === 'number' ? p.MIN.toFixed(1) : (p.MIN || 0)}</td>
+                    <td><strong>${typeof p.PTS === 'number' ? p.PTS.toFixed(1) : (p.PTS || 0)}</strong></td>
+                    <td>${typeof p.OREB === 'number' ? p.OREB.toFixed(1) : (p.OREB || 0)}</td>
+                    <td>${typeof p.DREB === 'number' ? p.DREB.toFixed(1) : (p.DREB || 0)}</td>
+                    <td><strong>${typeof p.REB === 'number' ? p.REB.toFixed(1) : (p.REB || 0)}</strong></td>
+                    <td>${typeof p.AST === 'number' ? p.AST.toFixed(1) : (p.AST || 0)}</td>
+                    <td>${typeof p.STL === 'number' ? p.STL.toFixed(1) : (p.STL || 0)}</td>
+                    <td>${typeof p.BLK === 'number' ? p.BLK.toFixed(1) : (p.BLK || 0)}</td>
+                    <td>${typeof p.PF === 'number' ? p.PF.toFixed(1) : (p.PF || 0)}</td>
+                    <td>${typeof p.S3PM === 'number' ? p.S3PM.toFixed(1) : (p['3PM'] || 0)}</td>
+                    <td>${typeof p.S3PA === 'number' ? p.S3PA.toFixed(1) : (p['3PA'] || 0)}</td>
+                    <td>${calcPct(p['3PM'] || p.S3PM, p['3PA'] || p.S3PA)}</td>
+                    <td>${typeof p.FGM === 'number' ? p.FGM.toFixed(1) : (p.FGM || 0)}</td>
+                    <td>${typeof p.FGA === 'number' ? p.FGA.toFixed(1) : (p.FGA || 0)}</td>
+                    <td>${calcPct(p.FGM, p.FGA)}</td>
+                    <td>${typeof p.FTM === 'number' ? p.FTM.toFixed(1) : (p.FTM || 0)}</td>
+                    <td>${typeof p.FTA === 'number' ? p.FTA.toFixed(1) : (p.FTA || 0)}</td>
+                    <td>${calcPct(p.FTM, p.FTA)}</td>
+                    <td>${typeof p.TO === 'number' ? p.TO.toFixed(1) : (p.TO || 0)}</td>
+                    <td><strong>${typeof p.PIR === 'number' ? p.PIR.toFixed(1) : (p.PIR || 0)}</strong></td>
                 </tr>`;
                 tbody.innerHTML += row;
             });
@@ -236,30 +242,32 @@
         function renderTeams(data) {
             const tbody = document.getElementById('teamsBody');
             if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="18" class="loading-text">No team statistics available.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="20" class="loading-text">No team statistics available.</td></tr>';
                 return;
             }
             tbody.innerHTML = "";
             data.forEach(t => {
                 const row = `<tr>
-                    <td><strong>${t.team}</strong></td>
-                    <td>${t.gp}</td>
-                    <td><strong>${t.pts}</strong></td>
-                    <td><span style="color:#f87171;">${t.oppPts}</span></td>
-                    <td>${t.oreb}</td>
-                    <td>${t.dreb}</td>
-                    <td><strong>${t.reb}</strong></td>
-                    <td>${t.ast}</td>
-                    <td>${t.stl}</td>
-                    <td>${t.blk}</td>
-                    <td>${t.pf}</td>
-                    <td>${t.fg3m}-${t.fg3a}</td>
-                    <td>${calcPct(t.fg3m, t.fg3a)}</td>
-                    <td>${t.fgm}-${t.fga}</td>
-                    <td>${calcPct(t.fgm, t.fga)}</td>
-                    <td>${t.ftm}-${t.fta}</td>
-                    <td>${calcPct(t.ftm, t.fta)}</td>
-                    <td>${t.to}</td>
+                    <td><strong>${t.Team || t.team || ''}</strong></td>
+                    <td>${t.GP || 0}</td>
+                    <td><strong>${t.PTS || 0}</strong></td>
+                    <td>${t.OREB || 0}</td>
+                    <td>${t.DREB || 0}</td>
+                    <td><strong>${t.REB || 0}</strong></td>
+                    <td>${t.AST || 0}</td>
+                    <td>${t.STL || 0}</td>
+                    <td>${t.BLK || 0}</td>
+                    <td>${t.PF || 0}</td>
+                    <td>${t['3PM'] || 0}</td>
+                    <td>${t['3PA'] || 0}</td>
+                    <td>${calcPct(t['3PM'], t['3PA'])}</td>
+                    <td>${t.FGM || 0}</td>
+                    <td>${t.FGA || 0}</td>
+                    <td>${calcPct(t.FGM, t.FGA)}</td>
+                    <td>${t.FTM || 0}</td>
+                    <td>${t.FTA || 0}</td>
+                    <td>${calcPct(t.FTM, t.FTA)}</td>
+                    <td>${t.TO || 0}</td>
                 </tr>`;
                 tbody.innerHTML += row;
             });
