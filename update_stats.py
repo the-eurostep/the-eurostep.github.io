@@ -19,7 +19,6 @@ def fetch_euroleague_data():
         with urllib.request.urlopen(req_players) as response:
             raw_data = json.loads(response.read().decode('utf-8'))
             
-            # Estrazione della lista dei giocatori
             if isinstance(raw_data, list):
                 items = raw_data
             elif isinstance(raw_data, dict):
@@ -30,22 +29,15 @@ def fetch_euroleague_data():
                 items = []
 
             for p in items:
-                # Estrazione dati anagrafici dal blocco "player"
                 person = p.get("player", {})
                 
+                # Nome giocatore
                 name = person.get("name") or f"{person.get('firstName', '')} {person.get('lastName', '')}".strip()
                 if not name or name == " ":
                     name = "Unknown"
 
-                # Estrazione della squadra corretta (annidata dentro "player" -> "team")
-                team_obj = person.get("team", {})
-                team_code = team_obj.get("code", "") if isinstance(team_obj, dict) else ""
-                
-                # Fallback di sicurezza nel caso non sia lì
-                if not team_code:
-                    t_fallback = p.get("team", {})
-                    if isinstance(t_fallback, dict):
-                        team_code = t_fallback.get("code", "")
+                # Estrazione diretta e sicura del codice squadra dal percorso esatto del log
+                team_code = person.get("team", {}).get("code", "")
 
                 player_entry = {
                     "Player": name,
