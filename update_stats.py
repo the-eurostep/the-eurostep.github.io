@@ -32,10 +32,9 @@ def fetch_euroleague_data():
     
     players_data = []
     
-    # Struttura per accumulare i totali ponderati per squadra
-    team_aggregates = defaultdict(lambda: {
-        "total_gp": 0, "player_count": 0,
-        "MIN": 0, "PTS": 0, "OREB": 0, "DREB": 0, "REB": 0,
+    # Dizionario per accumulare le metriche e contarne i giocatori
+    team_totals = defaultdict(lambda: {
+        "count": 0, "GP": 0, "MIN": 0, "PTS": 0, "OREB": 0, "DREB": 0, "REB": 0,
         "AST": 0, "STL": 0, "BLK": 0, "PF": 0, "2PM": 0, "2PA": 0,
         "3PM": 0, "3PA": 0, "FTM": 0, "FTA": 0, "TO": 0
     })
@@ -88,7 +87,7 @@ def fetch_euroleague_data():
                 to_val = p.get("turnovers", 0) or 0
                 pir = p.get("pir", 0) or 0
 
-                # Dati singoli giocatore (invariati)
+                # 1. Inseriamo il giocatore nella lista dei player stats (mantenendo la sigla breve nella colonna Team)
                 player_entry = {
                     "Player": name,
                     "Team": team_code,
@@ -115,66 +114,57 @@ def fetch_euroleague_data():
                 }
                 players_data.append(player_entry)
 
-                # Aggregazione ponderata per squadra (moltiplicando per le partite giocate del giocatore)
-                if team_full_name and team_full_name != "UNKNOWN TEAM" and gp > 0:
-                    t = team_aggregates[team_full_name]
-                    t["max_gp"] = max(t.get("max_gp", 0), gp)
-                    t["total_gp_sum"] += gp
-                    t["player_count"] += 1
-                    
-                    # Accumuliamo il volume totale moltiplicando la media del giocatore per le sue partite
-                    t["MIN"] += min_val * gp
-                    t["PTS"] += pts * gp
-                    t["OREB"] += oreb * gp
-                    t["DREB"] += dreb * gp
-                    t["REB"] += reb * gp
-                    t["AST"] += ast * gp
-                    t["STL"] += stl * gp
-                    t["BLK"] += blk * gp
-                    t["PF"] += pf * gp
-                    t["2PM"] += t2m * gp
-                    t["2PA"] += t2a * gp
-                    t["3PM"] += t3m * gp
-                    t["3PA"] += t3a * gp
-                    t["FTM"] += ftm * gp
-                    t["FTA"] += fta * gp
-                    t["TO"] += to_val * gp
+                # 2. Accumuliamo i dati per le statistiche di squadra
+                if team_full_name and team_full_name != "UNKNOWN TEAM":
+                    t = team_totals[team_full_name]
+                    t["count"] += 1
+                    t["GP"] = max(t["GP"], gp) # Prende il massimo delle partite giocate nel roster
+                    t["MIN"] += min_val
+                    t["PTS"] += pts
+                    t["OREB"] += oreb
+                    t["DREB"] += dreb
+                    t["REB"] += reb
+                    t["AST"] += ast
+                    t["STL"] += stl
+                    t["BLK"] += blk
+                    t["PF"] += pf
+                    t["2PM"] += t2m
+                    t["2PA"] += t2a
+                    t["3PM"] += t3m
+                    t["3PA"] += t3a
+                    t["FTM"] += ftm
+                    t["FTA"] += fta
+                    t["TO"] += to_val
 
     except Exception as e:
         print(f"Errore durante il recupero dei dati: {e}")
 
-    # Calcolo finale delle medie squadra dividendo per il totale delle partite o normalizzando
+    # Creazione della lista finale delle squadre
     teams_data = []
-    for team_name, stats in team_aggregates.items():
-        # Usiamo il massimo delle partite giocate dai giocatori chiave come base partita della squadra
-        gp_base = stats.get("max_gp", 1)
-        if gp_base == 0:
-            gp_base = 1
-
-        # Il volume totale diviso per le partite della squadra ci dà la media per partita corretta e ponderata
+    for team_name, stats in team_totals.items():
         teams_data.append({
             "Team": team_name,
-            "GP": gp_base,
-            "PTS": round(stats["PTS"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0, # Media ponderata robusta per partita
-            "OREB": round(stats["OREB"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "DREB": round(stats["DREB"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "REB": round(stats["REB"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "AST": round(stats["AST"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "STL": round(stats["STL"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "BLK": round(stats["BLK"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "PF": round(stats["PF"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "2PM": round(stats["2PM"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "2PA": round(stats["2PA"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "3PM": round(stats["3PM"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "3PA": round(stats["3PA"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "FGM": round((stats["2PM"] + stats["3PM"]) / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "FGA": round((stats["2PA"] + stats["3PA"]) / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "FTM": round(stats["FTM"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "FTA": round(stats["FTA"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
-            "TO": round(stats["TO"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0
+            "GP": stats["GP"],
+            "PTS": round(stats["PTS"], 1),
+            "OREB": round(stats["OREB"], 1),
+            "DREB": round(stats["DREB"], 1),
+            "REB": round(stats["REB"], 1),
+            "AST": round(stats["AST"], 1),
+            "STL": round(stats["STL"], 1),
+            "BLK": round(stats["BLK"], 1),
+            "PF": round(stats["PF"], 1),
+            "2PM": round(stats["2PM"], 1),
+            "2PA": round(stats["2PA"], 1),
+            "3PM": round(stats["3PM"], 1),
+            "3PA": round(stats["3PA"], 1),
+            "FGM": round(stats["2PM"] + stats["3PM"], 1),
+            "FGA": round(stats["2PA"] + stats["3PA"], 1),
+            "FTM": round(stats["FTM"], 1),
+            "FTA": round(stats["FTA"], 1),
+            "TO": round(stats["TO"], 1)
         })
 
-    # Ordinamento per punti decrescente
+    # Ordiniamo le squadre per punti totali decrescenti
     teams_data.sort(key=lambda x: x["PTS"], reverse=True)
 
     final_output = {
