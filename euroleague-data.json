@@ -1,7 +1,7 @@
 {
   "players": [
     {
-      "Player": "Unknown",
+      "Player": "VEZENKOV, SASHA",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -10,10 +10,10 @@
       "AST": 1.0,
       "STL": 0.3,
       "BLK": 0.0,
-      "PIR": 22.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BRYANT, ELIJAH",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -22,10 +22,10 @@
       "AST": 3.9,
       "STL": 1.1,
       "BLK": 0.1,
-      "PIR": 22.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LESSORT, MATHIAS",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -34,10 +34,10 @@
       "AST": 1.8,
       "STL": 1.4,
       "BLK": 0.8,
-      "PIR": 20.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HIFI, NADIR",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -46,10 +46,10 @@
       "AST": 3.6,
       "STL": 1.0,
       "BLK": 0.1,
-      "PIR": 20.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MALEDON, THEO",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -58,10 +58,10 @@
       "AST": 5.2,
       "STL": 0.6,
       "BLK": 0.3,
-      "PIR": 20.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SHORTS, TJ",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -70,10 +70,10 @@
       "AST": 5.6,
       "STL": 0.9,
       "BLK": 0.1,
-      "PIR": 20.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MONTERO, JEAN",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -82,10 +82,10 @@
       "AST": 4.5,
       "STL": 1.2,
       "BLK": 0.3,
-      "PIR": 20.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "VALANCIUNAS, JONAS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -94,10 +94,10 @@
       "AST": 2.0,
       "STL": 0.2,
       "BLK": 0.9,
-      "PIR": 19.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BACON, DWAYNE",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -106,10 +106,10 @@
       "AST": 2.8,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 19.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DIARRA, ALIOU",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -118,10 +118,10 @@
       "AST": 0.3,
       "STL": 0.4,
       "BLK": 2.1,
-      "PIR": 18.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "KABENGELE, MFIONDU",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -130,10 +130,10 @@
       "AST": 1.1,
       "STL": 0.7,
       "BLK": 0.9,
-      "PIR": 17.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JONES, CARLIK",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -142,10 +142,10 @@
       "AST": 5.9,
       "STL": 1.0,
       "BLK": 0.0,
-      "PIR": 16.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "TAVARES, WALTER",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -154,10 +154,10 @@
       "AST": 0.1,
       "STL": 0.6,
       "BLK": 1.3,
-      "PIR": 16.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "TUBELIS, AZUOLAS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -166,10 +166,10 @@
       "AST": 1.6,
       "STL": 0.7,
       "BLK": 0.4,
-      "PIR": 15.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MIROTIC, NIKOLA",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -178,10 +178,10 @@
       "AST": 0.9,
       "STL": 0.5,
       "BLK": 0.2,
-      "PIR": 15.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SARIC, DARIO",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -190,10 +190,10 @@
       "AST": 2.1,
       "STL": 0.5,
       "BLK": 0.0,
-      "PIR": 14.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PUNTER, KEVIN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -202,10 +202,10 @@
       "AST": 2.4,
       "STL": 0.9,
       "BLK": 0.0,
-      "PIR": 14.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WRIGHT, MOSES",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -214,10 +214,10 @@
       "AST": 0.8,
       "STL": 0.3,
       "BLK": 0.5,
-      "PIR": 14.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MADAR, YAM",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -226,10 +226,10 @@
       "AST": 4.7,
       "STL": 0.4,
       "BLK": 0.0,
-      "PIR": 14.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MONEKE, CHIMA",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -238,10 +238,10 @@
       "AST": 1.6,
       "STL": 0.9,
       "BLK": 0.4,
-      "PIR": 14.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FELIZ, ANDRES",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -250,10 +250,10 @@
       "AST": 3.8,
       "STL": 0.6,
       "BLK": 0.3,
-      "PIR": 14.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "OTURU, DAN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -262,10 +262,10 @@
       "AST": 0.5,
       "STL": 1.0,
       "BLK": 1.5,
-      "PIR": 14.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "NWORA, JORDAN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -274,10 +274,10 @@
       "AST": 1.2,
       "STL": 0.8,
       "BLK": 0.0,
-      "PIR": 14.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MILLS, PATTY",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -286,10 +286,10 @@
       "AST": 2.1,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 14.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FRANCISCO, SYLVAIN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -298,10 +298,10 @@
       "AST": 4.7,
       "STL": 0.7,
       "BLK": 0.3,
-      "PIR": 13.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "OKOBO, ELIE",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -310,10 +310,10 @@
       "AST": 4.7,
       "STL": 1.0,
       "BLK": 0.0,
-      "PIR": 13.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FARIED, KENNETH",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -322,10 +322,10 @@
       "AST": 0.9,
       "STL": 0.8,
       "BLK": 1.2,
-      "PIR": 13.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "ZIZIC, ANTE",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -334,10 +334,10 @@
       "AST": 1.4,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 13.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PAYNE, CAMERON",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -346,10 +346,10 @@
       "AST": 4.4,
       "STL": 1.1,
       "BLK": 0.1,
-      "PIR": 13.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "ROBINSON, JUSTIN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -358,10 +358,10 @@
       "AST": 4.1,
       "STL": 0.5,
       "BLK": 0.1,
-      "PIR": 13.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JEKIRI, TONYE",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -370,10 +370,10 @@
       "AST": 1.2,
       "STL": 1.3,
       "BLK": 0.3,
-      "PIR": 13.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SHIELDS, SHAVON",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -382,10 +382,10 @@
       "AST": 1.5,
       "STL": 0.5,
       "BLK": 0.1,
-      "PIR": 13.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "NEBO, JOSH",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -394,10 +394,10 @@
       "AST": 0.7,
       "STL": 0.3,
       "BLK": 0.6,
-      "PIR": 13.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JONES, CHRIS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -406,10 +406,10 @@
       "AST": 5.9,
       "STL": 0.8,
       "BLK": 0.0,
-      "PIR": 13.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BROOKS, ARMONI",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -418,10 +418,10 @@
       "AST": 1.2,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 13.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LEDAY, ZACH",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -430,10 +430,10 @@
       "AST": 0.8,
       "STL": 0.2,
       "BLK": 0.1,
-      "PIR": 13.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CAMPAZZO, FACUNDO",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -442,10 +442,10 @@
       "AST": 4.9,
       "STL": 0.6,
       "BLK": 0.2,
-      "PIR": 13.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "GIBSON, UMOJA",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -454,10 +454,10 @@
       "AST": 2.9,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 13.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MALCOLM, COLLIN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -466,10 +466,10 @@
       "AST": 1.9,
       "STL": 1.0,
       "BLK": 0.3,
-      "PIR": 13.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SEDEKERSKIS, TADAS",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -478,10 +478,10 @@
       "AST": 0.3,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 13.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DOTSON, DEVON",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -490,10 +490,10 @@
       "AST": 3.7,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 12.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BALDWIN IV, WADE",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -502,10 +502,10 @@
       "AST": 4.5,
       "STL": 0.9,
       "BLK": 0.0,
-      "PIR": 12.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WILBEKIN, SCOTTIE",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -514,10 +514,10 @@
       "AST": 3.1,
       "STL": 0.8,
       "BLK": 0.0,
-      "PIR": 12.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BESSON, HUGO",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -526,10 +526,10 @@
       "AST": 2.9,
       "STL": 0.1,
       "BLK": 0.1,
-      "PIR": 12.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MICIC, VASILIJE",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -538,10 +538,10 @@
       "AST": 4.6,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 12.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WASHINGTON JR, TYTY",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -550,10 +550,10 @@
       "AST": 4.0,
       "STL": 0.2,
       "BLK": 0.3,
-      "PIR": 12.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HORTON TUCKER, TALEN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -562,10 +562,10 @@
       "AST": 2.3,
       "STL": 0.5,
       "BLK": 0.4,
-      "PIR": 12.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BRISSETT, O'SHAE J",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -574,10 +574,10 @@
       "AST": 1.1,
       "STL": 0.9,
       "BLK": 0.8,
-      "PIR": 12.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "COLSON, BONZIE",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -586,10 +586,10 @@
       "AST": 0.7,
       "STL": 1.2,
       "BLK": 0.2,
-      "PIR": 12.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "EDWARDS, CARSEN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -598,10 +598,10 @@
       "AST": 2.6,
       "STL": 1.0,
       "BLK": 0.0,
-      "PIR": 12.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "TAYLOR, KAMERON",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -610,10 +610,10 @@
       "AST": 2.3,
       "STL": 0.6,
       "BLK": 0.2,
-      "PIR": 12.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MOORE, WENDELL",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -622,10 +622,10 @@
       "AST": 1.1,
       "STL": 1.0,
       "BLK": 0.1,
-      "PIR": 11.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "THIEMANN, JOHANNES",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -634,10 +634,10 @@
       "AST": 1.7,
       "STL": 0.5,
       "BLK": 0.0,
-      "PIR": 11.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "OJELEYE, SEMI",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -646,10 +646,10 @@
       "AST": 1.4,
       "STL": 0.3,
       "BLK": 0.3,
-      "PIR": 11.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "RHODEN, JARED",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -658,10 +658,10 @@
       "AST": 2.2,
       "STL": 0.6,
       "BLK": 0.6,
-      "PIR": 11.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WARREN, TJ",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -670,10 +670,10 @@
       "AST": 1.2,
       "STL": 0.8,
       "BLK": 0.2,
-      "PIR": 11.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PETRUSEV, FILIP",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -682,10 +682,10 @@
       "AST": 0.8,
       "STL": 0.4,
       "BLK": 0.2,
-      "PIR": 11.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CARR, MARCUS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -694,10 +694,10 @@
       "AST": 5.1,
       "STL": 0.9,
       "BLK": 0.0,
-      "PIR": 11.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SORKIN, ROMAN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -706,10 +706,10 @@
       "AST": 1.0,
       "STL": 0.7,
       "BLK": 0.7,
-      "PIR": 11.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WRIGHT IV, MCKINLEY",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -718,10 +718,10 @@
       "AST": 3.6,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 11.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BROWN, STERLING",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -730,10 +730,10 @@
       "AST": 1.0,
       "STL": 1.0,
       "BLK": 0.2,
-      "PIR": 11.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CROWDER, JAE",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -742,10 +742,10 @@
       "AST": 3.9,
       "STL": 0.9,
       "BLK": 0.4,
-      "PIR": 11.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "NDIAYE, MBAYE",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -754,10 +754,10 @@
       "AST": 1.1,
       "STL": 1.0,
       "BLK": 1.0,
-      "PIR": 11.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "STRAZEL, MATTHEW",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -766,10 +766,10 @@
       "AST": 4.1,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 11.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BLAKENEY, ANTONIO",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -778,10 +778,10 @@
       "AST": 1.0,
       "STL": 0.5,
       "BLK": 0.0,
-      "PIR": 10.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WASHINGTON, DUANE",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -790,10 +790,10 @@
       "AST": 2.9,
       "STL": 0.5,
       "BLK": 0.0,
-      "PIR": 10.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "STEVENS, LAMAR",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -802,10 +802,10 @@
       "AST": 0.4,
       "STL": 0.3,
       "BLK": 0.3,
-      "PIR": 10.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HAYES, KEVARRIUS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -814,10 +814,10 @@
       "AST": 0.4,
       "STL": 0.7,
       "BLK": 1.0,
-      "PIR": 10.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HALL, DEVON",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -826,10 +826,10 @@
       "AST": 4.0,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 10.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CLARK III, JIMMY",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -838,10 +838,10 @@
       "AST": 3.4,
       "STL": 0.6,
       "BLK": 0.2,
-      "PIR": 10.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "THEIS, DANIEL",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -850,10 +850,10 @@
       "AST": 2.0,
       "STL": 1.0,
       "BLK": 0.1,
-      "PIR": 10.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "ALSTON JR. , DERRICK",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -862,10 +862,10 @@
       "AST": 1.1,
       "STL": 0.7,
       "BLK": 0.0,
-      "PIR": 10.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "VILDOZA, LUCA",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -874,10 +874,10 @@
       "AST": 2.7,
       "STL": 2.1,
       "BLK": 0.2,
-      "PIR": 10.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WARD, TYSON",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -886,10 +886,10 @@
       "AST": 1.9,
       "STL": 0.8,
       "BLK": 0.4,
-      "PIR": 10.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FERNANDO, BRUNO",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -898,10 +898,10 @@
       "AST": 1.2,
       "STL": 0.5,
       "BLK": 0.4,
-      "PIR": 10.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LUCIC, VLADIMIR",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -910,10 +910,10 @@
       "AST": 1.5,
       "STL": 0.4,
       "BLK": 0.1,
-      "PIR": 10.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HAYES-DAVIS, NIGEL",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -922,10 +922,10 @@
       "AST": 0.6,
       "STL": 1.0,
       "BLK": 0.1,
-      "PIR": 10.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PETERS, ALEC",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -934,10 +934,10 @@
       "AST": 0.9,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 10.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DOKOSSI, ALLAN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -946,10 +946,10 @@
       "AST": 2.1,
       "STL": 1.5,
       "BLK": 0.4,
-      "PIR": 10.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CLYBURN, WILL",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -958,10 +958,10 @@
       "AST": 1.5,
       "STL": 1.0,
       "BLK": 0.3,
-      "PIR": 10.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LAWSON, A.J.",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -970,10 +970,10 @@
       "AST": 2.3,
       "STL": 0.1,
       "BLK": 0.1,
-      "PIR": 10.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HOARD, JAYLEN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -982,10 +982,10 @@
       "AST": 1.3,
       "STL": 0.9,
       "BLK": 0.3,
-      "PIR": 9.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MILLER-MCINTYRE, CODI",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -994,10 +994,10 @@
       "AST": 5.1,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 9.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SAKO, NEAL",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1006,10 +1006,10 @@
       "AST": 0.7,
       "STL": 0.4,
       "BLK": 0.1,
-      "PIR": 9.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WILEY, AUSTIN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1018,10 +1018,10 @@
       "AST": 0.7,
       "STL": 0.2,
       "BLK": 1.3,
-      "PIR": 9.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "YABUSELE, GUERSCHON",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1030,10 +1030,10 @@
       "AST": 1.1,
       "STL": 0.4,
       "BLK": 0.5,
-      "PIR": 9.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "COLE, RJ",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1042,10 +1042,10 @@
       "AST": 3.1,
       "STL": 1.0,
       "BLK": 0.1,
-      "PIR": 9.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DUARTE, CHRIS",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -1054,10 +1054,10 @@
       "AST": 1.6,
       "STL": 1.0,
       "BLK": 0.3,
-      "PIR": 9.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SANTOS, MARCIO",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -1066,10 +1066,10 @@
       "AST": 0.7,
       "STL": 0.7,
       "BLK": 0.1,
-      "PIR": 9.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "ETIENNE, TYSON",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1078,10 +1078,10 @@
       "AST": 2.4,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 9.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WATERS, TREMONT",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1090,10 +1090,10 @@
       "AST": 3.6,
       "STL": 1.6,
       "BLK": 0.1,
-      "PIR": 9.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DA SILVA, OSCAR",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -1102,10 +1102,10 @@
       "AST": 0.8,
       "STL": 0.8,
       "BLK": 0.5,
-      "PIR": 9.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "OKEKE, CHUMA",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1114,10 +1114,10 @@
       "AST": 1.3,
       "STL": 0.9,
       "BLK": 0.4,
-      "PIR": 9.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FAYE, MOUHAMED",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1126,10 +1126,10 @@
       "AST": 1.2,
       "STL": 0.1,
       "BLK": 1.2,
-      "PIR": 9.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "GACH, BOTH",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1138,10 +1138,10 @@
       "AST": 1.6,
       "STL": 0.5,
       "BLK": 0.1,
-      "PIR": 9.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JOKUBAITIS, ROKAS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1150,10 +1150,10 @@
       "AST": 3.7,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 9.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "NOWELL, JAYLEN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1162,10 +1162,10 @@
       "AST": 2.2,
       "STL": 0.4,
       "BLK": 0.2,
-      "PIR": 9.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CARTER, TYSON",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1174,10 +1174,10 @@
       "AST": 2.0,
       "STL": 0.8,
       "BLK": 0.1,
-      "PIR": 8.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BOLOMBOY, JOEL",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1186,10 +1186,10 @@
       "AST": 0.8,
       "STL": 0.7,
       "BLK": 0.4,
-      "PIR": 8.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "KEY, BRAXTON",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1198,10 +1198,10 @@
       "AST": 1.4,
       "STL": 1.2,
       "BLK": 0.5,
-      "PIR": 8.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MORGAN, CONOR",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1210,10 +1210,10 @@
       "AST": 1.9,
       "STL": 0.1,
       "BLK": 0.3,
-      "PIR": 8.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "ABALDE, ALBERTO",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1222,10 +1222,10 @@
       "AST": 1.8,
       "STL": 0.7,
       "BLK": 0.0,
-      "PIR": 8.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LOYD, JORDAN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1234,10 +1234,10 @@
       "AST": 2.4,
       "STL": 0.7,
       "BLK": 0.0,
-      "PIR": 8.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "STEWART, DJ",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1246,10 +1246,10 @@
       "AST": 1.1,
       "STL": 1.5,
       "BLK": 0.2,
-      "PIR": 8.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BROWN, ANTHONY",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1258,10 +1258,10 @@
       "AST": 1.6,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 8.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HERNANGOMEZ, JUANCHO",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -1270,10 +1270,10 @@
       "AST": 0.4,
       "STL": 1.0,
       "BLK": 0.3,
-      "PIR": 8.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "REUVERS, NATHAN",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -1282,10 +1282,10 @@
       "AST": 0.4,
       "STL": 0.4,
       "BLK": 0.1,
-      "PIR": 8.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "GRIGONIS, MARIUS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1294,10 +1294,10 @@
       "AST": 1.9,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 8.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MITOGLOU, KONSTANTINOS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1306,10 +1306,10 @@
       "AST": 0.7,
       "STL": 0.7,
       "BLK": 0.0,
-      "PIR": 8.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "TANASKOVIC, NIKOLA",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1318,10 +1318,10 @@
       "AST": 1.2,
       "STL": 0.4,
       "BLK": 0.1,
-      "PIR": 8.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HALL, DONTA",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -1330,10 +1330,10 @@
       "AST": 1.2,
       "STL": 0.4,
       "BLK": 0.6,
-      "PIR": 8.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MARTIN, TYRESE",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1342,10 +1342,10 @@
       "AST": 1.4,
       "STL": 0.8,
       "BLK": 0.2,
-      "PIR": 7.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "EDWARDS, KESSLER",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1354,10 +1354,10 @@
       "AST": 1.0,
       "STL": 0.9,
       "BLK": 0.4,
-      "PIR": 7.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JONES, KAI",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1366,10 +1366,10 @@
       "AST": 0.2,
       "STL": 0.5,
       "BLK": 1.3,
-      "PIR": 7.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SATORANSKY, TOMAS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1378,10 +1378,10 @@
       "AST": 3.9,
       "STL": 0.3,
       "BLK": 0.0,
-      "PIR": 7.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BAUGH, DAMION",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1390,10 +1390,10 @@
       "AST": 4.3,
       "STL": 0.8,
       "BLK": 0.1,
-      "PIR": 7.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BOLMARO, LEANDRO",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1402,10 +1402,10 @@
       "AST": 2.6,
       "STL": 0.8,
       "BLK": 0.3,
-      "PIR": 7.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FOURNIER, EVAN",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -1414,10 +1414,10 @@
       "AST": 2.7,
       "STL": 1.2,
       "BLK": 0.0,
-      "PIR": 7.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JONES, DAMIAN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1426,10 +1426,10 @@
       "AST": 0.3,
       "STL": 0.4,
       "BLK": 0.3,
-      "PIR": 7.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "GRANT, JERIAN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1438,10 +1438,10 @@
       "AST": 2.6,
       "STL": 0.3,
       "BLK": 0.2,
-      "PIR": 7.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JANTUNEN, MIKAEL",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1450,10 +1450,10 @@
       "AST": 1.0,
       "STL": 0.2,
       "BLK": 0.1,
-      "PIR": 7.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HERRERA, SEBASTIAN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1462,10 +1462,10 @@
       "AST": 2.0,
       "STL": 0.7,
       "BLK": 0.0,
-      "PIR": 7.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LEE, SABEN",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -1474,10 +1474,10 @@
       "AST": 4.5,
       "STL": 0.5,
       "BLK": 0.2,
-      "PIR": 7.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LUNDBERG, IFFE",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -1486,10 +1486,10 @@
       "AST": 3.0,
       "STL": 0.8,
       "BLK": 0.0,
-      "PIR": 7.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "OMORUYI, EUGENE",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1498,10 +1498,10 @@
       "AST": 2.3,
       "STL": 0.8,
       "BLK": 0.0,
-      "PIR": 7.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MELLI, NICOLO",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1510,10 +1510,10 @@
       "AST": 1.1,
       "STL": 0.4,
       "BLK": 0.6,
-      "PIR": 7.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "OBST, ANDREAS",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1522,10 +1522,10 @@
       "AST": 2.4,
       "STL": 0.5,
       "BLK": 0.0,
-      "PIR": 7.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JOHNSON, ALIZE",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -1534,10 +1534,10 @@
       "AST": 1.1,
       "STL": 0.0,
       "BLK": 0.0,
-      "PIR": 7.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BUTLER, JARED",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1546,10 +1546,10 @@
       "AST": 2.4,
       "STL": 0.1,
       "BLK": 0.3,
-      "PIR": 7.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PARRA, JOEL",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1558,10 +1558,10 @@
       "AST": 1.2,
       "STL": 0.8,
       "BLK": 0.2,
-      "PIR": 7.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JESSUP, JUSTINIAN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1570,10 +1570,10 @@
       "AST": 1.2,
       "STL": 0.8,
       "BLK": 0.1,
-      "PIR": 7.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BURNELL, JASON",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1582,10 +1582,10 @@
       "AST": 1.1,
       "STL": 0.8,
       "BLK": 0.4,
-      "PIR": 7.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "RIVERO, JASIEL",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1594,10 +1594,10 @@
       "AST": 0.6,
       "STL": 0.5,
       "BLK": 0.2,
-      "PIR": 6.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BINGHAM, MARCUS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1606,10 +1606,10 @@
       "AST": 0.7,
       "STL": 0.6,
       "BLK": 1.1,
-      "PIR": 6.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BLOSSOMGAME, JARON",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1618,10 +1618,10 @@
       "AST": 0.2,
       "STL": 0.1,
       "BLK": 0.3,
-      "PIR": 6.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JONES, TYRIQUE",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1630,10 +1630,10 @@
       "AST": 1.2,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 6.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BALCEROWSKI, OLEK",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1642,10 +1642,10 @@
       "AST": 0.5,
       "STL": 0.3,
       "BLK": 0.5,
-      "PIR": 6.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FRISCH, CLEMENT",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -1654,10 +1654,10 @@
       "AST": 1.0,
       "STL": 0.6,
       "BLK": 0.4,
-      "PIR": 6.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "COFFEY, AMIR",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -1666,10 +1666,10 @@
       "AST": 1.0,
       "STL": 0.8,
       "BLK": 0.2,
-      "PIR": 6.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FRAZIER, TRENT",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1678,10 +1678,10 @@
       "AST": 2.4,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 6.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "THOMPSON, ETHAN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1690,10 +1690,10 @@
       "AST": 1.7,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 6.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MANTZOUKAS, ELEFTHERIOS",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -1702,10 +1702,10 @@
       "AST": 0.8,
       "STL": 0.2,
       "BLK": 0.5,
-      "PIR": 6.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "NORRIS, MILES",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -1714,10 +1714,10 @@
       "AST": 1.2,
       "STL": 1.0,
       "BLK": 0.2,
-      "PIR": 6.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BOOKER, DEVIN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1726,10 +1726,10 @@
       "AST": 1.1,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 6.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "KLINTMAN, BO",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1738,10 +1738,10 @@
       "AST": 1.4,
       "STL": 0.3,
       "BLK": 0.2,
-      "PIR": 6.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DAVIDOVAC, DEJAN",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -1750,10 +1750,10 @@
       "AST": 1.3,
       "STL": 0.8,
       "BLK": 0.5,
-      "PIR": 6.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DIAKITE, MAMADI",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1762,10 +1762,10 @@
       "AST": 0.4,
       "STL": 0.3,
       "BLK": 1.0,
-      "PIR": 6.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "VOIGTMANN, JOHANNES",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1774,10 +1774,10 @@
       "AST": 2.1,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 6.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LARKIN, SHANE",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -1786,10 +1786,10 @@
       "AST": 2.3,
       "STL": 0.3,
       "BLK": 0.0,
-      "PIR": 6.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "EVBUOMWAN, TOSAN",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -1798,10 +1798,10 @@
       "AST": 1.0,
       "STL": 0.4,
       "BLK": 0.4,
-      "PIR": 6.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "ULANOVAS, EDGARAS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1810,10 +1810,10 @@
       "AST": 1.3,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 6.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "KURUCS, RODIONS",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -1822,10 +1822,10 @@
       "AST": 3.4,
       "STL": 1.0,
       "BLK": 0.0,
-      "PIR": 6.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PAJOLA, ALESSANDRO",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1834,10 +1834,10 @@
       "AST": 4.0,
       "STL": 1.2,
       "BLK": 0.0,
-      "PIR": 6.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PRADILLA, JAIME",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1846,10 +1846,10 @@
       "AST": 1.2,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 6.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "OSETKOWSKI, DYLAN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1858,10 +1858,10 @@
       "AST": 1.2,
       "STL": 0.8,
       "BLK": 0.1,
-      "PIR": 5.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "ODIASE, TAI",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1870,10 +1870,10 @@
       "AST": 0.0,
       "STL": 0.4,
       "BLK": 0.7,
-      "PIR": 5.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "TARPEY, TERRY",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -1882,10 +1882,10 @@
       "AST": 2.1,
       "STL": 1.0,
       "BLK": 0.4,
-      "PIR": 5.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BRIZUELA, DARIO",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1894,10 +1894,10 @@
       "AST": 1.4,
       "STL": 0.2,
       "BLK": 0.1,
-      "PIR": 5.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BUTKEVICIUS, ARNAS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1906,10 +1906,10 @@
       "AST": 0.6,
       "STL": 0.6,
       "BLK": 0.2,
-      "PIR": 5.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SLEVA, DUSTIN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1918,10 +1918,10 @@
       "AST": 1.0,
       "STL": 0.8,
       "BLK": 0.0,
-      "PIR": 5.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BACOT JR., ARMANDO",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -1930,10 +1930,10 @@
       "AST": 0.3,
       "STL": 0.6,
       "BLK": 0.4,
-      "PIR": 5.6
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DOZIER, PJ",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -1942,10 +1942,10 @@
       "AST": 1.5,
       "STL": 0.5,
       "BLK": 0.2,
-      "PIR": 5.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DIOUF, MOUHAMET",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1954,10 +1954,10 @@
       "AST": 0.3,
       "STL": 0.3,
       "BLK": 0.4,
-      "PIR": 5.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BADIO, BRANCOU",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -1966,10 +1966,10 @@
       "AST": 2.3,
       "STL": 0.4,
       "BLK": 0.2,
-      "PIR": 5.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BEAUCHAMP, MARJON",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -1978,10 +1978,10 @@
       "AST": 1.6,
       "STL": 0.8,
       "BLK": 0.0,
-      "PIR": 5.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "GUDURIC, MARKO",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -1990,10 +1990,10 @@
       "AST": 1.9,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 5.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PROCIDA, GABRIELE",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2002,10 +2002,10 @@
       "AST": 0.3,
       "STL": 0.5,
       "BLK": 0.0,
-      "PIR": 5.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "NKAMHOUA, OLIVIER",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2014,10 +2014,10 @@
       "AST": 0.9,
       "STL": 0.4,
       "BLK": 0.2,
-      "PIR": 5.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SHENGELIA, TORNIKE",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2026,10 +2026,10 @@
       "AST": 0.6,
       "STL": 0.2,
       "BLK": 0.1,
-      "PIR": 5.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "GABRIEL, WENYEN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2038,10 +2038,10 @@
       "AST": 0.6,
       "STL": 0.9,
       "BLK": 0.4,
-      "PIR": 4.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MATHEWS, GARRISON",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2050,10 +2050,10 @@
       "AST": 0.6,
       "STL": 0.7,
       "BLK": 0.0,
-      "PIR": 4.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DEJULIUS, DAVID",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2062,10 +2062,10 @@
       "AST": 1.7,
       "STL": 0.3,
       "BLK": 0.0,
-      "PIR": 4.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PUERTO, JOSEP",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2074,10 +2074,10 @@
       "AST": 0.5,
       "STL": 0.3,
       "BLK": 0.2,
-      "PIR": 4.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SIMMONS, KOBI",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2086,10 +2086,10 @@
       "AST": 2.9,
       "STL": 0.2,
       "BLK": 0.1,
-      "PIR": 4.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "KOKILA, KEVIN",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2098,10 +2098,10 @@
       "AST": 0.3,
       "STL": 0.0,
       "BLK": 0.2,
-      "PIR": 4.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LIGHTY, DAVID",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2110,10 +2110,10 @@
       "AST": 0.8,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 4.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PAPANIKOLAOU, KOSTAS",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2122,10 +2122,10 @@
       "AST": 1.1,
       "STL": 1.0,
       "BLK": 0.2,
-      "PIR": 4.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "IZUNDU, EBUKA",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2134,10 +2134,10 @@
       "AST": 0.5,
       "STL": 0.5,
       "BLK": 0.2,
-      "PIR": 4.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "THOMPSON, DARIUS",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2146,10 +2146,10 @@
       "AST": 2.0,
       "STL": 1.2,
       "BLK": 0.3,
-      "PIR": 4.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WAINRIGHT, ISH",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2158,10 +2158,10 @@
       "AST": 0.7,
       "STL": 0.8,
       "BLK": 0.2,
-      "PIR": 4.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WEILER-BABB, NICK",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2170,10 +2170,10 @@
       "AST": 4.0,
       "STL": 0.9,
       "BLK": 0.0,
-      "PIR": 4.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SESTINA, NATHAN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2182,10 +2182,10 @@
       "AST": 1.1,
       "STL": 0.6,
       "BLK": 0.2,
-      "PIR": 4.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "YUSTA, SANTI",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2194,10 +2194,10 @@
       "AST": 0.4,
       "STL": 0.4,
       "BLK": 0.0,
-      "PIR": 4.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SARGIUNAS, IGNAS",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -2206,10 +2206,10 @@
       "AST": 1.6,
       "STL": 0.1,
       "BLK": 0.0,
-      "PIR": 4.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "AYAYI, JOEL",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2218,10 +2218,10 @@
       "AST": 2.5,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 4.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "DOBRIC, OGNJEN",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2230,10 +2230,10 @@
       "AST": 0.6,
       "STL": 0.5,
       "BLK": 0.0,
-      "PIR": 4.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FODZO DADA, MARC-OWEN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2242,10 +2242,10 @@
       "AST": 2.1,
       "STL": 0.6,
       "BLK": 0.3,
-      "PIR": 4.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MOORE, OMARI",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2254,10 +2254,10 @@
       "AST": 2.6,
       "STL": 0.4,
       "BLK": 0.2,
-      "PIR": 4.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "UMUDE, STANLEY",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2266,10 +2266,10 @@
       "AST": 0.6,
       "STL": 1.0,
       "BLK": 0.3,
-      "PIR": 4.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FALL, MOUSTAPHA",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2278,10 +2278,10 @@
       "AST": 0.3,
       "STL": 0.0,
       "BLK": 0.3,
-      "PIR": 4.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BIRSEN, METECAN",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -2290,10 +2290,10 @@
       "AST": 1.0,
       "STL": 0.1,
       "BLK": 0.0,
-      "PIR": 4.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CABOCLO, BRUNO",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2302,10 +2302,10 @@
       "AST": 0.2,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 4.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CARDENAS, ALVARO",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2314,10 +2314,10 @@
       "AST": 2.9,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 4.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CAVALIERE, LEOPOLD",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2326,10 +2326,10 @@
       "AST": 0.8,
       "STL": 0.4,
       "BLK": 0.0,
-      "PIR": 3.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BONGA, ISAAC",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2338,10 +2338,10 @@
       "AST": 0.5,
       "STL": 0.6,
       "BLK": 0.4,
-      "PIR": 3.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HACKETT, DANIEL",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2350,10 +2350,10 @@
       "AST": 0.9,
       "STL": 0.4,
       "BLK": 0.0,
-      "PIR": 3.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SMITH JR, NICK",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -2362,10 +2362,10 @@
       "AST": 0.7,
       "STL": 0.4,
       "BLK": 0.1,
-      "PIR": 3.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "FORREST, TRENT",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2374,10 +2374,10 @@
       "AST": 2.1,
       "STL": 0.6,
       "BLK": 0.2,
-      "PIR": 3.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BELLO, RASHEED",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2386,10 +2386,10 @@
       "AST": 2.2,
       "STL": 0.7,
       "BLK": 0.0,
-      "PIR": 3.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "KRAMER, DAVID",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2398,10 +2398,10 @@
       "AST": 0.3,
       "STL": 0.3,
       "BLK": 0.0,
-      "PIR": 3.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "PONS, YVES",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2410,10 +2410,10 @@
       "AST": 0.2,
       "STL": 0.7,
       "BLK": 0.4,
-      "PIR": 3.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "CORBALAN, GONZALO",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2422,10 +2422,10 @@
       "AST": 1.1,
       "STL": 0.5,
       "BLK": 0.1,
-      "PIR": 3.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HOMMES, DAULTON",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2434,10 +2434,10 @@
       "AST": 1.1,
       "STL": 0.2,
       "BLK": 0.1,
-      "PIR": 3.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JOKSIMOVIC, STEFAN",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2446,10 +2446,10 @@
       "AST": 1.8,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 3.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MASSA, BODIAN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2458,10 +2458,10 @@
       "AST": 0.5,
       "STL": 0.6,
       "BLK": 0.1,
-      "PIR": 3.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "ALLMAN, KYLE",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2470,10 +2470,10 @@
       "AST": 1.8,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 3.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SPAGNOLO, MATTEO",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2482,10 +2482,10 @@
       "AST": 2.1,
       "STL": 0.1,
       "BLK": 0.0,
-      "PIR": 3.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "GERMAN, EUGENE",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2494,10 +2494,10 @@
       "AST": 0.8,
       "STL": 0.1,
       "BLK": 0.0,
-      "PIR": 3.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "RUSSELL, DARON",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2506,10 +2506,10 @@
       "AST": 2.3,
       "STL": 0.8,
       "BLK": 0.0,
-      "PIR": 2.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LUWAWU-CABARROT, TIMOTHE",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2518,10 +2518,10 @@
       "AST": 0.8,
       "STL": 0.4,
       "BLK": 0.0,
-      "PIR": 2.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WALLACE, KEATON",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2530,10 +2530,10 @@
       "AST": 2.0,
       "STL": 0.3,
       "BLK": 0.2,
-      "PIR": 2.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "OSMANI, ERCAN",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2542,10 +2542,10 @@
       "AST": 0.5,
       "STL": 0.4,
       "BLK": 0.2,
-      "PIR": 2.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MINAYA, JUSTIN",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -2554,10 +2554,10 @@
       "AST": 0.1,
       "STL": 0.4,
       "BLK": 0.1,
-      "PIR": 2.3
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "KONDIC, KOSTA",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2566,10 +2566,10 @@
       "AST": 0.7,
       "STL": 0.2,
       "BLK": 0.0,
-      "PIR": 2.2
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BERTANS, DAVIS",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2578,10 +2578,10 @@
       "AST": 0.4,
       "STL": 0.5,
       "BLK": 0.1,
-      "PIR": 2.1
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "RICCI, GIAMPAOLO",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2590,10 +2590,10 @@
       "AST": 0.2,
       "STL": 0.0,
       "BLK": 0.0,
-      "PIR": 2.0
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SANLI, SERTAC",
       "Team": "",
       "GP": 9.0,
       "MIN": 0,
@@ -2602,10 +2602,10 @@
       "AST": 0.2,
       "STL": 0.3,
       "BLK": 0.1,
-      "PIR": 1.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "JOSEPH, CORY",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2614,10 +2614,10 @@
       "AST": 1.1,
       "STL": 0.1,
       "BLK": 0.0,
-      "PIR": 1.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "KALAITZAKIS, PANAGIOTIS",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2626,10 +2626,10 @@
       "AST": 2.0,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 1.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LO, MAODO",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -2638,10 +2638,10 @@
       "AST": 2.3,
       "STL": 0.3,
       "BLK": 0.0,
-      "PIR": 1.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "SAINT-SUPERY, MARIO",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -2650,10 +2650,10 @@
       "AST": 1.4,
       "STL": 0.6,
       "BLK": 0.0,
-      "PIR": 1.9
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "UGURLU, BERK",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2662,10 +2662,10 @@
       "AST": 1.5,
       "STL": 0.4,
       "BLK": 0.0,
-      "PIR": 1.8
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LEAF, TJ",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -2674,10 +2674,10 @@
       "AST": 0.4,
       "STL": 0.0,
       "BLK": 0.0,
-      "PIR": 1.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "WALKUP, THOMAS",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2686,10 +2686,10 @@
       "AST": 2.2,
       "STL": 0.7,
       "BLK": 0.0,
-      "PIR": 1.7
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "BLAZEVIC, MAREK",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2698,10 +2698,10 @@
       "AST": 0.3,
       "STL": 0.5,
       "BLK": 0.0,
-      "PIR": 1.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MINTZ, DAVION",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -2710,10 +2710,10 @@
       "AST": 1.0,
       "STL": 0.3,
       "BLK": 0.1,
-      "PIR": 1.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "MORGAN, JEREMY",
       "Team": "",
       "GP": 10.0,
       "MIN": 0,
@@ -2722,10 +2722,10 @@
       "AST": 0.8,
       "STL": 1.0,
       "BLK": 0.0,
-      "PIR": 1.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LAKIC, ARIJAN",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2734,10 +2734,10 @@
       "AST": 0.8,
       "STL": 0.2,
       "BLK": 0.1,
-      "PIR": 1.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "RAYMAN, WILLIAM",
       "Team": "",
       "GP": 8.0,
       "MIN": 0,
@@ -2746,10 +2746,10 @@
       "AST": 0.2,
       "STL": 0.5,
       "BLK": 0.1,
-      "PIR": 1.4
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "HOLLATZ, JUSTUS",
       "Team": "",
       "GP": 6.0,
       "MIN": 0,
@@ -2758,10 +2758,10 @@
       "AST": 1.2,
       "STL": 0.3,
       "BLK": 0.0,
-      "PIR": 0.5
+      "PIR": 0
     },
     {
-      "Player": "Unknown",
+      "Player": "LAUVERGNE, JOFFREY",
       "Team": "",
       "GP": 7.0,
       "MIN": 0,
@@ -2770,7 +2770,7 @@
       "AST": 0.1,
       "STL": 0.1,
       "BLK": 0.1,
-      "PIR": -0.1
+      "PIR": 0
     }
   ],
   "teams": []
