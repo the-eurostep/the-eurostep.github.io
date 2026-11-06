@@ -53,12 +53,12 @@
         tbody tr { transition: background 0.2s ease; }
         tbody tr:hover td { background: rgba(255, 255, 255, 0.05); color: #ffffff; }
 
-/* BLOCCO COLONNA GIOCATORE (Sticky a sinistra senza sovrapposizioni) */
+        /* BLOCCO PRIMA COLONNA FISSA (Sticky a sinistra senza sovrapposizioni sia per giocatori che per team) */
         th:first-child, td:first-child {
             position: sticky;
             left: 0;
             z-index: 5;
-            background: #0b0f19 !important; /* Sfondo pieno opaco per evitare trasparenze */
+            background: #0b0f19 !important;
             border-right: 2px solid rgba(255, 255, 255, 0.12);
             min-width: 210px;
             max-width: 210px;
@@ -67,7 +67,7 @@
             text-overflow: ellipsis;
         }
         th:first-child { 
-            z-index: 15; /* Per stare sopra l'intestazione generale e le righe scorrevoli */
+            z-index: 15; 
             background: #0f1624 !important;
         }
 
@@ -277,29 +277,29 @@
             tbody.innerHTML = "";
             data.forEach(t => {
                 const row = `<tr>
-                    <td><strong>${t.Team || t.team || ''}</strong></td>
+                    <td><strong>${t.Team || 'Unknown'}</strong></td>
                     <td>${t.GP || 0}</td>
-                    <td><strong>${t.PTS || 0}</strong></td>
-                    <td>${t.OREB || 0}</td>
-                    <td>${t.DREB || 0}</td>
-                    <td><strong>${t.REB || 0}</strong></td>
-                    <td>${t.AST || 0}</td>
-                    <td>${t.STL || 0}</td>
-                    <td>${t.BLK || 0}</td>
-                    <td>${t.PF || 0}</td>
-                    <td>${t['2PM'] || 0}</td>
-                    <td>${t['2PA'] || 0}</td>
+                    <td><strong>${typeof t.PTS === 'number' ? t.PTS.toFixed(1) : (t.PTS || 0)}</strong></td>
+                    <td>${typeof t.OREB === 'number' ? t.OREB.toFixed(1) : (t.OREB || 0)}</td>
+                    <td>${typeof t.DREB === 'number' ? t.DREB.toFixed(1) : (t.DREB || 0)}</td>
+                    <td><strong>${typeof t.REB === 'number' ? t.REB.toFixed(1) : (t.REB || 0)}</strong></td>
+                    <td>${typeof t.AST === 'number' ? t.AST.toFixed(1) : (t.AST || 0)}</td>
+                    <td>${typeof t.STL === 'number' ? t.STL.toFixed(1) : (t.STL || 0)}</td>
+                    <td>${typeof t.BLK === 'number' ? t.BLK.toFixed(1) : (t.BLK || 0)}</td>
+                    <td>${typeof t.PF === 'number' ? t.PF.toFixed(1) : (t.PF || 0)}</td>
+                    <td>${typeof t['2PM'] === 'number' ? t['2PM'].toFixed(1) : (t['2PM'] || 0)}</td>
+                    <td>${typeof t['2PA'] === 'number' ? t['2PA'].toFixed(1) : (t['2PA'] || 0)}</td>
                     <td>${calcPct(t['2PM'], t['2PA'])}</td>
-                    <td>${t['3PM'] || 0}</td>
-                    <td>${t['3PA'] || 0}</td>
+                    <td>${typeof t['3PM'] === 'number' ? t['3PM'].toFixed(1) : (t['3PM'] || 0)}</td>
+                    <td>${typeof t['3PA'] === 'number' ? t['3PA'].toFixed(1) : (t['3PA'] || 0)}</td>
                     <td>${calcPct(t['3PM'], t['3PA'])}</td>
-                    <td>${t.FGM || 0}</td>
-                    <td>${t.FGA || 0}</td>
+                    <td>${typeof t.FGM === 'number' ? t.FGM.toFixed(1) : (t.FGM || 0)}</td>
+                    <td>${typeof t.FGA === 'number' ? t.FGA.toFixed(1) : (t.FGA || 0)}</td>
                     <td>${calcPct(t.FGM, t.FGA)}</td>
-                    <td>${t.FTM || 0}</td>
-                    <td>${t.FTA || 0}</td>
+                    <td>${typeof t.FTM === 'number' ? t.FTM.toFixed(1) : (t.FTM || 0)}</td>
+                    <td>${typeof t.FTA === 'number' ? t.FTA.toFixed(1) : (t.FTA || 0)}</td>
                     <td>${calcPct(t.FTM, t.FTA)}</td>
-                    <td>${t.TO || 0}</td>
+                    <td>${typeof t.TO === 'number' ? t.TO.toFixed(1) : (t.TO || 0)}</td>
                 </tr>`;
                 tbody.innerHTML += row;
             });
