@@ -31,12 +31,10 @@ def fetch_euroleague_data():
             for p in items:
                 person = p.get("player", {})
                 
-                # Nome giocatore
                 name = person.get("name") or f"{person.get('firstName', '')} {person.get('lastName', '')}".strip()
                 if not name or name == " ":
                     name = "Unknown"
 
-                # Estrazione diretta e sicura del codice squadra dal percorso esatto del log
                 team_code = person.get("team", {}).get("code", "")
 
                 player_entry = {
@@ -45,10 +43,19 @@ def fetch_euroleague_data():
                     "GP": p.get("gamesPlayed", 0),
                     "MIN": p.get("minutesPlayed", 0),
                     "PTS": p.get("pointsScored", 0),
+                    "FGM": p.get("fieldGoalsMade", 0),
+                    "FGA": p.get("fieldGoalsAttempted", 0),
+                    "3PM": p.get("threePointersMade", 0),
+                    "3PA": p.get("threePointersAttempted", 0),
+                    "FTM": p.get("freeThrowsMade", 0),
+                    "FTA": p.get("freeThrowsAttempted", 0),
+                    "OREB": p.get("offensiveRebounds", 0),
+                    "DREB": p.get("defensiveRebounds", 0),
                     "REB": p.get("totalRebounds", 0),
                     "AST": p.get("assists", 0),
                     "STL": p.get("steals", 0),
                     "BLK": p.get("blocks", 0),
+                    "PF": p.get("foulsCommited", 0),
                     "PIR": p.get("pir", 0)
                 }
                 players_data.append(player_entry)
