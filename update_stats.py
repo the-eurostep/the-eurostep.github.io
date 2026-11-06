@@ -19,26 +19,28 @@ def fetch_euroleague_data():
         with urllib.request.urlopen(req_players) as response:
             raw_data = json.loads(response.read().decode('utf-8'))
             
-            items = raw_data if isinstance(raw_data, list) else raw_data.get('data', raw_data.get('players', []))
-            
+            # Gestione sicura per estrarre la lista dei giocatori indipendentemente dal livello radice
+            if isinstance(raw_data, list):
+                items = raw_data
+            elif isinstance(raw_data, dict):
+                items = raw_data.get('data', raw_data.get('players', []))
+                if isinstance(items, dict):
+                    items = items.get('data', items.get('items', []))
+            else:
+                items = []
+
             for p in items:
+                # Estrazione nome giocatore
                 person = p.get("player", {})
-                
-                # Gestione flessibile per estrarre il nome del giocatore
                 name = person.get("name") or f"{person.get('firstName', '')} {person.get('lastName', '')}".strip()
                 if not name or name == " ":
                     name = p.get("playerName", "Unknown")
 
-                # Estrazione sicura della squadra da tutti i possibili rami dell'oggetto
-                team_code = ""
-                for key in ["team", "club", "clubData"]:
-                    t_obj = p.get(key, {})
-                    if isinstance(t_obj, dict):
-                        team_code = t_obj.get("code") or t_obj.get("editorialCode") or t_obj.get("abbreviation", "")
-                        if team_code:
-                            break
+                # Estrazione codice squadra basata esattamente sulla tua schermata (team -> code)
+                team_obj = p.get("team", {})
+                team_code = team_obj.get("code", "") if isinstance(team_obj, dict) else ""
                 if not team_code:
-                    team_code = p.get("teamCode") or p.get("teamName", "")
+                    team_code = p.get("teamCode", "")
 
                 player_entry = {
                     "Player": name,
