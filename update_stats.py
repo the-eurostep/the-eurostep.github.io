@@ -19,19 +19,26 @@ def fetch_euroleague_data():
         with urllib.request.urlopen(req_players) as response:
             raw_data = json.loads(response.read().decode('utf-8'))
             
-            # Navighiamo correttamente dentro la risposta JSON dell'API
             items = raw_data if isinstance(raw_data, list) else raw_data.get('data', raw_data.get('players', []))
             
             for p in items:
-                # Estrazione corretta basata sulla struttura reale dell'API Euroleague
                 person = p.get("player", {})
-                team = p.get("team", {})
                 
+                # Gestione flessibile per estrarre il nome del giocatore
                 name = person.get("name") or f"{person.get('firstName', '')} {person.get('lastName', '')}".strip()
                 if not name or name == " ":
                     name = p.get("playerName", "Unknown")
 
-                team_code = team.get("code") or p.get("teamCode", "")
+                # Estrazione sicura della squadra da tutti i possibili rami dell'oggetto
+                team_code = ""
+                for key in ["team", "club", "clubData"]:
+                    t_obj = p.get(key, {})
+                    if isinstance(t_obj, dict):
+                        team_code = t_obj.get("code") or t_obj.get("editorialCode") or t_obj.get("abbreviation", "")
+                        if team_code:
+                            break
+                if not team_code:
+                    team_code = p.get("teamCode") or p.get("teamName", "")
 
                 player_entry = {
                     "Player": name,
@@ -58,7 +65,7 @@ def fetch_euroleague_data():
     with open("euroleague-data.json", "w", encoding="utf-8") as f:
         json.dump(final_output, f, indent=2, ensure_ascii=False)
     
-    print(f"File aggiornato! {len(players_data)} giocatori elaborati correttamente.")
+    print(f"File aggiornato con successo! {len(players_data)} giocatori elaborati.")
 
 if __name__ == "__main__":
     fetch_euroleague_data()
