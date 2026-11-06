@@ -3,25 +3,25 @@ import urllib.request
 from collections import defaultdict
 
 TEAM_NAMES = {
-    "ZAL": "Zalgiris",
-    "VIR": "Virtus Bologna",
-    "ULK": "Fenerbahce",
-    "TEL": "Maccabi Tel Aviv",
-    "RED": "Red Star",
-    "PRS": "Paris",
-    "PAR": "Partizan",
-    "PAN": "Panathinaikos",
-    "PAM": "Valencia",
-    "OLY": "Olympiacos",
-    "MUN": "Bayern Munich",
-    "MIL": "Olimpia Milan",
-    "MAD": "Real Madrid",
-    "IST": "Anadolu Efes",
-    "HTA": "Hapoel Tel Aviv",
-    "DUB": "Dubai",
-    "BES": "Besiktas",
-    "BAS": "Baskonia",
-    "BAR": "Barcelona",
+    "ZAL": "ZALGIRIS",
+    "VIR": "VIRTUS BOLOGNA",
+    "ULK": "FENERBAHCE",
+    "TEL": "MACCABI TEL AVIV",
+    "RED": "RED STAR",
+    "PRS": "PARIS",
+    "PAR": "PARTIZAN",
+    "PAN": "PANATHINAIKOS",
+    "PAM": "VALENCIA",
+    "OLY": "OLYMPIACOS",
+    "MUN": "BAYERN MUNICH",
+    "MIL": "OLIMPIA MILAN",
+    "MAD": "REAL MADRID",
+    "IST": "ANADOLU EFES",
+    "HTA": "HAPOEL TEL AVIV",
+    "DUB": "DUBAI",
+    "BES": "BESIKTAS",
+    "BAS": "BASKONIA",
+    "BAR": "BARCELONA",
     "ASV": "ASVEL"
 }
 
@@ -31,8 +31,11 @@ def fetch_euroleague_data():
     players_url = "https://feeds.incrowdsports.com/provider/euroleague-feeds/v3/competitions/E/statistics/players/traditional?seasonMode=Single&limit=1000&sortDirection=descending&seasonCode=E2026&statisticMode=perGame&statisticSortMode=perGame"
     
     players_data = []
+    
+    # Struttura per accumulare i totali ponderati per squadra
     team_aggregates = defaultdict(lambda: {
-        "GP_count": 0, "MIN": 0, "PTS": 0, "OREB": 0, "DREB": 0, "REB": 0,
+        "total_gp": 0, "player_count": 0,
+        "MIN": 0, "PTS": 0, "OREB": 0, "DREB": 0, "REB": 0,
         "AST": 0, "STL": 0, "BLK": 0, "PF": 0, "2PM": 0, "2PA": 0,
         "3PM": 0, "3PA": 0, "FTM": 0, "FTA": 0, "TO": 0
     })
@@ -64,7 +67,7 @@ def fetch_euroleague_data():
                     name = "Unknown"
 
                 team_code = person.get("team", {}).get("code", "")
-                team_full_name = TEAM_NAMES.get(team_code, team_code if team_code else "Unknown Team")
+                team_full_name = TEAM_NAMES.get(team_code, team_code if team_code else "UNKNOWN TEAM")
 
                 gp = p.get("gamesPlayed", 0) or 0
                 min_val = p.get("minutesPlayed", 0) or 0
@@ -80,14 +83,12 @@ def fetch_euroleague_data():
                 t2a = p.get("twoPointersAttempted", 0) or 0
                 t3m = p.get("threePointersMade", 0) or 0
                 t3a = p.get("threePointersAttempted", 0) or 0
-                fgm = round(t2m + t3m, 1)
-                fga = round(t2a + t3a, 1)
                 ftm = p.get("freeThrowsMade", 0) or 0
                 fta = p.get("freeThrowsAttempted", 0) or 0
                 to_val = p.get("turnovers", 0) or 0
                 pir = p.get("pir", 0) or 0
 
-                # Dati Giocatore
+                # Dati singoli giocatore (invariati)
                 player_entry = {
                     "Player": name,
                     "Team": team_code,
@@ -105,8 +106,8 @@ def fetch_euroleague_data():
                     "2PA": t2a,
                     "3PM": t3m,
                     "3PA": t3a,
-                    "FGM": fgm,
-                    "FGA": fga,
+                    "FGM": round(t2m + t3m, 1),
+                    "FGA": round(t2a + t3a, 1),
                     "FTM": ftm,
                     "FTA": fta,
                     "TO": to_val,
@@ -114,56 +115,66 @@ def fetch_euroleague_data():
                 }
                 players_data.append(player_entry)
 
-                # Aggregazione per Squadra
-                if team_full_name and team_full_name != "Unknown Team":
+                # Aggregazione ponderata per squadra (moltiplicando per le partite giocate del giocatore)
+                if team_full_name and team_full_name != "UNKNOWN TEAM" and gp > 0:
                     t = team_aggregates[team_full_name]
-                    t["GP_max"] = max(t.get("GP_max", 0), gp) # Prendiamo il massimo delle partite giocate dai giocatori chiave come riferimento GP
-                    t["MIN"] += min_val
-                    t["PTS"] += pts
-                    t["OREB"] += oreb
-                    t["DREB"] += dreb
-                    t["REB"] += reb
-                    t["AST"] += ast
-                    t["STL"] += stl
-                    t["BLK"] += blk
-                    t["PF"] += pf
-                    t["2PM"] += t2m
-                    t["2PA"] += t2a
-                    t["3PM"] += t3m
-                    t["3PA"] += t3a
-                    t["FTM"] += ftm
-                    t["FTA"] += fta
-                    t["TO"] += to_val
+                    t["max_gp"] = max(t.get("max_gp", 0), gp)
+                    t["total_gp_sum"] += gp
+                    t["player_count"] += 1
+                    
+                    # Accumuliamo il volume totale moltiplicando la media del giocatore per le sue partite
+                    t["MIN"] += min_val * gp
+                    t["PTS"] += pts * gp
+                    t["OREB"] += oreb * gp
+                    t["DREB"] += dreb * gp
+                    t["REB"] += reb * gp
+                    t["AST"] += ast * gp
+                    t["STL"] += stl * gp
+                    t["BLK"] += blk * gp
+                    t["PF"] += pf * gp
+                    t["2PM"] += t2m * gp
+                    t["2PA"] += t2a * gp
+                    t["3PM"] += t3m * gp
+                    t["3PA"] += t3a * gp
+                    t["FTM"] += ftm * gp
+                    t["FTA"] += fta * gp
+                    t["TO"] += to_val * gp
 
     except Exception as e:
         print(f"Errore durante il recupero dei dati: {e}")
 
-    # Formattazione finale dati squadre
+    # Calcolo finale delle medie squadra dividendo per il totale delle partite o normalizzando
     teams_data = []
     for team_name, stats in team_aggregates.items():
+        # Usiamo il massimo delle partite giocate dai giocatori chiave come base partita della squadra
+        gp_base = stats.get("max_gp", 1)
+        if gp_base == 0:
+            gp_base = 1
+
+        # Il volume totale diviso per le partite della squadra ci dà la media per partita corretta e ponderata
         teams_data.append({
             "Team": team_name,
-            "GP": stats.get("GP_max", 0),
-            "PTS": round(stats["PTS"], 1),
-            "OREB": round(stats["OREB"], 1),
-            "DREB": round(stats["DREB"], 1),
-            "REB": round(stats["REB"], 1),
-            "AST": round(stats["AST"], 1),
-            "STL": round(stats["STL"], 1),
-            "BLK": round(stats["BLK"], 1),
-            "PF": round(stats["PF"], 1),
-            "2PM": round(stats["2PM"], 1),
-            "2PA": round(stats["2PA"], 1),
-            "3PM": round(stats["3PM"], 1),
-            "3PA": round(stats["3PA"], 1),
-            "FGM": round(stats["2PM"] + stats["3PM"], 1),
-            "FGA": round(stats["2PA"] + stats["3PA"], 1),
-            "FTM": round(stats["FTM"], 1),
-            "FTA": round(stats["FTA"], 1),
-            "TO": round(stats["TO"], 1)
+            "GP": gp_base,
+            "PTS": round(stats["PTS"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0, # Media ponderata robusta per partita
+            "OREB": round(stats["OREB"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "DREB": round(stats["DREB"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "REB": round(stats["REB"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "AST": round(stats["AST"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "STL": round(stats["STL"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "BLK": round(stats["BLK"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "PF": round(stats["PF"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "2PM": round(stats["2PM"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "2PA": round(stats["2PA"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "3PM": round(stats["3PM"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "3PA": round(stats["3PA"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "FGM": round((stats["2PM"] + stats["3PM"]) / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "FGA": round((stats["2PA"] + stats["3PA"]) / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "FTM": round(stats["FTM"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "FTA": round(stats["FTA"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0,
+            "TO": round(stats["TO"] / stats["total_gp_sum"] * (stats["total_gp_sum"] / stats["player_count"]), 1) if stats["player_count"] > 0 else 0
         })
 
-    # Ordiniamo le squadre per punti in modo decrescente
+    # Ordinamento per punti decrescente
     teams_data.sort(key=lambda x: x["PTS"], reverse=True)
 
     final_output = {
