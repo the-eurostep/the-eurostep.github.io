@@ -26,6 +26,11 @@ jobs:
 
       - name: Esegui script di verifica NBA
         run: python update_nba_stats.py
+      
+      - name: Esegui lo script Python
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: python update_nba_stats.py
 
       - name: Salva e aggiorna il file JSON su GitHub
         run: |
