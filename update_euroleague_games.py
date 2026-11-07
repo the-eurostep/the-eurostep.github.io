@@ -3,88 +3,82 @@ import datetime
 import requests
 
 def fetch_euroleague_games():
-    print("Aggiornamento del calendario e dei risultati Eurolega...")
-    
-    # URL di riferimento per i dati di Euroleague (utilizziamo l'endpoint pubblico o la struttura della competizione)
-    # Poiché vogliamo che lo script sia robusto, strutturiamo i 38 round mappando le date reali della stagione 2026-27.
+    print("Aggiornamento del calendario e dei risultati Eurolega tramite API ufficiale...")
     
     season_data = {
-        "currentRound": 7, # Round corrente stimato in base a novembre 2026
+        "currentRound": 10, # Aggiornato al round attuale (Novembre 2026)
         "rounds": {}
     }
 
-    # Ottieni la data odierna per confrontarla e stabilire se una partita è "played" o "upcoming"
     today = datetime.date.today()
 
-    # Mappa delle squadre ufficiali di Eurolega con i rispettivi loghi CDN ufficiali
-    team_logos = {
-        "REAL MADRID": "https://www.euroleaguebasketball.net/media/ulvj0h30/rmd.svg",
-        "FC BARCELONA": "https://www.euroleaguebasketball.net/media/bkvfk53a/bar.svg",
-        "PANATHINAIKOS ATHENS": "https://www.euroleaguebasketball.net/media/2e5f5m3e/pao.svg",
-        "OLYMPIACOS PIRAEUS": "https://www.euroleaguebasketball.net/media/d43c2z42/oly.svg",
-        "FENERBAHCE BEKO ISTANBUL": "https://www.euroleaguebasketball.net/media/g31dz5gz/fen.svg",
-        "ANADOLU EFES ISTANBUL": "https://www.euroleaguebasketball.net/media/1x5ez5g1/efs.svg",
-        "AX ARMANI EXCHANGE MILAN": "https://www.euroleaguebasketball.net/media/3x1gz1g3/mil.svg",
-        "VIRTUS BOLOGNA": "https://www.euroleaguebasketball.net/media/5x2gz2g5/vir.svg",
-        "BASKONIA VITORIA-GASTEIZ": "https://www.euroleaguebasketball.net/media/4x3gz3g4/bas.svg",
-        "PARTIZAN MOZZART BET BELGRADE": "https://www.euroleaguebasketball.net/media/6x4gz4g6/par.svg",
-        "RED STAR BELGRADE": "https://www.euroleaguebasketball.net/media/7x5gz5g7/red.svg",
-        "MACCABI PLAYTIKA TEL AVIV": "https://www.euroleaguebasketball.net/media/8x6gz6g8/mac.svg",
-        "ZALGIRIS KAUNAS": "https://www.euroleaguebasketball.net/media/9x7gz7g9/zal.svg",
-        "BAYERN MUNICH": "https://www.euroleaguebasketball.net/media/0x8gz8g0/bay.svg",
-        "ASVEL VILLEURBANNE": "https://www.euroleaguebasketball.net/media/1y9gz9g1/asv.svg",
-        "MONACO": "https://www.euroleaguebasketball.net/media/2y0gz0g2/mon.svg",
-        "ALBA BERLIN": "https://www.euroleaguebasketball.net/media/3y1gz1g3/alb.svg",
-        "PARIS BASKETBALL": "https://www.euroleaguebasketball.net/media/4y2gz2g4/par_paris.svg"
-    }
-
-    # Generazione dei 38 round con logica temporale automatica
-    # Ogni round copre una settimana tipo (da ottobre a aprile)
-    start_date = datetime.date(2026, 10, 1)
-
+    # Iteriamo su tutti i 38 round della regular season
     for round_num in range(1, 39):
         matches_in_round = []
-        round_date = start_date + datetime.timedelta(days=(round_num - 1) * 7)
+        url = f"https://feeds.incrowdsports.com/provider/euroleague-feeds/v2/competitions/E/seasons/E2026/games?teamCode=&phaseTypeCode=RS&roundNumber={round_num}"
         
-        # Simuliamo 9 partite per round con dati coerenti
-        for match_idx in range(1, 10):
-            match_date_obj = round_date + datetime.timedelta(days=(match_idx % 2))
-            formatted_date = match_date_obj.strftime("%d/%m/%Y") # Formato europeo richiesto DD/MM/YYYY
-            
-            # Se la data della partita è passata rispetto ad oggi, viene considerata giocata
-            is_played = match_date_obj < today
-            
-            home_score = 85 + (match_idx % 5) if is_played else 0
-            away_score = 80 + ((match_idx + 2) % 6) if is_played else 0
+        try:
+            response = requests.get(url, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                games = data.get("data", [])
+                
+                for g in games:
+                    # Estrazione data e formattazione in stile europeo (DD/MM/YYYY)
+                    raw_date = g.get("date", "")
+                    match_date_str = ""
+                    match_time_str = "20:30"
+                    is_played = False
+                    
+                    if raw_date:
+                        try:
+                            # Esempio formato API: 2026-11-06T19:45:00.000Z
+                            dt = datetime.datetime.fromisoformat(raw_date.replace("Z", "+00:00"))
+                            match_date_str = dt.strftime("%d/%m/%Y")
+                            match_time_str = dt.strftime("%H:%M")
+                            is_played = dt.date() < today or g.get("status") == "result"
+                        except Exception:
+                            match_date_str = raw_date[:10]
 
-            matches_in_round.append({
-                "date": formatted_date,
-                "time": "20:30 CET",
-                "status": "played" if is_played else "upcoming",
-                "homeTeam": f"TEAM HOME {match_idx}",
-                "homeLogo": "the eurostep rounded.png",
-                "homeScore": home_score,
-                "awayTeam": f"TEAM AWAY {match_idx}",
-                "awayLogo": "the eurostep rounded.png",
-                "awayScore": away_score,
-                "boxscore": {
-                    "homePlayers": [
-                        {"name": "Player One", "min": "28:15", "pts": "18", "oreb": "1", "dreb": "4", "reb": "5", "ast": "6", "stl": "2", "blk": "0", "tpm2": "5", "tpa2": "8", "tp_pct2": ".625", "tpm3": "2", "tpa3": "5", "tp_pct3": ".400", "ftm": "2", "fta": "2", "ft_pct": "1.000", "to": "2", "pf": "3", "pir": "22", "plusMinus": "+8"},
-                        {"name": "Player Two", "min": "24:10", "pts": "14", "oreb": "2", "dreb": "3", "reb": "5", "ast": "2", "stl": "1", "blk": "1", "tpm2": "4", "tpa2": "7", "tp_pct2": ".571", "tpm3": "1", "tpa3": "3", "tp_pct3": ".333", "ftm": "3", "fta": "4", "ft_pct": ".750", "to": "1", "pf": "2", "pir": "16", "plusMinus": "+5"}
-                    ] if is_played else [],
-                    "awayPlayers": [
-                        {"name": "Player Three", "min": "30:00", "pts": "21", "oreb": "0", "dreb": "2", "reb": "2", "ast": "4", "stl": "3", "blk": "0", "tpm2": "3", "tpa2": "6", "tp_pct2": ".500", "tpm3": "4", "tpa3": "8", "tp_pct3": ".500", "ftm": "3", "fta": "3", "ft_pct": "1.000", "to": "3", "pf": "4", "pir": "19", "plusMinus": "-3"}
-                    ] if is_played else []
-                } if is_played else None
-            })
+                    home = g.get("home", {})
+                    away = g.get("away", {})
+                    
+                    home_team_name = home.get("name", "Home Team")
+                    away_team_name = away.get("name", "Away Team")
+                    
+                    home_logo = home.get("imageUrls", {}).get("crest", "the eurostep rounded.png")
+                    away_logo = away.get("imageUrls", {}).get("crest", "the eurostep rounded.png")
+                    
+                    home_score = home.get("score", 0) if is_played else 0
+                    away_score = away.get("score", 0) if is_played else 0
+                    
+                    # Se lo score è null (partite future o non iniziate)
+                    if home_score is None: home_score = 0
+                    if away_score is None: away_score = 0
+
+                    matches_in_round.append({
+                        "date": match_date_str,
+                        "time": f"{match_time_str} CET",
+                        "status": "played" if is_played and (home_score > 0 or away_score > 0) else "upcoming",
+                        "homeTeam": home_team_name,
+                        "homeLogo": home_logo,
+                        "homeScore": home_score,
+                        "awayTeam": away_team_name,
+                        "awayLogo": away_logo,
+                        "awayScore": away_score,
+                        "boxscore": None # Lo collegheremo nella Fase 2
+                    })
+            else:
+                print(f"Errore HTTP {response.status_code} per il round {round_num}")
+        except Exception as e:
+            print(f"Errore di connessione per il round {round_num}: {e}")
 
         season_data["rounds"][str(round_num)] = matches_in_round
 
-    # Salvataggio del file JSON aggiornato
+    # Salvataggio del file JSON finale per il sito
     with open("euroleague-games-data.json", "w", encoding="utf-8") as f:
         json.dump(season_data, f, ensure_ascii=False, indent=4)
     
-    print("File euroleague-games-data.json aggiornato con successo in base alla data odierna!")
+    print("File euroleague-games-data.json generato con successo dai feed ufficiali!")
 
-if __name__ == "__main__":
-    fetch_euroleague_games()
+if __name
