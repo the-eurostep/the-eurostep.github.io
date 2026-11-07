@@ -1,7 +1,6 @@
 import json
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
 
 def fetch_nba_standings():
     print("Scaricamento delle classifiche NBA da Basketball Reference...")
@@ -17,11 +16,7 @@ def fetch_nba_standings():
             print(f"Errore nella richiesta HTTP: status {response.status_code}")
             return
 
-        # Estrazione delle tabelle
         dfs = pd.read_html(response.text)
-        
-        # In Basketball Reference le tabelle principali delle conference sono solitamente le prime due:
-        # Table 0: Eastern Conference | Table 1: Western Conference (oppure viceversa)
         east_df = None
         west_df = None
 
@@ -33,53 +28,73 @@ def fetch_nba_standings():
             elif 'western' in first_col or 'western conference' in cols:
                 west_df = df
 
-        # Se il detection automatico non trova i titoli, usiamo l'indice predefinito
         if east_df is None and len(dfs) >= 1:
             east_df = dfs[0]
         if west_df is None and len(dfs) >= 2:
             west_df = dfs[1]
+
+        import re
 
         def process_conference_table(df):
             teams_list = []
             if df is None:
                 return teams_list
             
-            # Normalizza le colonne
             df.columns = [str(c).strip() for c in df.columns]
-            team_col = df.columns[0] # La prima colonna contiene il nome squadra
+            team_col = df.columns[0]
             
             for _, row in df.iterrows():
                 raw_name = str(row.get(team_col, '')).strip()
                 if not raw_name or 'Conference' in raw_name or 'Division' in raw_name:
                     continue
                 
-                # Pulisci il nome della squadra (rimuovi eventuali asterisco o note playoff)
-                clean_name = raw_name.replace('*', '').strip().upper()
+                # Rimuove asterischi e numeri tra parentesi (es. "(1)" o simili)
+                clean_name = re.sub(r'\s*\(\d+\)', '', raw_name)
+                clean_name = clean_name.replace('*', '').strip().upper()
                 
-                def safe_val(key, default='0'):
-                    val = str(row.get(key, default)).strip()
-                    return val if val != 'nan' else default
-
-                def safe_pct(key):
-                    val = str(row.get(key, '.000')).strip()
+                def safe_int(key):
                     try:
-                        f_val = float(val)
-                        return f".{int(round(f_val * 1000)):03d}" if f_val < 1 else "1.000"
+                        val = str(row.get(key, 0)).strip()
+                        return int(float(val))
                     except:
-                        return val
+                        return 0
 
+                w = safe_int('W')
+                l = safe_int('L')
+                gp = w + l
+                win_pct = round(w / gp, 3) if gp > 0 else 0.0
+                
                 team_obj = {
                     "Team": clean_name,
-                    "W": safe_val('W', '0'),
-                    "L": safe_val('L', '0'),
-                    "WinPct": safe_pct('W/L%') if 'W/L%' in row else safe_pct('PCT'),
-                    "GB": safe_val('GB', '—'),
-                    "Home": safe_val('Home', '0-0'),
-                    "Road": safe_val('Road', '0-0'),
-                    "Last10": safe_val('L10', safe_val('Last 10', '0-0')),
-                    "Streak": safe_val('Strk', safe_val('Streak', ''))
+                    "W": w,
+                    "L": l,
+                    "WinPct": f".{int(round(win_pct * 1000)):03d}" if win_pct < 1 else "1.000",
+                    "raw_win_pct": win_pct,
+                    "Home": str(row.get('Home', '0-0')),
+                    "Road": str(row.get('Road', '0-0')),
+                    "Last10": str(row.get('L10', row.get('Last 10', '0-0'))),
+                    "Streak": str(row.get('Strk', row.get('Streak', '')))
                 }
                 teams_list.append(team_obj)
+
+            # Ordina prima per Vittorie descrescente, poi per Sconfitte crescente
+            teams_list.sort(key=lambda x: (x['W'], -x['L']), reverse=True)
+
+            # Calcolo matematico rigoroso del GB (Games Behind) basato sulla prima in classifica
+            if len(teams_list) > 0:
+                top_w = teams_list[0]['W']
+                top_l = teams_list[0]['L']
+                for t in teams_list:
+                    w = t['W']
+                    l = t['L']
+                    gb = ((top_w - w) + (l - top_l)) / 2.0
+                    if gb == 0.0:
+                        t['GB'] = "—"
+                        t['raw_gb'] = 0.0
+                    else:
+                        t['GB'] = str(int(gb)) if gb.is_integer() else str(gb)
+                        t['raw_gb'] = gb
+
             return teams_list
 
         eastern_data = process_conference_table(east_df)
@@ -93,7 +108,7 @@ def fetch_nba_standings():
         with open("nba-standings-data.json", "w", encoding="utf-8") as f:
             json.dump(final_output, f, ensure_ascii=False, indent=4)
         
-        print("File nba-standings-data.json generato con successo!")
+        print("File nba-standings-data.json generato e corretto con successo!")
 
     except Exception as e:
         print(f"Errore durante il recupero delle standings: {e}")
