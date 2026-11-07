@@ -25,7 +25,6 @@
         .games-page-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
         .games-page-subtitle { color: #9ca3af; font-size: 0.95rem; }
 
-        /* Selettore dei 38 Round a scorrimento */
         .rounds-scroll-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: rgba(96, 165, 250, 0.4) rgba(11, 15, 25, 0.8); }
         .rounds-scroll-container::-webkit-scrollbar { height: 8px; }
         .rounds-scroll-container::-webkit-scrollbar-track { background: rgba(11, 15, 25, 0.8); border-radius: 4px; }
@@ -34,7 +33,6 @@
         .round-btn { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; padding: 10px 20px; background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; color: #9ca3af; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; text-transform: uppercase; }
         .round-btn.active, .round-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(96, 165, 250, 0.4); color: #ffffff; box-shadow: 0 0 15px rgba(96, 165, 250, 0.1); }
 
-        /* Lista delle Partite */
         .matches-list { display: flex; flex-direction: column; gap: 15px; }
         .match-card { background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; backdrop-filter: blur(12px); overflow: hidden; transition: all 0.3s ease; }
         .match-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); }
@@ -54,7 +52,10 @@
         .score-box { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 900; color: #ffffff; background: rgba(255, 255, 255, 0.04); padding: 6px 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); min-width: 90px; text-align: center; }
         .score-box.upcoming { font-size: 0.9rem; color: #9ca3af; font-weight: 600; }
 
-        /* Box Score Espandibile (Accordion) */
+        /* Scritta Box Scores interattiva */
+        .boxscore-link { font-family: 'Orbitron', sans-serif; font-size: 0.75srem; font-weight: 700; color: #9ca3af; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; text-align: right; }
+        .match-card:hover .boxscore-link { color: #60a5fa; text-shadow: 0 0 10px rgba(96, 165, 250, 0.4); }
+
         .boxscore-section { display: none; background: rgba(7, 10, 16, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 25px; }
         .match-card.expanded .boxscore-section { display: block; }
         
@@ -66,7 +67,6 @@
         .boxscore-table tr:hover td { background: rgba(255, 255, 255, 0.03); color: #ffffff; }
 
         .loading-text { text-align: center; padding: 40px; color: #9ca3af; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
-
         .back-home-container { display: flex; justify-content: center; margin-top: 10px; }
         .back-home-btn { display: inline-block; padding: 10px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; color: #ffffff; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 1px; transition: all 0.3s ease; }
         .back-home-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.3); }
@@ -95,12 +95,7 @@
             <p class="games-page-subtitle">Schedules, results, and detailed box scores for all 38 rounds.</p>
         </div>
 
-        <!-- Selettore dei 38 Round -->
-        <div class="rounds-scroll-container" id="roundsSelector">
-            <!-- Generato via JS -->
-        </div>
-
-        <!-- Lista Partite del Round selezionato -->
+        <div class="rounds-scroll-container" id="roundsSelector"></div>
         <div class="matches-list" id="matchesList">
             <div class="loading-text">Loading Game Center...</div>
         </div>
@@ -126,12 +121,10 @@
                 allSeasonData = await response.json();
                 
                 buildRoundsSelector();
-                // Trova di default l'ultimo round giocato o imposta 1
                 currentRound = allSeasonData.currentRound || 1;
                 selectRound(currentRound);
             } catch (err) {
                 console.error("Errore caricamento Game Center:", err);
-                document.getElementById('roundsSelector.innerHTML') = '';
                 document.getElementById('matchesList').innerHTML = '<div class="loading-text">Syncing game schedule in progress...</div>';
             }
         }
@@ -183,18 +176,18 @@
                         <div class="teams-matchup">
                             <div class="team-box home">
                                 <span class="team-name ${homeWinner ? 'winner' : ''}">${m.homeTeam}</span>
-                                <img src="${m.homeLogo || 'the eurostep rounded.png'}" alt="" class="team-logo">
+                                <img src="${m.homeLogo || 'the eurostep rounded.png'}" alt="" class="team-logo" onerror="this.src='the eurostep rounded.png'">
                             </div>
                             <div class="score-box ${isPlayed ? '' : 'upcoming'}">
                                 ${isPlayed ? `${m.homeScore} - ${m.awayScore}` : 'VS'}
                             </div>
                             <div class="team-box away">
-                                <img src="${m.awayLogo || 'the eurostep rounded.png'}" alt="" class="team-logo">
+                                <img src="${m.awayLogo || 'the eurostep rounded.png'}" alt="" class="team-logo" onerror="this.src='the eurostep rounded.png'">
                                 <span class="team-name ${awayWinner ? 'winner' : ''}">${m.awayTeam}</span>
                             </div>
                         </div>
-                        <div class="match-info" style="text-align: right; color: ${isPlayed ? '#60a5fa' : '#9ca3af'}">
-                            ${isPlayed ? 'Box Score &rarr;' : 'Upcoming'}
+                        <div class="match-info" style="text-align: right;">
+                            ${isPlayed ? '<span class="boxscore-link">Box Scores &rarr;</span>' : '<span style="color: #9ca3af; font-size: 0.8rem;">Upcoming</span>'}
                         </div>
                     </div>
                 `;
@@ -292,7 +285,6 @@
 
         loadGameCenterData();
 
-        // Canvas 3D Background
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
