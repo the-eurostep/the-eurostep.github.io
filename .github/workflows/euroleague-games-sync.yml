@@ -1,0 +1,34 @@
+name: Daily Euroleague Games Sync
+
+on:
+  schedule:
+    # Esegue ogni giorno alle 3:00 UTC (corrispondenti alle 4:00 ora italiana)
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Ti permette di farlo partire anche a mano quando vuoi dalla tab Actions
+
+jobs:
+  update-el-games:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pandas requests html5lib lxml
+
+      - name: Run Euroleague Games Python script
+        run: python update_euroleague_games.py
+
+      - name: Commit and push changes if any
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add euroleague-games-data.json
+          git commit -m "Auto-update Euroleague games json [skip ci]" || exit 0
+          git push
