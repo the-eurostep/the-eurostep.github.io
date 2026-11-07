@@ -3,35 +3,61 @@ import datetime
 import requests
 
 def parse_box_score(game_code):
-    """Funzione di diagnostica per leggere le chiavi del JSON Boxscore"""
+    """Estrae i tabellini dei giocatori navigando correttamente in Stats -> PlayersStats"""
     boxscore = {"homePlayers": [], "awayPlayers": []}
     
     url = f"https://live.euroleague.net/api/Boxscore?gamecode={game_code}&seasoncode=E2026"
-    print(f"-> Controllo Boxscore per match ID (gamecode): {game_code} (URL: {url})")
-    
     try:
         res = requests.get(url, timeout=5)
-        print(f"-> Status Code ricevuto: {res.status_code}")
-        
         if res.status_code == 200:
             data = res.json()
             if isinstance(data, dict):
-                # Stampa tutte le chiavi principali presenti nel JSON di questa API
-                print(f"-> CHIAVI DISPONIBILI nel JSON per match {game_code}: {list(data.keys())}")
-                if "Stats" in data:
-                    print(f"-> Struttura di 'Stats': {str(data['Stats'])[:300]}")
-            else:
-                print(f"-> Dati ricevuti (anteprima non dizionario): {str(data)[:250]}")
+                stats = data.get("Stats", [])
+                if isinstance(stats, list) and len(stats) >= 2:
+                    boxscore["homePlayers"] = format_players_list(stats[0].get("PlayersStats", []))
+                    boxscore["awayPlayers"] = format_players_list(stats[1].get("PlayersStats", []))
         else:
-            print(f"-> Errore HTTP dal server Eurolega: {res.status_code}")
-            
+            print(f"Errore HTTP {res.status_code} per boxscore match {game_code}")
     except Exception as e:
-        print(f"-> Eccezione riscontrata durante la richiesta: {e}")
+        print(f"Errore recupero box score (Match {game_code}): {e}")
         
     return boxscore
 
+def format_players_list(players_raw):
+    """Mappa i campi ufficiali dell'API Euroleague nei nomi attesi dal frontend"""
+    formatted = []
+    if not isinstance(players_raw, list):
+        return formatted
+
+    for p in players_raw:
+        formatted.append({
+            "name": p.get("Player", "Player"),
+            "min": p.get("Minutes", "00:00"),
+            "pts": p.get("Points", 0),
+            "oreb": p.get("OffRebounds", 0),
+            "dreb": p.get("DefRebounds", 0),
+            "reb": p.get("TotalRebounds", 0),
+            "ast": p.get("Assist", 0),
+            "stl": p.get("Steals", 0),
+            "blk": p.get("BlocksFavour", 0),
+            "tpm2": p.get("FieldGoalsMade2", 0),
+            "tpa2": p.get("FieldGoalsAttempted2", 0),
+            "tp_pct2": str(p.get("FieldGoalsPercentage2", ".000")),
+            "tpm3": p.get("FieldGoalsMade3", 0),
+            "tpa3": p.get("FieldGoalsAttempted3", 0),
+            "tp_pct3": str(p.get("FieldGoalsPercentage3", ".000")),
+            "ftm": p.get("FreeThrowsMade", 0),
+            "fta": p.get("FreeThrowsAttempted", 0),
+            "ft_pct": str(p.get("FreeThrowsPercentage", ".000")),
+            "to": p.get("Turnovers", 0),
+            "pf": p.get("FoulsCommited", 0),
+            "pir": p.get("Valuation", 0),
+            "plusMinus": str(p.get("PlusMinus", 0))
+        })
+    return formatted
+
 def fetch_euroleague_games():
-    print("=== Avvio aggiornamento calendario e risultati Eurolega ===")
+    print("=== Avvio aggiornamento calendario, risultati e box score Eurolega ===")
     
     season_data = {
         "currentRound": 10,
