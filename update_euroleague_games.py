@@ -2,55 +2,90 @@ import json
 import datetime
 import requests
 
-def parse_box_score(game_code, home_tla, away_tla):
-    """Funzione per recuperare i tabellini dei giocatori dai feed live dell'Eurolega"""
+def parse_box_score(game_code):
+    """Funzione per recuperare i tabellini completi dei giocatori dall'API Boxscore dell'Eurolega"""
     boxscore = {"homePlayers": [], "awayPlayers": []}
     
-    for tla, team_key in [(home_tla, "homePlayers"), (away_tla, "awayPlayers")]:
-        if not tla:
-            continue
-        url = f"https://live.euroleague.net/api/Players?gamecode={game_code}&seasoncode=E2026&disp=&equipo={tla}&temp=E2026"
-        try:
-            res = requests.get(url, timeout=5)
-            if res.status_code == 200:
-                data = res.json()
-                # L'API restituisce la lista dei giocatori della squadra
-                players_list = data if isinstance(data, list) else data.get("Players", [])
-                
-                formatted_players = []
-                for p in players_list:
-                    formatted_players.append({
-                        "name": p.get("Player", p.get("Name", "Player")),
-                        "min": p.get("Min", "00:00"),
-                        "pts": p.get("Points", p.get("PTS", 0)),
-                        "oreb": p.get("OffRebounds", 0),
-                        "dreb": p.get("DefRebounds", 0),
-                        "reb": p.get("TotalRebounds", p.get("REB", 0)),
-                        "ast": p.get("Assist", p.get("AST", 0)),
-                        "stl": p.get("Steals", p.get("STL", 0)),
-                        "blk": p.get("Turnovers", p.get("BLK", 0)), # o stoppate se presenti
-                        "tpm2": p.get("FieldGoalsMade2", 0),
-                        "tpa2": p.get("FieldGoalsAttempted2", 0),
-                        "tp_pct2": str(p.get("FieldGoalsPercentage2", ".000")),
-                        "tpm3": p.get("FieldGoalsMade3", 0),
-                        "tpa3": p.get("FieldGoalsAttempted3", 0),
-                        "tp_pct3": str(p.get("FieldGoalsPercentage3", ".000")),
-                        "ftm": p.get("FreeThrowsMade", 0),
-                        "fta": p.get("FreeThrowsAttempted", 0),
-                        "ft_pct": str(p.get("FreeThrowsPercentage", ".000")),
-                        "to": p.get("Turnovers", 0),
-                        "pf": p.get("FoulsCommited", 0),
-                        "pir": p.get("Valuation", p.get("PIR", 0)),
-                        "plusMinus": str(p.get("PlusMinus", 0))
-                    })
-                boxscore[team_key] = formatted_players
-        except Exception as e:
-            print(f"Errore recupero box score per {tla} (Match {game_code}): {e}")
+    url = f"https://live.euroleague.net/api/Boxscore?gamecode={game_code}&seasoncode=E2026"
+    try:
+        res = requests.get(url, timeout=5)
+        if res.status_code == 200:
+            data = res.json()
             
+            # L'API di solito restituisce i dati suddivisi per squadra (es. ClubA / ClubB o liste di giocatori)
+            # Gestiamo le varie strutture possibili restituite dal feed
+            teams_data = []
+            if isinstance(data, list):
+                teams_data = data
+            elif isinstance(data, dict):
+                # Cerchiamo chiavi comuni nei feed live
+                teams_data = data.get("Statistics", data.get("Boxscore", data.get("Players", [])))
+                if not teams_data and "Home" in data and "Away" in data:
+                    # Se separato in Home e Away
+                    return parse_structured_boxscore(data)
+
+            # Se abbiamo una lista di liste (giocatori squadra 1 e squadra 2)
+            if len(teams_data) >= 2:
+                boxscore["homePlayers"] = format_players_list(teams_data[0])
+                boxscore["awayPlayers"] = format_players_list(teams_data[1])
+            elif len(teams_data) == 1:
+                boxscore["homePlayers"] = format_players_list(teams_data[0])
+                
+        else:
+            print(f"Errore HTTP {res.status_code} per boxscore match {game_code}")
+    except Exception as e:
+        print(f"Errore recupero box score (Match {game_code}): {e}")
+        
     return boxscore
 
+def parse_structured_boxscore(data):
+    """Gestione alternativa se il JSON divide direttamente in Home e Away"""
+    boxscore = {"homePlayers": [], "awayPlayers": []}
+    if "Home" in data:
+        boxscore["homePlayers"] = format_players_list(data["Home"])
+    if "Away" in data:
+        boxscore["awayPlayers"] = format_players_list(data["Away"])
+    return boxscore
+
+def format_players_list(players_raw):
+    """Formatta la lista dei giocatori mappando correttamente tutte le statistiche"""
+    formatted = []
+    # Se è un dizionario con dentro una lista di giocatori
+    if isinstance(players_raw, dict):
+        players_raw = players_raw.get("Players", players_raw.get("队员", []))
+        
+    if not isinstance(players_raw, list):
+        return formatted
+
+    for p in players_raw:
+        formatted.append({
+            "name": p.get("Player", p.get("Name", p.get("PLAYER", "Player"))),
+            "min": p.get("Min", p.get("MIN", "00:00")),
+            "pts": p.get("Points", p.get("PTS", 0)),
+            "oreb": p.get("OffRebounds", p.get("OREB", 0)),
+            "dreb": p.get("DefRebounds", p.get("DREB", 0)),
+            "reb": p.get("TotalRebounds", p.get("REB", 0)),
+            "ast": p.get("Assist", p.get("AST", 0)),
+            "stl": p.get("Steals", p.get("STL", 0)),
+            "blk": p.get("BlocksFavour", p.get("BLK", 0)),
+            "tpm2": p.get("FieldGoalsMade2", p.get("2PM", 0)),
+            "tpa2": p.get("FieldGoalsAttempted2", p.get("2PA", 0)),
+            "tp_pct2": str(p.get("FieldGoalsPercentage2", p.get("2P_PCT", ".000"))),
+            "tpm3": p.get("FieldGoalsMade3", p.get("3PM", 0)),
+            "tpa3": p.get("FieldGoalsAttempted3", p.get("3PA", 0)),
+            "tp_pct3": str(p.get("FieldGoalsPercentage3", p.get("3P_PCT", ".000"))),
+            "ftm": p.get("FreeThrowsMade", p.get("FTM", 0)),
+            "fta": p.get("FreeThrowsAttempted", p.get("FTA", 0)),
+            "ft_pct": str(p.get("FreeThrowsPercentage", p.get("FT_PCT", ".000"))),
+            "to": p.get("Turnovers", p.get("TO", 0)),
+            "pf": p.get("FoulsCommited", p.get("PF", 0)),
+            "pir": p.get("Valuation", p.get("PIR", 0)),
+            "plusMinus": str(p.get("PlusMinus", p.get("+/-", 0)))
+        })
+    return formatted
+
 def fetch_euroleague_games():
-    print("Aggiornamento del calendario, risultati e ordinamento cronologico Eurolega...")
+    print("Aggiornamento del calendario, risultati e box score Eurolega...")
     
     season_data = {
         "currentRound": 10,
@@ -90,8 +125,6 @@ def fetch_euroleague_games():
                     
                     home_team_name = home.get("name", "Home Team")
                     away_team_name = away.get("name", "Away Team")
-                    home_tla = home.get("tla", "")
-                    away_tla = away.get("tla", "")
                     
                     home_logo = home.get("imageUrls", {}).get("crest", "the eurostep rounded.png")
                     away_logo = away.get("imageUrls", {}).get("crest", "the eurostep rounded.png")
@@ -102,16 +135,15 @@ def fetch_euroleague_games():
                     if home_score is None: home_score = 0
                     if away_score is None: away_score = 0
 
-                    # Codice partita per i box score (es. "99" o estratto dall'id)
                     game_code = g.get("code", "")
 
-                    # Recupero box score se la partita è giocata
+                    # Recupero box score tramite API Boxscore se la partita è giocata
                     boxscore_data = None
                     if is_played and game_code:
-                        boxscore_data = parse_box_score(game_code, home_tla, away_tla)
+                        boxscore_data = parse_box_score(game_code)
 
                     matches_in_round.append({
-                        "datetime_obj": match_datetime, # Usato per ordinare
+                        "datetime_obj": match_datetime,
                         "date": match_date_str,
                         "time": f"{match_time_str} CET",
                         "status": "played" if is_played and (home_score > 0 or away_score > 0) else "upcoming",
@@ -124,10 +156,8 @@ def fetch_euroleague_games():
                         "boxscore": boxscore_data
                     })
                 
-                # Ordinamento cronologico corretto (dalla prima alla più tardi nel round)
                 matches_in_round.sort(key=lambda x: x["datetime_obj"])
                 
-                # Rimuoviamo l'oggetto datetime temporaneo prima di salvare nel JSON
                 for m in matches_in_round:
                     del m["datetime_obj"]
 
@@ -141,7 +171,7 @@ def fetch_euroleague_games():
     with open("euroleague-games-data.json", "w", encoding="utf-8") as f:
         json.dump(season_data, f, ensure_ascii=False, indent=4)
     
-    print("File euroleague-games-data.json ordinato e aggiornato con successo!")
+    print("File euroleague-games-data.json con box score generato con successo!")
 
 if __name__ == "__main__":
     fetch_euroleague_games()
