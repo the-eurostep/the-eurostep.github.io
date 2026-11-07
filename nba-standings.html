@@ -20,7 +20,7 @@
         .nav-link { color: #d1d5db; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 0; transition: color 0.3s ease; display: block; }
         .nav-link:hover { color: #ffffff; }
 
-        .stats-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; z-index: 1; width: 100%; display: flex; flex-direction: column; gap: 25px; }
+        .stats-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; z-index: 1; width: 100%; display: flex; flex-direction: column; gap: 25px; }
         .stats-header-section { text-align: center; }
         .stats-page-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
         .stats-page-subtitle { color: #9ca3af; font-size: 0.95rem; }
@@ -38,21 +38,23 @@
 
         table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; font-size: 0.9rem; }
         
-        th { font-family: 'Orbitron', sans-serif; background: rgba(15, 22, 36, 0.95); position: sticky; top: 0; z-index: 10; color: #9ca3af; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); user-select: none; }
+        th { font-family: 'Orbitron', sans-serif; background: rgba(15, 22, 36, 0.95); position: sticky; top: 0; z-index: 10; color: #9ca3af; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; user-select: none; transition: color 0.2s ease; }
+        th:hover { color: #ffffff; }
+        th span { margin-left: 5px; font-size: 0.65rem; color: #60a5fa; }
         
         td { padding: 14px 16px; color: #d1d5db; border-bottom: 1px solid rgba(255, 255, 255, 0.04); background: rgba(11, 15, 25, 0.8); }
         tbody tr { transition: background 0.2s ease; }
         tbody tr:hover td { background: rgba(255, 255, 255, 0.05); color: #ffffff; }
 
-        /* Linee divisorie personalizzate richieste */
+        /* Linee divisorie richieste (entrambe tratteggiate dello stesso colore) */
         tr.playoff-cutoff td {
             border-bottom: 2px dashed rgba(96, 165, 250, 0.6);
         }
         tr.playin-cutoff td {
-            border-bottom: 3px solid rgba(239, 68, 68, 0.8);
+            border-bottom: 2px dashed rgba(96, 165, 250, 0.6);
         }
 
-        /* Gestione colonne fisse (prima colonna: numero di posizione, seconda colonna: nome team) */
+        /* Colonne fisse a sinistra */
         th:first-child, td:first-child {
             position: sticky;
             left: 0;
@@ -61,10 +63,7 @@
             width: 60px;
             text-align: center;
         }
-        th:first-child { 
-            z-index: 15; 
-            background: #0f1624 !important;
-        }
+        th:first-child { z-index: 15; background: #0f1624 !important; }
 
         th:nth-child(2), td:nth-child(2) {
             position: sticky;
@@ -74,10 +73,7 @@
             border-right: 2px solid rgba(255, 255, 255, 0.12);
             min-width: 250px;
         }
-        th:nth-child(2) { 
-            z-index: 15; 
-            background: #0f1624 !important;
-        }
+        th:nth-child(2) { z-index: 15; background: #0f1624 !important; }
 
         .table-section { display: none; }
         .table-section.active { display: block; }
@@ -124,20 +120,16 @@
                 <table id="westTable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>TEAM</th>
-                            <th>W</th>
-                            <th>L</th>
-                            <th>WIN%</th>
-                            <th>GB</th>
-                            <th>HOME</th>
-                            <th>ROAD</th>
-                            <th>LAST 10</th>
-                            <th>STREAK</th>
+                            <th onclick="sortTable('westTable', 0)"># <span>↕</span></th>
+                            <th onclick="sortTable('westTable', 1)">TEAM <span>↕</span></th>
+                            <th onclick="sortTable('westTable', 2)">W <span>↕</span></th>
+                            <th onclick="sortTable('westTable', 3)">L <span>↕</span></th>
+                            <th onclick="sortTable('westTable', 4)">WIN% <span>↕</span></th>
+                            <th onclick="sortTable('westTable', 5)">GB <span>↕</span></th>
                         </tr>
                     </thead>
                     <tbody id="westBody">
-                        <tr><td colspan="10" class="loading-text">Syncing Western Conference...</td></tr>
+                        <tr><td colspan="6" class="loading-text">Syncing Western Conference...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -149,20 +141,16 @@
                 <table id="eastTable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>TEAM</th>
-                            <th>W</th>
-                            <th>L</th>
-                            <th>WIN%</th>
-                            <th>GB</th>
-                            <th>HOME</th>
-                            <th>ROAD</th>
-                            <th>LAST 10</th>
-                            <th>STREAK</th>
+                            <th onclick="sortTable('eastTable', 0)"># <span>↕</span></th>
+                            <th onclick="sortTable('eastTable', 1)">TEAM <span>↕</span></th>
+                            <th onclick="sortTable('eastTable', 2)">W <span>↕</span></th>
+                            <th onclick="sortTable('eastTable', 3)">L <span>↕</span></th>
+                            <th onclick="sortTable('eastTable', 4)">WIN% <span>↕</span></th>
+                            <th onclick="sortTable('eastTable', 5)">GB <span>↕</span></th>
                         </tr>
                     </thead>
                     <tbody id="eastBody">
-                        <tr><td colspan="10" class="loading-text">Syncing Eastern Conference...</td></tr>
+                        <tr><td colspan="6" class="loading-text">Syncing Eastern Conference...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -179,32 +167,38 @@
     </footer>
 
     <script>
+        let rawWestData = [];
+        let rawEastData = [];
+
         async function loadStandingsData() {
             try {
                 const response = await fetch('nba-standings-data.json?v=' + new Date().getTime());
                 if (!response.ok) throw new Error('File non trovato');
                 const data = await response.json();
                 
-                renderConference('westBody', data.western || []);
-                renderConference('eastBody', data.eastern || []);
+                rawWestData = data.western || [];
+                rawEastData = data.eastern || [];
+
+                renderConference('westBody', rawWestData);
+                renderConference('eastBody', rawEastData);
             } catch (err) {
                 console.error("Errore caricamento standings:", err);
-                document.getElementById('westBody').innerHTML = '<tr><td colspan="10" class="loading-text">Live feed sync in progress...</td></tr>';
-                document.getElementById('eastBody').innerHTML = '<tr><td colspan="10" class="loading-text">Live feed sync in progress...</td></tr>';
+                document.getElementById('westBody').innerHTML = '<tr><td colspan="6" class="loading-text">Live feed sync in progress...</td></tr>';
+                document.getElementById('eastBody').innerHTML = '<tr><td colspan="6" class="loading-text">Live feed sync in progress...</td></tr>';
             }
         }
 
         function renderConference(tbodyId, teams) {
             const tbody = document.getElementById(tbodyId);
             if (teams.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" class="loading-text">No standings data available.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="loading-text">No standings data available.</td></tr>';
                 return;
             }
             tbody.innerHTML = "";
             teams.forEach((t, index) => {
                 let rowClass = "";
                 if (index === 5) rowClass = "playoff-cutoff"; // Tratteggiata tra 6° e 7°
-                if (index === 9) rowClass = "playin-cutoff";  // Marcata tra 10° e 11°
+                if (index === 9) rowClass = "playin-cutoff";  // Tratteggiata tra 10° e 11°
 
                 const row = `<tr class="${rowClass}">
                     <td><strong>${index + 1}</strong></td>
@@ -213,10 +207,6 @@
                     <td>${t.L !== undefined ? t.L : 0}</td>
                     <td>${t.WinPct !== undefined ? t.WinPct : '.000'}</td>
                     <td>${t.GB !== undefined ? t.GB : '—'}</td>
-                    <td>${t.Home !== undefined ? t.Home : '0-0'}</td>
-                    <td>${t.Road !== undefined ? t.Road : '0-0'}</td>
-                    <td>${t.Last10 !== undefined ? t.Last10 : '0-0'}</td>
-                    <td>${t.Streak !== undefined ? t.Streak : ''}</td>
                 </tr>`;
                 tbody.innerHTML += row;
             });
@@ -235,6 +225,55 @@
                 document.getElementById('section-east').classList.add('active');
                 document.getElementById('btn-east').classList.add('active');
             }
+        }
+
+        let sortDirections = {};
+        function sortTable(tableId, colIndex) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const rowsArray = Array.from(tbody.querySelectorAll('tr'));
+            if (rowsArray.length === 0 || rowsArray[0].querySelector('.loading-text')) return;
+
+            const key = tableId + '-' + colIndex;
+            let dir = sortDirections[key] || 'none';
+
+            // Logica di ordinamento personalizzata:
+            // Per il GB (colonna 5) o L (colonna 3), valori più bassi sono meglio all'inizio (quindi primo click 'asc', secondo 'desc').
+            // Per W (colonna 2) o WIN% (colonna 4), valori più alti sono meglio all'inizio (primo click 'desc', secondo 'asc').
+            if (dir === 'none') {
+                dir = (colIndex === 3 || colIndex === 5) ? 'asc' : 'desc';
+            } else if (dir === 'desc') {
+                dir = 'asc';
+            } else if (dir === 'asc') {
+                dir = 'none';
+            }
+            sortDirections[key] = dir;
+
+            if (dir === 'none') {
+                if (tableId === 'westTable') renderConference('westBody', rawWestData);
+                else renderConference('eastBody', rawEastData);
+                return;
+            }
+
+            rowsArray.sort((a, b) => {
+                let valA = a.querySelectorAll('td')[colIndex].textContent.trim();
+                let valB = b.querySelectorAll('td')[colIndex].textContent.trim();
+
+                if (valA === '—') valA = '0';
+                if (valB === '—') valB = '0';
+
+                valA = valA.replace('%', '').replace('.', '');
+                valB = valB.replace('%', '').replace('.', '');
+
+                const numA = parseFloat(valA), numB = parseFloat(valB);
+                if (!isNaN(numA) && !isNaN(numB)) {
+                    return dir === 'desc' ? numB - numA : numA - numB;
+                } else {
+                    return dir === 'desc' ? valB.localeCompare(valA) : valA.localeCompare(valB);
+                }
+            });
+
+            tbody.innerHTML = "";
+            rowsArray.forEach(row => tbody.appendChild(row));
         }
 
         loadStandingsData();
