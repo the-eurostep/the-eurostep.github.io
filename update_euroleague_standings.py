@@ -6,12 +6,12 @@ import requests
 def clean_text(text):
     if not text or text == 'nan':
         return ''
-    # Normalizza i caratteri speciali (es. gestisce accenti e codifiche strane)
     text = str(text)
+    # Rimuove note come asterischi o spazi superflui
+    text = text.replace('*', '').strip()
+    # Normalizza i caratteri speciali per evitare problemi di encoding
     text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('utf-8')
-    # Pulizie extra per caratteri sporchi residui
-    text = text.replace('Ã', '').replace('Â', '').replace('½', '')
-    return text.strip().upper()
+    return text.upper()
 
 def fetch_euroleague_standings():
     print("Scaricamento della classifica Eurolega da Basketball Reference...")
@@ -24,7 +24,7 @@ def fetch_euroleague_standings():
 
     try:
         response = requests.get(url, headers=headers)
-        response.encoding = 'utf-8' # Forza la codifica corretta per i caratteri speciali
+        response.encoding = 'utf-8'
         
         if response.status_code != 200:
             print(f"Errore nella richiesta HTTP: status {response.status_code}")
@@ -33,38 +33,40 @@ def fetch_euroleague_standings():
         dfs = pd.read_html(response.text)
         standings_df = None
 
-        # Cerca la tabella che contiene le colonne W e L o record simili
+        # Cerchiamo la tabella che ha esattamente le colonne W, L, W/L% come nell'immagine
         for df in dfs:
+            # Se le colonne sono un MultiIndex (intestazioni su più righe), le appiattiamo
+            if isinstance(df.columns, pd.MultiIndex):
+                df.columns = ['_'.join(str(c) for c in col).strip() for col in df.columns]
+            
             cols = [str(c).upper() for c in df.columns]
-            # Cerchiamo tabelle che contengano W/L o record di vittorie
-            if any('W' in c for c in cols) and any('L' in c for c in cols):
+            if any('W' in c for c in cols) and any('L' in c for c in cols) and any('W/L%' in c or 'PCT' in c for c in cols):
                 standings_df = df
                 break
 
+        # Fallimento di sicurezza: prendiamo la prima tabella disponibile se non trovata con i filtri
         if standings_df is None and len(dfs) > 0:
             standings_df = dfs[0]
 
         teams_list = []
         if standings_df is not None:
-            # Pulisci i nomi delle colonne
             standings_df.columns = [str(c).strip() for c in standings_df.columns]
-            team_col = standings_df.columns[0]
+            team_col = standings_df.columns[0] # La prima colonna è il nome della squadra
 
             for _, row in standings_df.iterrows():
                 raw_name = str(row.get(team_col, '')).strip()
-                if not raw_name or 'Standings' in raw_name or 'Team' in raw_name or 'Conference' in raw_name:
+                # Filtra le righe di intestazione o vuote
+                if not raw_name or 'Standings' in raw_name or 'Regular' in raw_name or 'Team' in raw_name or raw_name == 'nan':
                     continue
 
-                clean_name = clean_text(raw_name.replace('*', ''))
+                clean_name = clean_text(raw_name)
 
-                def safe_int(keys):
-                    if isinstance(keys, str):
-                        keys = [keys]
-                    for k in keys:
-                        if k in standings_df.columns:
+                # Estrazione sicura di W e L basata sulle posizioni o sui nomi delle colonne
+                def get_numeric_val(col_names):
+                    for col in standings_df.columns:
+                        if any(k == col.upper() for k in col_names):
                             try:
-                                val = str(row.get(k, 0)).strip()
-                                # Rimuove eventuali caratteri non numerici
+                                val = str(row.get(col, 0)).strip()
                                 val_clean = ''.join(c for c in val if c.isdigit() or c == '.')
                                 if val_clean:
                                     return int(float(val_clean))
@@ -72,14 +74,18 @@ def fetch_euroleague_standings():
                                 pass
                     return 0
 
-                w = safe_int(['W', 'Wins', 'W_1'])
-                l = safe_int(['L', 'Losses', 'L_1'])
+                w = get_numeric_val(['W'])
+                l = get_numeric_val(['L'])
                 
-                # Cerca GP o G, altrimenti calcola W + L
-                gp = safe_int(['G', 'GP', 'Games'])
-                if gp == 0:
-                    gp = w + l
+                # Se W e L sono entrambi 0, proviamo a leggerli per indice (colonna 1 e colonna 2)
+                if w == 0 and l == 0:
+                    try:
+                        w = int(float(str(row.iloc[1]).strip()))
+                        l = int(float(str(row.iloc[2]).strip()))
+                    except:
+                        pass
 
+                gp = w + l
                 win_pct = round(w / gp, 3) if gp > 0 else 0.0
 
                 team_obj = {
@@ -102,7 +108,7 @@ def fetch_euroleague_standings():
         with open("euroleague-standings-data.json", "w", encoding="utf-8") as f:
             json.dump(final_output, f, ensure_ascii=False, indent=4)
         
-        print("File euroleague-standings-data.json generato correttamente con caratteri puliti e dati numerici validi!")
+        print("File euroleague-standings-data.json generato con successo e dati corretti!")
 
     except Exception as e:
         print(f"Errore durante il recupero delle standings Eurolega: {e}")
