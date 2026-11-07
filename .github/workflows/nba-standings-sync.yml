@@ -1,0 +1,34 @@
+name: Daily NBA Standings Sync
+
+on:
+  schedule:
+    # Esegue ogni giorno alle 7:00 UTC (corrispondenti alle 9:00 ora italiana)
+    - cron: '0 7 * * *'
+  workflow_dispatch: # Permette l'esecuzione manuale da GitHub
+
+jobs:
+  update-standings:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pandas requests beautifulsoup4 html5lib lxml
+
+      - name: Run Standings Python script
+        run: python update_nba_standings.py
+
+      - name: Commit and push changes if any
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add nba-standings-data.json
+          git commit -m "Auto-update NBA standings json [skip ci]" || exit 0
+          git push
