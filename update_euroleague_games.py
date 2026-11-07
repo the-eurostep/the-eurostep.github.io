@@ -3,76 +3,35 @@ import datetime
 import requests
 
 def parse_box_score(game_code):
-    """Funzione completa per il recupero dei tabellini dei giocatori dall'API Boxscore"""
+    """Funzione di diagnostica per leggere le chiavi del JSON Boxscore"""
     boxscore = {"homePlayers": [], "awayPlayers": []}
     
     url = f"https://live.euroleague.net/api/Boxscore?gamecode={game_code}&seasoncode=E2026"
+    print(f"-> Controllo Boxscore per match ID (gamecode): {game_code} (URL: {url})")
+    
     try:
         res = requests.get(url, timeout=5)
+        print(f"-> Status Code ricevuto: {res.status_code}")
+        
         if res.status_code == 200:
             data = res.json()
+            if isinstance(data, dict):
+                # Stampa tutte le chiavi principali presenti nel JSON di questa API
+                print(f"-> CHIAVI DISPONIBILI nel JSON per match {game_code}: {list(data.keys())}")
+                if "Stats" in data:
+                    print(f"-> Struttura di 'Stats': {str(data['Stats'])[:300]}")
+            else:
+                print(f"-> Dati ricevuti (anteprima non dizionario): {str(data)[:250]}")
+        else:
+            print(f"-> Errore HTTP dal server Eurolega: {res.status_code}")
             
-            # L'API restituisce le statistiche solitamente sotto la chiave 'Stats' o 'Players'
-            stats_container = data.get("Stats", data.get("Players", []))
-            
-            # Se è suddiviso in due squadre (solitamente una lista con i dati delle due roster)
-            team_lists = []
-            if isinstance(stats_container, list):
-                team_lists = stats_container
-            elif isinstance(stats_container, dict):
-                team_lists = list(stats_container.values())
-
-            # Se abbiamo i dati per entrambe le squadre
-            if len(team_lists) >= 2:
-                boxscore["homePlayers"] = format_players(team_lists[0])
-                boxscore["awayPlayers"] = format_players(team_lists[1])
-            elif len(team_lists) == 1:
-                boxscore["homePlayers"] = format_players(team_lists[0])
-                
     except Exception as e:
-        print(f"Errore nel recupero boxscore per match {game_code}: {e}")
+        print(f"-> Eccezione riscontrata durante la richiesta: {e}")
         
     return boxscore
 
-def format_players(players_raw):
-    """Formatta la lista dei singoli giocatori mappando le statistiche"""
-    formatted = []
-    
-    if isinstance(players_raw, dict):
-        players_raw = players_raw.get("Players", players_raw.get("List", []))
-        
-    if not isinstance(players_raw, list):
-        return formatted
-
-    for p in players_raw:
-        formatted.append({
-            "name": p.get("Player", p.get("Name", "Player")),
-            "min": p.get("Min", "00:00"),
-            "pts": p.get("Points", p.get("PTS", 0)),
-            "oreb": p.get("OffRebounds", 0),
-            "dreb": p.get("DefRebounds", 0),
-            "reb": p.get("TotalRebounds", p.get("REB", 0)),
-            "ast": p.get("Assist", p.get("AST", 0)),
-            "stl": p.get("Steals", p.get("STL", 0)),
-            "blk": p.get("BlocksFavour", p.get("BLK", 0)),
-            "tpm2": p.get("FieldGoalsMade2", 0),
-            "tpa2": p.get("FieldGoalsAttempted2", 0),
-            "tp_pct2": str(p.get("FieldGoalsPercentage2", ".000")),
-            "tpm3": p.get("FieldGoalsMade3", 0),
-            "tpa3": p.get("FieldGoalsAttempted3", 0),
-            "tp_pct3": str(p.get("FieldGoalsPercentage3", ".000")),
-            "ftm": p.get("FreeThrowsMade", 0),
-            "fta": p.get("FreeThrowsAttempted", 0),
-            "ft_pct": str(p.get("FreeThrowsPercentage", ".000")),
-            "to": p.get("Turnovers", 0),
-            "pf": p.get("FoulsCommited", 0),
-            "pir": p.get("Valuation", p.get("PIR", 0)),
-            "plusMinus": str(p.get("PlusMinus", 0))
-        })
-    return formatted
-
 def fetch_euroleague_games():
-    print("Avvio aggiornamento completo calendario, risultati e box score...")
+    print("=== Avvio aggiornamento calendario e risultati Eurolega ===")
     
     season_data = {
         "currentRound": 10,
@@ -142,7 +101,7 @@ def fetch_euroleague_games():
                         "boxscore": boxscore_data
                     })
                 
-                # Ordinamento cronologico corretto delle partite nel round
+                # Ordinamento cronologico corretto
                 matches_in_round.sort(key=lambda x: x["datetime_obj"])
                 
                 for m in matches_in_round:
@@ -158,7 +117,7 @@ def fetch_euroleague_games():
     with open("euroleague-games-data.json", "w", encoding="utf-8") as f:
         json.dump(season_data, f, ensure_ascii=False, indent=4)
     
-    print("File euroleague-games-data.json generato con successo!")
+    print("=== File euroleague-games-data.json salvato con successo! ===")
 
 if __name__ == "__main__":
     fetch_euroleague_games()
