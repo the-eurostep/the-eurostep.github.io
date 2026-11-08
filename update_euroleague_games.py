@@ -1,14 +1,18 @@
 import json
 import datetime
+import time
 import requests
 
 def parse_box_score(game_code):
-    """Estrae i tabellini dei giocatori navigando correttamente in Stats -> PlayersStats"""
+    """Recupera e mappa correttamente i tabellini dei giocatori dall'API Boxscore"""
     boxscore = {"homePlayers": [], "awayPlayers": []}
     
     url = f"https://live.euroleague.net/api/Boxscore?gamecode={game_code}&seasoncode=E2026"
     try:
-        res = requests.get(url, timeout=5)
+        # Pausa breve per evitare il blocco HTTP 429 (Too Many Requests)
+        time.sleep(0.4)
+        res = requests.get(url, timeout=6)
+        
         if res.status_code == 200:
             data = res.json()
             if isinstance(data, dict):
@@ -24,14 +28,27 @@ def parse_box_score(game_code):
     return boxscore
 
 def format_players_list(players_raw):
-    """Mappa i campi ufficiali dell'API Euroleague nei nomi attesi dal frontend"""
+    """Mappa con precisione millimetrica i campi ufficiali dell'Eurolega"""
     formatted = []
     if not isinstance(players_raw, list):
         return formatted
 
     for p in players_raw:
+        # Estrazione tiri e calcolo percentuali sicuri
+        fgm2 = p.get("FieldGoalsMade2", 0) or 0
+        fga2 = p.get("FieldGoalsAttempted2", 0) or 0
+        pct2 = f"{round((fgm2 / fga2) * 100, 1)}%" if fga2 > 0 else "0.0%"
+
+        fgm3 = p.get("FieldGoalsMade3", 0) or 0
+        fga3 = p.get("FieldGoalsAttempted3", 0) or 0
+        pct3 = f"{round((fgm3 / fga3) * 100, 1)}%" if fga3 > 0 else "0.0%"
+
+        ftm = p.get("FreeThrowsMade", 0) or 0
+        fta = p.get("FreeThrowsAttempted", 0) or 0
+        pct_ft = f"{round((ftm / fta) * 100, 1)}%" if fta > 0 else "0.0%"
+
         formatted.append({
-            "name": p.get("Player", "Player"),
+            "name": p.get("Player", "Player").strip(),
             "min": p.get("Minutes", "00:00"),
             "pts": p.get("Points", 0),
             "oreb": p.get("OffRebounds", 0),
@@ -40,15 +57,15 @@ def format_players_list(players_raw):
             "ast": p.get("Assist", 0),
             "stl": p.get("Steals", 0),
             "blk": p.get("BlocksFavour", 0),
-            "tpm2": p.get("FieldGoalsMade2", 0),
-            "tpa2": p.get("FieldGoalsAttempted2", 0),
-            "tp_pct2": str(p.get("FieldGoalsPercentage2", ".000")),
-            "tpm3": p.get("FieldGoalsMade3", 0),
-            "tpa3": p.get("FieldGoalsAttempted3", 0),
-            "tp_pct3": str(p.get("FieldGoalsPercentage3", ".000")),
-            "ftm": p.get("FreeThrowsMade", 0),
-            "fta": p.get("FreeThrowsAttempted", 0),
-            "ft_pct": str(p.get("FreeThrowsPercentage", ".000")),
+            "tpm2": fgm2,
+            "tpa2": fga2,
+            "tp_pct2": pct2,
+            "tpm3": fgm3,
+            "tpa3": fga3,
+            "tp_pct3": pct3,
+            "ftm": ftm,
+            "fta": fta,
+            "ft_pct": pct_ft,
             "to": p.get("Turnovers", 0),
             "pf": p.get("FoulsCommited", 0),
             "pir": p.get("Valuation", 0),
