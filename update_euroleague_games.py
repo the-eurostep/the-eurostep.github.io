@@ -4,12 +4,12 @@ import time
 import requests
 
 def parse_box_score(game_code):
-    """Recupera e mappa correttamente i tabellini dei giocatori dall'API Boxscore"""
+    """Estrae e mappa con precisione millimetrica i tabellini dei giocatori usando le chiavi ufficiali Euroleague"""
     boxscore = {"homePlayers": [], "awayPlayers": []}
     
     url = f"https://live.euroleague.net/api/Boxscore?gamecode={game_code}&seasoncode=E2026"
     try:
-        # Pausa breve per evitare il blocco HTTP 429 (Too Many Requests)
+        # Pausa per evitare il blocco HTTP 429 (Too Many Requests)
         time.sleep(0.4)
         res = requests.get(url, timeout=6)
         
@@ -28,13 +28,13 @@ def parse_box_score(game_code):
     return boxscore
 
 def format_players_list(players_raw):
-    """Mappa con precisione millimetrica i campi ufficiali dell'Eurolega"""
+    """Mappa i campi esatti del JSON ufficiale dell'Eurolega"""
     formatted = []
     if not isinstance(players_raw, list):
         return formatted
 
     for p in players_raw:
-        # Estrazione tiri e calcolo percentuali sicuri
+        # Estrazione tiri e calcolo percentuali sicure
         fgm2 = p.get("FieldGoalsMade2", 0) or 0
         fga2 = p.get("FieldGoalsAttempted2", 0) or 0
         pct2 = f"{round((fgm2 / fga2) * 100, 1)}%" if fga2 > 0 else "0.0%"
@@ -51,10 +51,10 @@ def format_players_list(players_raw):
             "name": p.get("Player", "Player").strip(),
             "min": p.get("Minutes", "00:00"),
             "pts": p.get("Points", 0),
-            "oreb": p.get("OffRebounds", 0),
-            "dreb": p.get("DefRebounds", 0),
+            "oreb": p.get("OffensiveRebounds", 0),
+            "dreb": p.get("DefensiveRebounds", 0),
             "reb": p.get("TotalRebounds", 0),
-            "ast": p.get("Assist", 0),
+            "ast": p.get("Assistances", 0),
             "stl": p.get("Steals", 0),
             "blk": p.get("BlocksFavour", 0),
             "tpm2": fgm2,
@@ -69,7 +69,7 @@ def format_players_list(players_raw):
             "to": p.get("Turnovers", 0),
             "pf": p.get("FoulsCommited", 0),
             "pir": p.get("Valuation", 0),
-            "plusMinus": str(p.get("PlusMinus", 0))
+            "plusMinus": str(p.get("Plusminus", 0))
         })
     return formatted
 
