@@ -27,15 +27,15 @@
         .games-page-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
         .games-page-subtitle { color: #9ca3af; font-size: 0.95rem; }
 
-        /* Barra delle date con stile Euroleague rounds */
+        /* Barra delle date con freccia sinistra e destra posizionate correttamente */
         .date-nav-wrapper { display: flex; align-items: center; gap: 12px; background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 20px; border-radius: 14px; backdrop-filter: blur(12px); position: relative; }
         .month-indicator { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; white-space: nowrap; position: relative; }
         
         .calendar-icon-btn { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 1rem; transition: transform 0.2s; }
         .calendar-icon-btn:hover { transform: scale(1.15); }
 
-        /* Custom Popup Calendario in stile The Eurostep */
-        .custom-calendar-popup { display: none; position: absolute; top: 50px; left: 0; background: rgba(11, 15, 25, 0.96); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(15px); min-width: 260px; }
+        /* Popup Custom Calendario con z-index alto in primo piano */
+        .custom-calendar-popup { display: none; position: absolute; top: 45px; left: 0; background: rgba(11, 15, 25, 0.98); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); z-index: 99999; backdrop-filter: blur(20px); min-width: 260px; }
         .custom-calendar-popup.active { display: block; }
         .calendar-popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #ffffff; }
         .calendar-popup-header button { background: none; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
@@ -54,13 +54,12 @@
         .round-btn { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; padding: 10px 18px; background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; color: #9ca3af; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; text-transform: uppercase; }
         .round-btn.active, .round-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(96, 165, 250, 0.4); color: #ffffff; box-shadow: 0 0 15px rgba(96, 165, 250, 0.1); }
 
-        .nav-arrows { display: flex; gap: 6px; }
-        .arrow-btn { background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); color: #f3f4f6; width: 38px; height: 38px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .arrow-btn { background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); color: #f3f4f6; width: 38px; height: 38px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
         .arrow-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(96, 165, 250, 0.4); color: #60a5fa; }
 
         /* Stile Card Partite */
         .matches-list { display: flex; flex-direction: column; gap: 15px; }
-        .match-card { background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; backdrop-filter: blur(12px); overflow: hidden; transition: all 0.3s ease; }
+        .match-card { background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; backdrop-filter: blur(12px); overflow: hidden; transition: all 0.3s ease; position: relative; z-index: 1; }
         .match-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); }
         
         .match-main-row { padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; flex-wrap: wrap; gap: 15px; }
@@ -141,13 +140,13 @@
             <p class="games-page-subtitle">Schedules, results, and detailed box scores for the NBA regular season.</p>
         </div>
 
-        <!-- Barra delle date con mini-calendario custom -->
+        <!-- Barra delle date con freccia sinistra a sinistra, giorni al centro e freccia destra a destra -->
         <div class="date-nav-wrapper">
             <div class="month-indicator">
                 <button class="calendar-icon-btn" id="calendarToggle" title="Select Date"><i class="fa-regular fa-calendar-days"></i></button>
                 <span id="currentMonthLabel">November 2026</span>
                 
-                <!-- Popup Custom Calendar -->
+                <!-- Popup Custom Calendario -->
                 <div class="custom-calendar-popup" id="customCalendar">
                     <div class="calendar-popup-header">
                         <button id="calPrevMonth">&lt;</button>
@@ -158,12 +157,13 @@
                 </div>
             </div>
             
+            <!-- Freccia Sinistra posizionata prima dei giorni -->
+            <button class="arrow-btn" id="prevWeekBtn" title="Previous Week"><i class="fa-solid fa-chevron-left"></i></button>
+            
             <div class="rounds-scroll-container" id="daysContainer"></div>
             
-            <div class="nav-arrows">
-                <button class="arrow-btn" id="prevWeekBtn" title="Previous Week"><i class="fa-solid fa-chevron-left"></i></button>
-                <button class="arrow-btn" id="nextWeekBtn" title="Next Week"><i class="fa-solid fa-chevron-right"></i></button>
-            </div>
+            <!-- Freccia Destra posizionata a destra dei giorni -->
+            <button class="arrow-btn" id="nextWeekBtn" title="Next Week"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
 
         <div class="matches-list" id="gamesContainer">
@@ -182,7 +182,7 @@
 
     <script>
         let nbaData = {};
-        let selectedDate = "2026-11-08"; // Data di default
+        let selectedDate = "2026-11-08";
         let popupDate = new Date(selectedDate);
 
         async function loadNbaData() {
@@ -397,7 +397,6 @@
             const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7;
             const totalDays = new Date(year, month + 1, 0).getDate();
 
-            // Giorni mese precedente
             const prevMonthDays = new Date(year, month, 0).getDate();
             for (let i = firstDayIndex - 1; i >= 0; i--) {
                 const div = document.createElement('div');
@@ -406,7 +405,6 @@
                 grid.appendChild(div);
             }
 
-            // Giorni mese corrente
             for (let i = 1; i <= totalDays; i++) {
                 const div = document.createElement('div');
                 div.className = 'calendar-day-cell';
@@ -437,7 +435,7 @@
             renderCustomCalendar();
         };
 
-        // Frecce settimana
+        // Logica frecce settimana (salto di 7 giorni pulito)
         document.getElementById('prevWeekBtn').onclick = () => {
             let d = new Date(selectedDate);
             d.setDate(d.getDate() - 7);
@@ -459,7 +457,7 @@
         // Avvio
         loadNbaData();
 
-        // Sfondo animato 3D con particelle (Three.js)
+        // Sfondo 3D Three.js
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
