@@ -1,5 +1,7 @@
 import json
 import datetime
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import time
 import requests
 
@@ -66,7 +68,7 @@ def format_nba_players(athletes_raw):
     return formatted
 
 def fetch_nba_games():
-    print("=== Avvio aggiornamento calendario e risultati NBA (Correzione Date) ===")
+    print("=== Avvio aggiornamento calendario NBA (Fuso orario USA sincronizzato) ===")
     season_data = {"dates": {}}
 
     url = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
@@ -78,9 +80,15 @@ def fetch_nba_games():
             
             for ev in events:
                 event_id = ev.get("id")
-                # Estraiamo la data della partita normalizzata sul calendario NBA ufficiale
                 raw_date = ev.get("date", "")
-                date_str = raw_date[:10] # YYYY-MM-DD ufficiale della schedule NBA
+                
+                # Conversione rigorosa basata sul calendario della costa orientale americana
+                if raw_date:
+                    utc_dt = datetime.fromisoformat(raw_date.replace("Z", "+00:00"))
+                    us_dt = utc_dt.astimezone(ZoneInfo("America/New_York"))
+                    date_str = us_dt.strftime("%Y-%m-%d")
+                else:
+                    continue
                 
                 competitions = ev.get("competitions", [{}])[0]
                 competitors = competitions.get("competitors", [])
@@ -117,7 +125,7 @@ def fetch_nba_games():
                 
             with open("nba-games-data.json", "w", encoding="utf-8") as f:
                 json.dump(season_data, f, ensure_ascii=False, indent=4)
-            print("=== File nba-games-data.json aggiornato correttamente! ===")
+            print("=== File nba-games-data.json aggiornato con successo! ===")
     except Exception as e:
         print(f"Errore durante il fetch: {e}")
 
