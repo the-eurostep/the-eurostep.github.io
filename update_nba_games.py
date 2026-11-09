@@ -3,13 +3,24 @@ import datetime
 import time
 import requests
 
+def parse_shooting_stat(stat_str):
+    """Converte stringhe come '8-16' in (made, attempted, percentage_string)"""
+    if "-" in stat_str:
+        parts = stat_str.split("-")
+        if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+            made = int(parts[0])
+            att = int(parts[1])
+            pct = f"{(made / att * 100):.1f}%" if att > 0 else "0.0%"
+            return made, att, pct
+    return 0, 0, "0.0%"
+
 def parse_nba_box_score(event_id):
-    """Recupera e mappa i tabellini dei giocatori dalle API di ESPN per una specifica partita NBA"""
+    """Recupera e mappa i tabellini dei giocatori dalle API di ESPN con indici esatti"""
     boxscore = {"homePlayers": [], "awayPlayers": []}
     
     url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event={event_id}"
     try:
-        time.sleep(0.3) # Rate limiting per sicurezza
+        time.sleep(0.3)
         res = requests.get(url, timeout=6)
         if res.status_code == 200:
             data = res.json()
@@ -17,8 +28,6 @@ def parse_nba_box_score(event_id):
             teams_stats = boxscore_data.get("players", [])
             
             if len(teams_stats) >= 2:
-                # Team 0: Away (di solito), Team 1: Home - verifichiamo la struttura ESPN
-                # In ESPN 'players' contiene solitamente due oggetti squadra
                 away_data = teams_stats[0].get("statistics", [{}])[0].get("athletes", [])
                 home_data = teams_stats[1].get("statistics", [{}])[0].get("athletes", [])
                 
@@ -32,33 +41,59 @@ def parse_nba_box_score(event_id):
     return boxscore
 
 def format_nba_players(athletes_raw):
-    """Mappa le statistiche dei giocatori NBA escludendo PIR, 2PM, 2PA e 2P%"""
+    """Mappa le statistiche dei giocatori NBA basandosi sulle etichette ufficiali di ESPN:
+       ['MIN', 'PTS', 'FG', '3PT', 'FT', 'REB', 'AST', 'TO', 'STL', 'BLK', 'OREB', 'DREB', 'PF', '+/-']
+    """
     formatted = []
     for ath in athletes_raw:
         stats = ath.get("stats", [])
-        # ESPN restituisce le statistiche in un array ordinato di stringhe. 
-        # Di solito l'ordine tipico di ESPN boxscore è: MIN, PTS, OREB, DREB, REB, AST, STL, BLK, TO, PF, 3PM-3A, FTM-FTA, +/- (può variare leggermente)
-        # Salviamo i campi principali in modo sicuro estraendoli per nome o posizione se mappati.
         name = ath.get("athlete", {}).get("displayName", "Player")
         
-        # Estraiamo i campi base se presenti nell'oggetto atleta
-        # Nota: adatteremo i campi esatti in base al primo test stampato nei log
+        # Estrazione sicura dei campi in base agli indici ufficiali di ESPN
+        min_val = stats[0] if len(stats) > 0 else "0"
+        pts = int(stats[1]) if len(stats) > 1 and stats[1].isdigit() else 0
+        
+        fg_str = stats[2] if len(stats) > 2 else "0-0"
+        fgm, fga, fg_pct = parse_shooting_stat(fg_str)
+        
+        tp_str = stats[3] if len(stats) > 3 else "0-0"
+        tpm3, tpa3, tp_pct3 = parse_shooting_stat(tp_str)
+        
+        ft_str = stats[4] if len(stats) > 4 else "0-0"
+        ftm, fta, ft_pct = parse_shooting_stat(ft_str)
+        
+        reb = int(stats[5]) if len(stats) > 5 and stats[5].isdigit() else 0
+        ast = int(stats[6]) if len(stats) > 6 and stats[6].isdigit() else 0
+        to = int(stats[7]) if len(stats) > 7 and stats[7].isdigit() else 0
+        stl = int(stats[8]) if len(stats) > 8 and stats[8].isdigit() else 0
+        blk = int(stats[9]) if len(stats) > 9 and stats[9].isdigit() else 0
+        oreb = int(stats[10]) if len(stats) > 10 and stats[10].isdigit() else 0
+        dreb = int(stats[11]) if len(stats) > 11 and stats[11].isdigit() else 0
+        pf = int(stats[12]) if len(stats) > 12 and stats[12].isdigit() else 0
+        plus_minus = stats[13] if len(stats) > 13 else "0"
+        
         formatted.append({
             "name": name,
-            "min": stats[0] if len(stats) > 0 else "0",
-            "pts": int(stats[1]) if len(stats) > 1 and stats[1].isdigit() else 0,
-            "oreb": int(stats[2]) if len(stats) > 2 and stats[2].isdigit() else 0,
-            "dreb": int(stats[3]) if len(stats) > 3 and stats[3].isdigit() else 0,
-            "reb": int(stats[4]) if len(stats) > 4 and stats[4].isdigit() else 0,
-            "ast": int(stats[5]) if len(stats) > 5 and stats[5].isdigit() else 0,
-            "stl": int(stats[6]) if len(stats) > 6 and stats[6].isdigit() else 0,
-            "blk": int(stats[7]) if len(stats) > 7 and stats[7].isdigit() else 0,
-            "to": int(stats[8]) if len(stats) > 8 and stats[8].isdigit() else 0,
-            "pf": int(stats[9]) if len(stats) > 9 and stats[9].isdigit() else 0,
-            # Per triple e tiri liberi gestiamo la formattazione pulita
-            "tpm3": 0, "tpa3": 0, "tp_pct3": "0.0%",
-            "ftm": 0, "fta": 0, "ft_pct": "0.0%",
-            "plusMinus": "0"
+            "min": min_val,
+            "fgm": fgm,
+            "fga": fga,
+            "fg_pct": fg_pct,
+            "tpm3": tpm3,
+            "tpa3": tpa3,
+            "tp_pct3": tp_pct3,
+            "ftm": ftm,
+            "fta": fta,
+            "ft_pct": ft_pct,
+            "oreb": oreb,
+            "dreb": dreb,
+            "reb": reb,
+            "ast": ast,
+            "stl": stl,
+            "blk": blk,
+            "to": to,
+            "pf": pf,
+            "pts": pts,
+            "plusMinus": plus_minus
         })
     return formatted
 
@@ -69,7 +104,6 @@ def fetch_nba_games():
         "dates": {}
     }
 
-    # Scarichiamo il blocco delle partite (scoreboard recente / stagione corrente)
     url = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
     
     try:
@@ -80,8 +114,7 @@ def fetch_nba_games():
             
             for ev in events:
                 event_id = ev.get("id")
-                date_str = ev.get("date", "")[:10] # Formato YYYY-MM-DD
-                name = ev.get("name", "")
+                date_str = ev.get("date", "")[:10]
                 
                 competitions = ev.get("competitions", [{}])[0]
                 competitors = competitions.get("competitors", [])
@@ -128,7 +161,7 @@ def fetch_nba_games():
             with open("nba-games-data.json", "w", encoding="utf-8") as f:
                 json.dump(season_data, f, ensure_ascii=False, indent=4)
                 
-            print("=== File nba-games-data.json salvato con successo! ===")
+            print("=== File nba-games-data.json rigenerato con successo! ===")
         else:
             print(f"Errore HTTP scoreboard NBA: {res.status_code}")
     except Exception as e:
