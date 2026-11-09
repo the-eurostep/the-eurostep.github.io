@@ -68,10 +68,9 @@ def format_nba_players(athletes_raw):
     return formatted
 
 def fetch_nba_games():
-    print("=== Avvio aggiornamento calendario NBA (Multi-giorno & Doppi orari) ==pss")
+    print("=== Avvio aggiornamento calendario NBA (Multi-giorno & Doppi orari) ===")
     season_data = {"dates": {}}
 
-    # Generiamo un range di date da 5 giorni fa a 25 giorni nel futuro per coprire l'intera settimana corrente e dintorni
     today = datetime.now(ZoneInfo("America/New_York")).date()
     start_date = today - timedelta(days=5)
     end_date = today + timedelta(days=25)
@@ -96,11 +95,9 @@ def fetch_nba_games():
                     
                     utc_dt = datetime.fromisoformat(raw_date.replace("Z", "+00:00"))
                     
-                    # Data solare americana (US Eastern)
                     us_dt = utc_dt.astimezone(ZoneInfo("America/New_York"))
                     date_str = us_dt.strftime("%Y-%m-%d")
                     
-                    # Orari formattati compatti: ET (americano) e CET (europeo)
                     et_time = us_dt.strftime("%H:%M") + " ET"
                     cet_dt = utc_dt.astimezone(ZoneInfo("Europe/Rome"))
                     cet_time = cet_dt.strftime("%H:%M") + " CET"
@@ -130,7 +127,6 @@ def fetch_nba_games():
                     if date_str not in season_data["dates"]:
                         season_data["dates"][date_str] = []
                     
-                    # Evitiamo duplicati se una partita viene trovata su più chiamate di data
                     if not any(g["id"] == event_id for g in season_data["dates"][date_str]):
                         season_data["dates"][date_str].append({
                             "id": event_id,
@@ -143,7 +139,7 @@ def fetch_nba_games():
         except Exception as e:
             print(f"Errore durante il fetch per la data {date_param}: {e}")
         
-        current_d += timedelta(days=1))
+        current_d += timedelta(days=1)
 
     with open("nba-games-data.json", "w", encoding="utf-8") as f:
         json.dump(season_data, f, ensure_ascii=False, indent=4)
