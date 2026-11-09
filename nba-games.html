@@ -27,22 +27,22 @@
         .games-page-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
         .games-page-subtitle { color: #9ca3af; font-size: 0.95rem; }
 
-        /* Barra delle date con freccia sinistra e destra simmetriche */
-        .date-nav-wrapper { display: flex; align-items: center; gap: 12px; background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 20px; border-radius: 14px; backdrop-filter: blur(12px); position: relative; }
+        /* Barra date con z-index elevato per stare sopra le card */
+        .date-nav-wrapper { display: flex; align-items: center; gap: 12px; background: rgba(11, 15, 25, 0.95); border: 1px solid rgba(255, 255, 255, 0.12); padding: 12px 20px; border-radius: 14px; backdrop-filter: blur(15px); position: relative; z-index: 5000; }
         .month-indicator { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; white-space: nowrap; position: relative; }
         
         .calendar-icon-btn { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 1rem; transition: transform 0.2s; }
         .calendar-icon-btn:hover { transform: scale(1.15); }
 
-        /* Popup Custom Calendario in primo piano */
-        .custom-calendar-popup { display: none; position: absolute; top: 45px; left: 0; background: rgba(11, 15, 25, 0.98); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); z-index: 99999; backdrop-filter: blur(20px); min-width: 260px; }
+        /* Popup Custom Calendario Opaco e in primissimo piano */
+        .custom-calendar-popup { display: none; position: absolute; top: 48px; left: 0; background: #070a12; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 12px; padding: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.95); z-index: 99999; min-width: 280px; }
         .custom-calendar-popup.active { display: block; }
         .calendar-popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #ffffff; }
-        .calendar-popup-header button { background: none; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
+        .calendar-popup-header button { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 0.75rem; }
         .calendar-day-header { color: #9ca3af; font-weight: 600; padding-bottom: 6px; font-family: 'Orbitron', sans-serif; }
         .calendar-day-cell { padding: 8px 4px; border-radius: 6px; cursor: pointer; color: #d1d5db; transition: background 0.2s; }
-        .calendar-day-cell:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .calendar-day-cell:hover { background: rgba(255,255,255,0.15); color: #fff; }
         .calendar-day-cell.selected { background: #60a5fa; color: #030508; font-weight: 700; }
         .calendar-day-cell.muted { color: #4b5563; }
 
@@ -64,7 +64,6 @@
         
         .match-main-row { padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; flex-wrap: wrap; gap: 15px; }
         
-        /* Spazio orari compatto a due righe per ET e CET */
         .match-info { font-size: 0.75rem; color: #9ca3af; font-family: 'Orbitron', sans-serif; min-width: 130px; line-height: 1.3; }
         .match-info .time-et { color: #f3f4f6; font-weight: 700; }
         .match-info .time-cet { color: #60a5fa; font-weight: 600; font-size: 0.7rem; }
@@ -78,7 +77,8 @@
         .team-name { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: #9ca3af; }
         .team-name.winner { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
 
-        .score-box { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 900; color: #ffffff; background: rgba(255, 255, 255, 0.04); padding: 6px 16px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); min-width: 90px; text-align: center; }
+        /* Score-box allargato e bloccato su una sola riga (niente a capo con 3 cifre) */
+        .score-box { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; color: #ffffff; background: rgba(255, 255, 255, 0.04); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); min-width: 115px; text-align: center; white-space: nowrap; letter-spacing: 1px; }
         .score-box.upcoming { font-size: 0.9rem; color: #9ca3af; font-weight: 600; }
 
         .boxscore-link { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700; color: #9ca3af; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; text-align: right; }
@@ -143,12 +143,13 @@
             <p class="games-page-subtitle">Schedules, results, and detailed box scores for the NBA regular season.</p>
         </div>
 
-        <!-- Barra delle date con freccia sinistra e destra posizionate simmetricamente -->
+        <!-- Barra delle date con z-index elevato -->
         <div class="date-nav-wrapper">
             <div class="month-indicator">
                 <button class="calendar-icon-btn" id="calendarToggle" title="Select Date"><i class="fa-regular fa-calendar-days"></i></button>
                 <span id="currentMonthLabel">November 2026</span>
                 
+                <!-- Popup Calendario Opaco in primissimo piano -->
                 <div class="custom-calendar-popup" id="customCalendar">
                     <div class="calendar-popup-header">
                         <button id="calPrevMonth">&lt;</button>
@@ -247,7 +248,6 @@
                 const homeWinner = isPlayed && game.homeScore > game.awayScore;
                 const awayWinner = isPlayed && game.awayScore > game.homeScore;
 
-                // Gestione della visualizzazione dei doppi orari (ET / CET)
                 let timeHtml = game.time || '';
                 if (game.time && game.time.includes('/')) {
                     const parts = game.time.split('/');
