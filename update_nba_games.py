@@ -68,12 +68,12 @@ def format_nba_players(athletes_raw):
     return formatted
 
 def fetch_nba_games():
-    print("=== Avvio aggiornamento calendario NBA (Multi-giorno & Doppi orari) ===")
+    print("=== Avvio aggiornamento calendario NBA (Regular Season Completa) ===")
     season_data = {"dates": {}}
 
-    today = datetime.now(ZoneInfo("America/New_York")).date()
-    start_date = today - timedelta(days=5)
-    end_date = today + timedelta(days=25)
+    # Intervallo ufficiale Regular Season 2026-27: dal 20 ottobre 2026 all'11 aprile 2027
+    start_date = datetime(2026, 10, 20, tzinfo=ZoneInfo("America/New_York")).date()
+    end_date = datetime(2027, 4, 11, tzinfo=ZoneInfo("America/New_York")).date()
     
     current_d = start_date
     while current_d <= end_date:
@@ -94,7 +94,6 @@ def fetch_nba_games():
                         continue
                     
                     utc_dt = datetime.fromisoformat(raw_date.replace("Z", "+00:00"))
-                    
                     us_dt = utc_dt.astimezone(ZoneInfo("America/New_York"))
                     date_str = us_dt.strftime("%Y-%m-%d")
                     
@@ -143,7 +142,7 @@ def fetch_nba_games():
 
     with open("nba-games-data.json", "w", encoding="utf-8") as f:
         json.dump(season_data, f, ensure_ascii=False, indent=4)
-    print("=== File nba-games-data.json aggiornato con successo per tutta la stagione! ===")
+    print("=== File nba-games-data.json aggiornato con successo per l'intera regular season! ===")
 
 if __name__ == "__main__":
     fetch_nba_games()
