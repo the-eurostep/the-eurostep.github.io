@@ -13,7 +13,6 @@
         body { background-color: #030508; color: #f3f4f6; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
         #webgl-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
         
-        /* Header identico all'Eurolega */
         header { display: flex; justify-content: space-between; align-items: center; padding: 18px 45px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(3, 5, 8, 0.92); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000; }
         .brand-container { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.3s ease, filter 0.3s ease; }
         .brand-container:hover { transform: scale(1.02); filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)); }
@@ -28,11 +27,24 @@
         .games-page-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
         .games-page-subtitle { color: #9ca3af; font-size: 0.95rem; }
 
-        /* Barra delle date in perfetto stile "rounds-scroll-container" dell'Eurolega */
-        .date-nav-wrapper { display: flex; align-items: center; gap: 12px; background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 20px; border-radius: 14px; backdrop-filter: blur(12px); }
-        .month-indicator { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+        /* Barra delle date con stile Euroleague rounds */
+        .date-nav-wrapper { display: flex; align-items: center; gap: 12px; background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 20px; border-radius: 14px; backdrop-filter: blur(12px); position: relative; }
+        .month-indicator { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; white-space: nowrap; position: relative; }
+        
         .calendar-icon-btn { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 1rem; transition: transform 0.2s; }
         .calendar-icon-btn:hover { transform: scale(1.15); }
+
+        /* Custom Popup Calendario in stile The Eurostep */
+        .custom-calendar-popup { display: none; position: absolute; top: 50px; left: 0; background: rgba(11, 15, 25, 0.96); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(15px); min-width: 260px; }
+        .custom-calendar-popup.active { display: block; }
+        .calendar-popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #ffffff; }
+        .calendar-popup-header button { background: none; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 0.75rem; }
+        .calendar-day-header { color: #9ca3af; font-weight: 600; padding-bottom: 6px; font-family: 'Orbitron', sans-serif; }
+        .calendar-day-cell { padding: 8px 4px; border-radius: 6px; cursor: pointer; color: #d1d5db; transition: background 0.2s; }
+        .calendar-day-cell:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .calendar-day-cell.selected { background: #60a5fa; color: #030508; font-weight: 700; }
+        .calendar-day-cell.muted { color: #4b5563; }
 
         .rounds-scroll-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; scrollbar-color: rgba(96, 165, 250, 0.4) rgba(11, 15, 25, 0.8); flex: 1; }
         .rounds-scroll-container::-webkit-scrollbar { height: 6px; }
@@ -46,7 +58,7 @@
         .arrow-btn { background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); color: #f3f4f6; width: 38px; height: 38px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
         .arrow-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(96, 165, 250, 0.4); color: #60a5fa; }
 
-        /* Stile Card Partite ed Espansione Box Score (Esatto stile Eurolega) */
+        /* Stile Card Partite */
         .matches-list { display: flex; flex-direction: column; gap: 15px; }
         .match-card { background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; backdrop-filter: blur(12px); overflow: hidden; transition: all 0.3s ease; }
         .match-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); }
@@ -129,17 +141,24 @@
             <p class="games-page-subtitle">Schedules, results, and detailed box scores for the NBA regular season.</p>
         </div>
 
-        <!-- Barra delle date con lo stile dei round dell'Eurolega -->
+        <!-- Barra delle date con mini-calendario custom -->
         <div class="date-nav-wrapper">
             <div class="month-indicator">
                 <button class="calendar-icon-btn" id="calendarToggle" title="Select Date"><i class="fa-regular fa-calendar-days"></i></button>
                 <span id="currentMonthLabel">November 2026</span>
+                
+                <!-- Popup Custom Calendar -->
+                <div class="custom-calendar-popup" id="customCalendar">
+                    <div class="calendar-popup-header">
+                        <button id="calPrevMonth">&lt;</button>
+                        <span id="calMonthTitle">November 2026</span>
+                        <button id="calNextMonth">&gt;</button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </div>
             </div>
-            <input type="date" id="hiddenDateInput" style="display:none;">
             
-            <div class="rounds-scroll-container" id="daysContainer">
-                <!-- Generato via JS in stile round-btn -->
-            </div>
+            <div class="rounds-scroll-container" id="daysContainer"></div>
             
             <div class="nav-arrows">
                 <button class="arrow-btn" id="prevWeekBtn" title="Previous Week"><i class="fa-solid fa-chevron-left"></i></button>
@@ -163,7 +182,8 @@
 
     <script>
         let nbaData = {};
-        let selectedDate = "2026-11-08"; // Data di test iniziale
+        let selectedDate = "2026-11-08"; // Data di default
+        let popupDate = new Date(selectedDate);
 
         async function loadNbaData() {
             try {
@@ -191,14 +211,12 @@
 
             const baseDate = new Date(selectedDate);
             
-            // Generiamo i bottoni dei giorni in stile round-btn
             for (let i = -3; i <= 3; i++) {
                 const d = new Date(baseDate);
                 d.setDate(baseDate.getDate() + i);
                 const dateString = d.toISOString().split('T')[0];
                 
                 const btn = document.createElement('button');
-                btn.id = `day-btn-${dateString}`;
                 btn.className = `round-btn ${dateString === selectedDate ? 'active' : ''}`;
                 btn.textContent = d.toLocaleDateString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric' });
                 
@@ -339,16 +357,92 @@
         function toggleBoxScore(matchIndex, isPlayed) {
             if (!isPlayed) return;
             const card = document.getElementById(`match-${matchIndex}`);
-            if (card) {
-                card.classList.toggle('expanded');
+            if (card) card.classList.toggle('expanded');
+        }
+
+        // Custom Calendar Logic
+        const calendarToggle = document.getElementById('calendarToggle');
+        const customCalendar = document.getElementById('customCalendar');
+        
+        calendarToggle.onclick = (e) => {
+            e.stopPropagation();
+            customCalendar.classList.toggle('active');
+            renderCustomCalendar();
+        };
+
+        document.addEventListener('click', (e) => {
+            if (!customCalendar.contains(e.target) && e.target !== calendarToggle) {
+                customCalendar.classList.remove('active');
+            }
+        });
+
+        function renderCustomCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const title = document.getElementById('calMonthTitle');
+            grid.innerHTML = '';
+
+            const year = popupDate.getFullYear();
+            const month = popupDate.getMonth();
+
+            title.textContent = popupDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            const daysOfWeek = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+            daysOfWeek.forEach(d => {
+                const div = document.createElement('div');
+                div.className = 'calendar-day-header';
+                div.textContent = d;
+                grid.appendChild(div);
+            });
+
+            const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7;
+            const totalDays = new Date(year, month + 1, 0).getDate();
+
+            // Giorni mese precedente
+            const prevMonthDays = new Date(year, month, 0).getDate();
+            for (let i = firstDayIndex - 1; i >= 0; i--) {
+                const div = document.createElement('div');
+                div.className = 'calendar-day-cell muted';
+                div.textContent = prevMonthDays - i;
+                grid.appendChild(div);
+            }
+
+            // Giorni mese corrente
+            for (let i = 1; i <= totalDays; i++) {
+                const div = document.createElement('div');
+                div.className = 'calendar-day-cell';
+                const mStr = String(month + 1).padStart(2, '0');
+                const dStr = String(i).padStart(2, '0');
+                const dateStr = `${year}-${mStr}-${dStr}`;
+
+                if (dateStr === selectedDate) div.classList.add('selected');
+                div.textContent = i;
+                
+                div.onclick = () => {
+                    selectedDate = dateStr;
+                    customCalendar.classList.remove('active');
+                    renderDateBar();
+                    renderGames();
+                };
+                grid.appendChild(div);
             }
         }
 
-        // Frecce navigazione settimana
+        document.getElementById('calPrevMonth').onclick = () => {
+            popupDate.setMonth(popupDate.getMonth() - 1);
+            renderCustomCalendar();
+        };
+
+        document.getElementById('calNextMonth').onclick = () => {
+            popupDate.setMonth(popupDate.getMonth() + 1);
+            renderCustomCalendar();
+        };
+
+        // Frecce settimana
         document.getElementById('prevWeekBtn').onclick = () => {
             let d = new Date(selectedDate);
             d.setDate(d.getDate() - 7);
             selectedDate = d.toISOString().split('T')[0];
+            popupDate = new Date(selectedDate);
             renderDateBar();
             renderGames();
         };
@@ -357,30 +451,15 @@
             let d = new Date(selectedDate);
             d.setDate(d.getDate() + 7);
             selectedDate = d.toISOString().split('T')[0];
+            popupDate = new Date(selectedDate);
             renderDateBar();
             renderGames();
-        };
-
-        // Calendario interattivo
-        const calendarToggle = document.getElementById('calendarToggle');
-        const hiddenDateInput = document.getElementById('hiddenDateInput');
-
-        calendarToggle.onclick = () => {
-            hiddenDateInput.showPicker ? hiddenDateInput.showPicker() : hiddenDateInput.click();
-        };
-
-        hiddenDateInput.onchange = (e) => {
-            if (e.target.value) {
-                selectedDate = e.target.value;
-                renderDateBar();
-                renderGames();
-            }
         };
 
         // Avvio
         loadNbaData();
 
-        // Sfondo animato 3D con particelle (Three.js identico all'Eurolega)
+        // Sfondo animato 3D con particelle (Three.js)
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
