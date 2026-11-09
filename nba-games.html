@@ -22,19 +22,19 @@
         .nav-link { color: #d1d5db; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 0; transition: color 0.3s ease; display: block; }
         .nav-link:hover { color: #ffffff; }
 
-        .games-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; z-index: 1; width: 100%; display: flex; flex-direction: column; gap: 25px; }
+        .games-container { max-width: 1050px; margin: 40px auto; padding: 0 20px; z-index: 1; width: 100%; display: flex; flex-direction: column; gap: 25px; }
         .games-header-section { text-align: center; }
         .games-page-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
         .games-page-subtitle { color: #9ca3af; font-size: 0.95rem; }
 
-        /* Barra date con z-index elevato per stare sopra le card */
+        /* Barra date con z-index elevato e opaca */
         .date-nav-wrapper { display: flex; align-items: center; gap: 12px; background: rgba(11, 15, 25, 0.95); border: 1px solid rgba(255, 255, 255, 0.12); padding: 12px 20px; border-radius: 14px; backdrop-filter: blur(15px); position: relative; z-index: 5000; }
         .month-indicator { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; white-space: nowrap; position: relative; }
         
         .calendar-icon-btn { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 1rem; transition: transform 0.2s; }
         .calendar-icon-btn:hover { transform: scale(1.15); }
 
-        /* Popup Custom Calendario Opaco e in primissimo piano */
+        /* Popup Calendario Opaco e in primissimo piano */
         .custom-calendar-popup { display: none; position: absolute; top: 48px; left: 0; background: #070a12; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 12px; padding: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.95); z-index: 99999; min-width: 280px; }
         .custom-calendar-popup.active { display: block; }
         .calendar-popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #ffffff; }
@@ -57,31 +57,32 @@
         .arrow-btn { background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); color: #f3f4f6; width: 38px; height: 38px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
         .arrow-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(96, 165, 250, 0.4); color: #60a5fa; }
 
-        /* Stile Card Partite */
+        /* Card Partite pulite e ordinate */
         .matches-list { display: flex; flex-direction: column; gap: 15px; }
         .match-card { background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; backdrop-filter: blur(12px); overflow: hidden; transition: all 0.3s ease; position: relative; z-index: 1; }
         .match-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); }
         
-        .match-main-row { padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; flex-wrap: wrap; gap: 15px; }
+        .match-main-row { padding: 18px 25px; display: grid; grid-template-columns: 140px 1fr 140px; align-items: center; cursor: pointer; gap: 20px; }
         
-        .match-info { font-size: 0.75rem; color: #9ca3af; font-family: 'Orbitron', sans-serif; min-width: 130px; line-height: 1.3; }
+        .match-info { font-size: 0.75rem; color: #9ca3af; font-family: 'Orbitron', sans-serif; line-height: 1.3; }
+        .match-info.right { text-align: right; }
         .match-info .time-et { color: #f3f4f6; font-weight: 700; }
         .match-info .time-cet { color: #60a5fa; font-weight: 600; font-size: 0.7rem; }
         
-        .teams-matchup { display: flex; align-items: center; gap: 30px; flex: 1; justify-content: center; }
-        .team-box { display: flex; align-items: center; gap: 12px; width: 220px; }
+        .teams-matchup { display: flex; align-items: center; gap: 20px; justify-content: center; }
+        .team-box { display: flex; align-items: center; gap: 12px; width: 210px; }
         .team-box.home { justify-content: flex-end; text-align: right; }
         .team-box.away { justify-content: flex-start; text-align: left; }
         
-        .team-logo { width: 32px; height: 32px; object-fit: contain; }
-        .team-name { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: #9ca3af; }
+        .team-logo { width: 30px; height: 30px; object-fit: contain; flex-shrink: 0; }
+        .team-name { font-family: 'Orbitron', sans-serif; font-size: 0.82rem; font-weight: 700; color: #9ca3af; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .team-name.winner { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
 
-        /* Score-box allargato e bloccato su una sola riga (niente a capo con 3 cifre) */
-        .score-box { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; color: #ffffff; background: rgba(255, 255, 255, 0.04); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); min-width: 115px; text-align: center; white-space: nowrap; letter-spacing: 1px; }
-        .score-box.upcoming { font-size: 0.9rem; color: #9ca3af; font-weight: 600; }
+        /* Score-box rigido, a dimensione fissa identica per tutti e senza andare a capo */
+        .score-box { font-family: 'Orbitron', sans-serif; font-size: 1.05rem; font-weight: 900; color: #ffffff; background: rgba(255, 255, 255, 0.04); padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); width: 125px; flex: 0 0 125px; text-align: center; white-space: nowrap; letter-spacing: 0.5px; }
+        .score-box.upcoming { font-size: 0.9rem; color: #9ca3af; font-weight: 600; letter-spacing: 2px; }
 
-        .boxscore-link { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700; color: #9ca3af; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; text-align: right; }
+        .boxscore-link { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700; color: #9ca3af; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; white-space: nowrap; display: inline-block; }
         .match-card:hover .boxscore-link { color: #60a5fa; text-shadow: 0 0 10px rgba(96, 165, 250, 0.4); }
 
         .boxscore-section { display: none; background: rgba(7, 10, 16, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 25px; }
@@ -116,10 +117,12 @@
         footer a { color: #6b7280; text-decoration: none; transition: color 0.2s ease; }
         footer a:hover { color: #ffffff; }
 
-        @media (max-width: 768px) { 
+        @media (max-width: 850px) { 
             header { padding: 15px 20px; } 
+            .match-main-row { grid-template-columns: 1fr; text-align: center; gap: 12px; }
+            .match-info.right { text-align: center; }
             .teams-matchup { flex-direction: column; gap: 10px; } 
-            .team-box.home, .team-box.away { justify-content: center; text-align: center; } 
+            .team-box.home, .team-box.away { justify-content: center; text-align: center; width: 100%; } 
             .date-nav-wrapper { flex-direction: column; align-items: stretch; }
         }
     </style>
@@ -143,13 +146,13 @@
             <p class="games-page-subtitle">Schedules, results, and detailed box scores for the NBA regular season.</p>
         </div>
 
-        <!-- Barra delle date con z-index elevato -->
+        <!-- Barra delle date -->
         <div class="date-nav-wrapper">
             <div class="month-indicator">
                 <button class="calendar-icon-btn" id="calendarToggle" title="Select Date"><i class="fa-regular fa-calendar-days"></i></button>
                 <span id="currentMonthLabel">November 2026</span>
                 
-                <!-- Popup Calendario Opaco in primissimo piano -->
+                <!-- Popup Calendario Opaco -->
                 <div class="custom-calendar-popup" id="customCalendar">
                     <div class="calendar-popup-header">
                         <button id="calPrevMonth">&lt;</button>
@@ -274,7 +277,7 @@
                                 <span class="team-name ${awayWinner ? 'winner' : ''}">${game.awayTeam}</span>
                             </div>
                         </div>
-                        <div class="match-info" style="text-align: right;">
+                        <div class="match-info right">
                             ${isPlayed ? '<span class="boxscore-link">Box Scores &rarr;</span>' : '<span style="color: #9ca3af; font-size: 0.8rem;">Upcoming</span>'}
                         </div>
                     </div>
