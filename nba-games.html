@@ -27,14 +27,14 @@
         .games-page-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
         .games-page-subtitle { color: #9ca3af; font-size: 0.95rem; }
 
-        /* Barra delle date con freccia sinistra e destra posizionate correttamente */
+        /* Barra delle date con freccia sinistra e destra simmetriche */
         .date-nav-wrapper { display: flex; align-items: center; gap: 12px; background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 20px; border-radius: 14px; backdrop-filter: blur(12px); position: relative; }
         .month-indicator { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; white-space: nowrap; position: relative; }
         
         .calendar-icon-btn { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 1rem; transition: transform 0.2s; }
         .calendar-icon-btn:hover { transform: scale(1.15); }
 
-        /* Popup Custom Calendario con z-index alto in primo piano */
+        /* Popup Custom Calendario in primo piano */
         .custom-calendar-popup { display: none; position: absolute; top: 45px; left: 0; background: rgba(11, 15, 25, 0.98); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); z-index: 99999; backdrop-filter: blur(20px); min-width: 260px; }
         .custom-calendar-popup.active { display: block; }
         .calendar-popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #ffffff; }
@@ -63,7 +63,11 @@
         .match-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); }
         
         .match-main-row { padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; flex-wrap: wrap; gap: 15px; }
-        .match-info { font-size: 0.8rem; color: #9ca3af; font-family: 'Orbitron', sans-serif; min-width: 120px; }
+        
+        /* Spazio orari compatto a due righe per ET e CET */
+        .match-info { font-size: 0.75rem; color: #9ca3af; font-family: 'Orbitron', sans-serif; min-width: 130px; line-height: 1.3; }
+        .match-info .time-et { color: #f3f4f6; font-weight: 700; }
+        .match-info .time-cet { color: #60a5fa; font-weight: 600; font-size: 0.7rem; }
         
         .teams-matchup { display: flex; align-items: center; gap: 30px; flex: 1; justify-content: center; }
         .team-box { display: flex; align-items: center; gap: 12px; width: 220px; }
@@ -85,7 +89,7 @@
         
         .boxscore-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #ffffff; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase; border-left: 3px solid #60a5fa; padding-left: 10px; }
         
-        /* Tabella Box Score con colonne NBA e blocco prima colonna (Player) */
+        /* Tabella Box Score */
         .table-responsive { overflow-x: auto; overflow-y: auto; max-height: 550px; margin-bottom: 25px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.06); }
         .table-responsive::-webkit-scrollbar { height: 14px; width: 10px; }
         .table-responsive::-webkit-scrollbar-track { background: rgba(15, 22, 36, 0.95); border-radius: 0 0 12px 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
@@ -98,7 +102,6 @@
         .boxscore-table td:first-child { text-align: left; }
         .boxscore-table tbody tr:hover td { background: rgba(255, 255, 255, 0.05); color: #ffffff; }
 
-        /* Colonna Player Fissa */
         .boxscore-table th:first-child, .boxscore-table td:first-child {
             position: sticky; left: 0; z-index: 5; background: #0b0f19 !important; border-right: 2px solid rgba(255, 255, 255, 0.12); min-width: 200px; max-width: 200px; overflow: hidden; text-overflow: ellipsis;
         }
@@ -140,13 +143,12 @@
             <p class="games-page-subtitle">Schedules, results, and detailed box scores for the NBA regular season.</p>
         </div>
 
-        <!-- Barra delle date con freccia sinistra a sinistra, giorni al centro e freccia destra a destra -->
+        <!-- Barra delle date con freccia sinistra e destra posizionate simmetricamente -->
         <div class="date-nav-wrapper">
             <div class="month-indicator">
                 <button class="calendar-icon-btn" id="calendarToggle" title="Select Date"><i class="fa-regular fa-calendar-days"></i></button>
                 <span id="currentMonthLabel">November 2026</span>
                 
-                <!-- Popup Custom Calendario -->
                 <div class="custom-calendar-popup" id="customCalendar">
                     <div class="calendar-popup-header">
                         <button id="calPrevMonth">&lt;</button>
@@ -157,12 +159,10 @@
                 </div>
             </div>
             
-            <!-- Freccia Sinistra posizionata prima dei giorni -->
             <button class="arrow-btn" id="prevWeekBtn" title="Previous Week"><i class="fa-solid fa-chevron-left"></i></button>
             
             <div class="rounds-scroll-container" id="daysContainer"></div>
             
-            <!-- Freccia Destra posizionata a destra dei giorni -->
             <button class="arrow-btn" id="nextWeekBtn" title="Next Week"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
 
@@ -182,7 +182,7 @@
 
     <script>
         let nbaData = {};
-        let selectedDate = "2026-11-08";
+        let selectedDate = "2026-11-09";
         let popupDate = new Date(selectedDate);
 
         async function loadNbaData() {
@@ -201,7 +201,7 @@
                 renderGames();
             } catch (err) {
                 console.error("Errore caricamento NBA Game Center:", err);
-                document.getElementById('gamesContainer').innerHTML = '<div class="loading-text">No games data found. Please run the python update script.</div>';
+                document.getElementById('gamesContainer').innerHTML = '<div class="loading-text">No games data found. Please run the python update script via GitHub Actions.</div>';
             }
         }
 
@@ -247,13 +247,20 @@
                 const homeWinner = isPlayed && game.homeScore > game.awayScore;
                 const awayWinner = isPlayed && game.awayScore > game.homeScore;
 
+                // Gestione della visualizzazione dei doppi orari (ET / CET)
+                let timeHtml = game.time || '';
+                if (game.time && game.time.includes('/')) {
+                    const parts = game.time.split('/');
+                    timeHtml = `<div class="time-et">${parts[0].trim()}</div><div class="time-cet">${parts[1].trim()}</div>`;
+                }
+
                 const card = document.createElement('div');
                 card.className = 'match-card';
                 card.id = `match-${index}`;
 
                 let mainRowHTML = `
                     <div class="match-main-row" onclick="toggleBoxScore(${index}, ${isPlayed})">
-                        <div class="match-info"><strong>${game.time || ''}</strong></div>
+                        <div class="match-info">${timeHtml}</div>
                         <div class="teams-matchup">
                             <div class="team-box home">
                                 <span class="team-name ${homeWinner ? 'winner' : ''}">${game.homeTeam}</span>
@@ -435,7 +442,7 @@
             renderCustomCalendar();
         };
 
-        // Logica frecce settimana (salto di 7 giorni pulito)
+        // Frecce settimana
         document.getElementById('prevWeekBtn').onclick = () => {
             let d = new Date(selectedDate);
             d.setDate(d.getDate() - 7);
@@ -454,7 +461,6 @@
             renderGames();
         };
 
-        // Avvio
         loadNbaData();
 
         // Sfondo 3D Three.js
