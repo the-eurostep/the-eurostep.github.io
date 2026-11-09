@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Game Center | The Eurostep</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0f1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent-color: #e31837; /* NBA Red / Euroleague button style vibe */
+            --accent-hover: #ff1e42;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0 0 8px 0;
+        }
+
+        header p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Calendar / Date Navigation Bar */
+        .date-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .month-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .calendar-icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.2s;
+        }
+
+        .calendar-icon-btn:hover {
+            color: #ffffff;
+        }
+
+        .nav-days {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        /* Stile bottoni round Eurolega applicato ai giorni */
+        .day-btn {
+            background: #21262d;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .day-btn:hover {
+            border-color: var(--text-muted);
+        }
+
+        .day-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(227, 24, 55, 0.4);
+        }
+
+        .nav-arrows {
+            display: flex;
+            gap: 5px;
+        }
+
+        .arrow-btn {
+            background: #21262d;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .arrow-btn:hover {
+            background: #30363d;
+        }
+
+        /* Match Cards */
+        .games-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .teams-scoreboard {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .team-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 35%;
+        }
+
+        .team-info.away {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        .team-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .team-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .match-score {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+
+        /* Box Score Tables */
+        .boxscore-section h4 {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 15px 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table.boxscore-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        table.boxscore-table th, table.boxscore-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table.boxscore-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+            background: #1f242c;
+        }
+
+        table.boxscore-table td:first-child, table.boxscore-table th:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .no-games {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>NBA Game Center</h1>
+            <p>Schedules, results, and detailed box scores for the NBA regular season.</p>
+        </header>
+
+        <!-- Barra di Navigazione Date -->
+        <div class="date-nav-bar">
+            <div class="nav-left">
+                <div class="month-title">
+                    <button class="calendar-icon-btn" id="calendarToggle" title="Seleziona data"><i class="fa-regular fa-calendar-days"></i></button>
+                    <span id="currentMonthLabel">November 2026</span>
+                </div>
+                <input type="date" id="hiddenDateInput" style="display:none;">
+                <div class="nav-days" id="daysContainer">
+                    <!-- Generato via JS -->
+                </div>
+            </div>
+            <div class="nav-arrows">
+                <button class="arrow-btn" id="prevWeekBtn"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="arrow-btn" id="nextWeekBtn"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Lista Partite -->
+        <div class="games-container" id="gamesContainer">
+            <!-- Caricato dinamicamente -->
+        </div>
+    </div>
+
+    <script>
+        let nbaData = {};
+        let selectedDate = "2026-11-08"; // Data di default di test
+
+        async function loadNbaData() {
+            try {
+                const response = await fetch('nba-games-data.json');
+                const data = await response.json();
+                nbaData = data.dates || {};
+                
+                // Seleziona la prima data disponibile se quella di default non esiste
+                const availableDates = Object.keys(nbaData).sort();
+                if (availableDates.length > 0 && !nbaData[selectedDate]) {
+                    selectedDate = availableDates[0];
+                }
+                
+                renderDateBar();
+                renderGames();
+            } catch (error) {
+                console.error("Errore caricamento dati NBA:", error);
+                document.getElementById('gamesContainer').innerHTML = `<div class="no-games">Impossibile caricare il file nba-games-data.json. Assicurati che lo script Python sia stato eseguito.</div>`;
+            }
+        }
+
+        function renderDateBar() {
+            const daysContainer = document.getElementById('daysContainer');
+            daysContainer.innerHTML = '';
+
+            // Generiamo una finestrella di giorni attorno alla data selezionata
+            const baseDate = new Date(selectedDate);
+            
+            for (let i = -3; i <= 3; i++) {
+                const d = new Date(baseDate);
+                d.setDate(baseDate.getDate() + i);
+                const dateString = d.toISOString().split('T')[0];
+                
+                const btn = document.createElement('button');
+                btn.className = `day-btn ${dateString === selectedDate ? 'active' : ''}`;
+                btn.textContent = d.toLocaleDateString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric' });
+                
+                btn.onclick = () => {
+                    selectedDate = dateString;
+                    renderDateBar();
+                    renderGames();
+                };
+                
+                daysContainer.appendChild(btn);
+            }
+
+            // Aggiorna etichetta mese
+            document.getElementById('currentMonthLabel').textContent = baseDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        }
+
+        function renderGames() {
+            const container = document.getElementById('gamesContainer');
+            container.innerHTML = '';
+
+            const games = nbaData[selectedDate];
+
+            if (!games || games.length === 0) {
+                container.innerHTML = `<div class="no-games">Nessuna partita programmata per la data selezionata (${selectedDate}).</div>`;
+                return;
+            }
+
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+
+                let boxscoreHtml = '';
+                if (game.status === 'played' && game.boxscore) {
+                    boxscoreHtml = `
+                        <div class="boxscore-section">
+                            <h4>${game.homeTeam} Box Score</h4>
+                            ${createTableHtml(game.boxscore.homePlayers)}
+                            
+                            <h4>${game.awayTeam} Box Score</h4>
+                            ${createTableHtml(game.boxscore.awayPlayers)}
+                        </div>
+                    `;
+                } else {
+                    boxscoreHtml = `<div style="text-align: center; color: var(--text-muted); padding: 10px;">Partita in programma / Non ancora disputata</div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="game-header">
+                        <span>${game.time}</span>
+                        <span>${game.status === 'played' ? 'FINAL' : 'UPCOMING'}</span>
+                    </div>
+                    <div class="teams-scoreboard">
+                        <div class="team-info away">
+                            <img src="${game.awayLogo}" class="team-logo" alt="${game.awayTeam}">
+                            <span class="team-name">${game.awayTeam}</span>
+                        </div>
+                        <div class="match-score">${game.status === 'played' ? `${game.awayScore} - ${game.homeScore}` : 'VS'}</div>
+                        <div class="team-info">
+                            <img src="${game.homeLogo}" class="team-logo" alt="${game.homeTeam}">
+                            <span class="team-name">${game.homeTeam}</span>
+                        </div>
+                    </div>
+                    ${boxscoreHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function createTableHtml(players) {
+            if (!players || players.length === 0) return '<p>Nessun dato giocatore disponibile.</p>';
+
+            let rows = '';
+            players.forEach(p => {
+                rows += `
+                    <tr>
+                        <td>${p.name}</td>
+                        <td>${p.min}</td>
+                        <td>${p.fgm}</td>
+                        <td>${p.fga}</td>
+                        <td>${p.fg_pct}</td>
+                        <td>${p.tpm3}</td>
+                        <td>${p.tpa3}</td>
+                        <td>${p.tp_pct3}</td>
+                        <td>${p.ftm}</td>
+                        <td>${p.fta}</td>
+                        <td>${p.ft_pct}</td>
+                        <td>${p.oreb}</td>
+                        <td>${p.dreb}</td>
+                        <td>${p.reb}</td>
+                        <td>${p.ast}</td>
+                        <td>${p.stl}</td>
+                        <td>${p.blk}</td>
+                        <td>${p.to}</td>
+                        <td>${p.pf}</td>
+                        <td>${p.pts}</td>
+                        <td>${p.plusMinus}</td>
+                    </tr>
+                `;
+            });
+
+            return `
+                <div class="table-responsive">
+                    <table class="boxscore-table">
+                        <thead>
+                            <tr>
+                                <th>PLAYER</th>
+                                <th>MIN</th>
+                                <th>FGM</th>
+                                <th>FGA</th>
+                                <th>FG%</th>
+                                <th>3PM</th>
+                                <th>3PA</th>
+                                <th>3P%</th>
+                                <th>FTM</th>
+                                <th>FTA</th>
+                                <th>FT%</th>
+                                <th>OREB</th>
+                                <th>DREB</th>
+                                <th>REB</th>
+                                <th>AST</th>
+                                <th>STL</th>
+                                <th>BLK</th>
+                                <th>TO</th>
+                                <th>PF</th>
+                                <th>PTS</th>
+                                <th>+/-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Event Listeners per frecce e calendario
+        document.getElementById('prevWeekBtn').onclick = () => {
+            let d = new Date(selectedDate);
+            d.setDate(d.getDate() - 7);
+            selectedDate = d.toISOString().split('T')[0];
+            renderDateBar();
+            renderGames();
+        };
+
+        document.getElementById('nextWeekBtn').onclick = () => {
+            let d = new Date(selectedDate);
+            d.setDate(d.getDate() + 7);
+            selectedDate = d.toISOString().split('T')[0];
+            renderDateBar();
+            renderGames();
+        };
+
+        const calendarToggle = document.getElementById('calendarToggle');
+        const hiddenDateInput = document.getElementById('hiddenDateInput');
+
+        calendarToggle.onclick = () => {
+            hiddenDateInput.showPicker ? hiddenDateInput.showPicker() : hiddenDateInput.click();
+        };
+
+        hiddenDateInput.onchange = (e) => {
+            if (e.target.value) {
+                selectedDate = e.target.value;
+                renderDateBar();
+                renderGames();
+            }
+        };
+
+        // Avvio
+        loadNbaData();
+    </script>
+</body>
+</html>
