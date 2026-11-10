@@ -50,7 +50,6 @@
         .player-name { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: #ffffff; font-weight: 700; margin-bottom: 4px; }
         .player-details { color: #9ca3af; font-size: 0.8rem; }
 
-        /* Modale Profilo Giocatore */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3, 5, 8, 0.85); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
         .modal-card { background: rgba(11, 15, 25, 0.95); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 20px; max-width: 480px; width: 100%; padding: 30px; display: flex; flex-direction: column; gap: 20px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
         .modal-close { position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: #9ca3af; font-size: 1.5rem; cursor: pointer; transition: color 0.2s; }
@@ -103,7 +102,6 @@
         </div>
     </main>
 
-    <!-- Modale Profilo Giocatore -->
     <div id="playerModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModalDirect()">&times;</button>
