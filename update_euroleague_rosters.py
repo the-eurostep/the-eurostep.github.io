@@ -31,19 +31,16 @@ def main():
         club_name = club.get('name')
         club_image = club.get('images', {}).get('crest', '')
 
-        teams_list.append({
-            "code": club_code,
-            "name": club_name,
-            "image": club_image
-        })
-
         print(f"Scaricamento roster per: {club_name} ({club_code})...")
         people_url = f"https://feeds.incrowdsports.com/provider/euroleague-feeds/v2/competitions/E/seasons/E2026/clubs/{club_code}/people"
         people_data = fetch_json(people_url)
         
         roster_players = []
+        head_coach_name = "N/A"
+
         if isinstance(people_data, list):
             for entry in people_data:
+                type_name = entry.get('typeName')
                 person = entry.get('person', {})
                 images = entry.get('images', {})
                 
@@ -57,18 +54,35 @@ def main():
                     name = full_name
                     surname = ""
 
-                roster_players.append({
-                    "code": person.get('code'),
-                    "name": name,
-                    "surname": surname,
-                    "number": entry.get('dorsal'),
-                    "position": entry.get('positionName'),
-                    "height": person.get('height'),
-                    "weight": person.get('weight'),
-                    "nationality": person.get('nationality', {}).get('name'),
-                    "birthDate": person.get('birthDate'),
-                    "image": images.get('headshot') or images.get('action', '')
-                })
+                # Estrazione Head Coach
+                if type_name == "Coach":
+                    head_coach_name = f"{name} {surname}".strip()
+
+                # Estrazione Giocatori (Filtro rigoroso)
+                elif type_name == "Player":
+                    # Estrazione nazionalità corretta
+                    country_obj = person.get('country')
+                    nat_name = country_obj.get('name') if isinstance(country_obj, dict) else 'N/A'
+
+                    roster_players.append({
+                        "code": person.get('code'),
+                        "name": name,
+                        "surname": surname,
+                        "number": entry.get('dorsal'),
+                        "position": entry.get('positionName'),
+                        "height": person.get('height'),
+                        "weight": person.get('weight'),
+                        "nationality": nat_name,
+                        "birthDate": person.get('birthDate'),
+                        "image": images.get('headshot') or images.get('action', '')
+                    })
+
+        teams_list.append({
+            "code": club_code,
+            "name": club_name,
+            "image": club_image,
+            "headCoach": head_coach_name
+        })
 
         all_rosters[club_code] = roster_players
 
