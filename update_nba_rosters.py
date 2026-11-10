@@ -2,39 +2,6 @@ import json
 import urllib.request
 from datetime import datetime
 
-TEAM_FULL_NAMES = {
-    "Atlanta": "Atlanta Hawks",
-    "Boston": "Boston Celtics",
-    "Brooklyn": "Brooklyn Nets",
-    "Charlotte": "Charlotte Hornets",
-    "Chicago": "Chicago Bulls",
-    "Cleveland": "Cleveland Cavaliers",
-    "Dallas": "Dallas Mavericks",
-    "Denver": "Denver Nuggets",
-    "Detroit": "Detroit Pistons",
-    "Golden State": "Golden State Warriors",
-    "Houston": "Houston Rockets",
-    "Indiana": "Indiana Pacers",
-    "Los Angeles Clippers": "LA Clippers",
-    "Los Angeles Lakers": "Los Angeles Lakers",
-    "Memphis": "Memphis Grizzlies",
-    "Miami": "Miami Heat",
-    "Milwaukee": "Milwaukee Bucks",
-    "Minnesota": "Minnesota Timberwolves",
-    "New Orleans": "New Orleans Pelicans",
-    "New York": "New York Knicks",
-    "Oklahoma City": "Oklahoma City Thunder",
-    "Orlando": "Orlando Magic",
-    "Philadelphia": "Philadelphia 76ers",
-    "Phoenix": "Phoenix Suns",
-    "Portland": "Portland Trail Blazers",
-    "Sacramento": "Sacramento Kings",
-    "San Antonio": "San Antonio Spurs",
-    "Toronto": "Toronto Raptors",
-    "Utah": "Utah Jazz",
-    "Washington": "Washington Wizards"
-}
-
 def fetch_json(url):
     req = urllib.request.Request(
         url,
@@ -48,57 +15,70 @@ def fetch_json(url):
         return None
 
 def main():
-    print("Sincronizzazione squadre e roster NBA...")
-    
-    # 1. Recupero delle squadre da Yahoo Sports
-    yahoo_url = "https://graphite.sports.yahoo.com/v1/query/shangrila/navDropdownTray?lang=en-US&region=US&ysp_platform=next-app-sports"
-    data = fetch_json(yahoo_url)
-    
-    if not data:
-        print("Impossibile contattare Yahoo Sports.")
-        return
+    print("Avvio sincronizzazione NBA...")
 
-    nba_sections = data.get('nba', [])
-    raw_teams = []
-    for section in nba_sections:
-        if 'teams' in section:
-            raw_teams.extend(section['teams'])
+    # 1. Recupero Loghi da Yahoo Sports
+    yahoo_url = "https://graphite.sports.yahoo.com/v1/query/shangrila/navDropdownTray?lang=en-US&region=US&ysp_platform=next-app-sports"
+    yahoo_data = fetch_json(yahoo_url)
+    
+    logos_map = {}
+    if yahoo_data and 'nba' in yahoo_data:
+        for section in yahoo_data['nba']:
+            if 'teams' in section:
+                for t in section['teams']:
+                    city_name = t.get('displayName', '').strip().lower()
+                    logo_url = t.get('teamLogo', {}).get('url', '')
+                    if city_name and logo_url:
+                        logos_map[city_name] = logo_url
+
+    # 2. Recupero Squadre e Roster da TSN
+    tsn_teams_url = "https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/"
+    tsn_teams = fetch_json(tsn_teams_url)
+
+    if not tsn_teams or not isinstance(tsn_teams, list):
+        print("Impossibile recuperare l'elenco squadre da TSN.")
+        return
 
     teams_list = []
     all_rosters = {}
     current_year = datetime.now().year
 
-    # Ordinamento preliminare per assegnare un ID progressivo stabile da 1 a 30 basato sull'ordine alfabetico del nome completo
-    sorted_raw_teams = sorted(
-        raw_teams, 
-        key=lambda t: TEAM_FULL_NAMES.get(t.get('displayName', ''), t.get('displayName', ''))
-    )
-
-    for index, team in enumerate(sorted_raw_teams, start=1):
-        short_name = team.get('displayName', '')
-        full_name = TEAM_FULL_NAMES.get(short_name, f"{short_name} Team")
-        team_logo = team.get('teamLogo', {}).get('url', '')
+    for team_info in tsn_teams:
+        competitor_id = team_info.get('competitorId')
+        full_name = team_info.get('name', '').strip()
+        location = team_info.get('location', '').strip().lower()
         
-        # Usiamo l'indice progressivo (1-30) che corrisponde alle 30 franchigie NBA ordinate alfabeticamente su TSN
-        team_code = str(index)
+        if not competitor_id or not full_name:
+            continue
 
-        print(f"Elaborazione franchigia ({team_code}/30): {full_name}...")
+        team_code = str(competitor_id)
+
+        # Abbinamento Logo da Yahoo in base alla città/location
+        logo = logos_map.get(location, "")
+        if not logo:
+            # Fallback: cerca corrispondenza parziale se la città ha nomi composti
+            for city_key, logo_val in logos_map.items():
+                if city_key in location or location in city_key:
+                    logo = logo_val
+                    break
+
+        # Recupero Roster per la squadra attuale
+        roster_url = f"https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/{competitor_id}/roster?brand=tsn&lang=en"
+        roster_data = fetch_json(roster_url)
 
         roster_players = []
-        tsn_url = f"https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/{index}/roster?brand=tsn&lang=en"
-        tsn_data = fetch_json(tsn_url)
-
-        if isinstance(tsn_data, list):
-            for p in tsn_data:
+        if roster_data and isinstance(roster_data, list):
+            for p in roster_data:
                 player_id = p.get('playerId')
-                first_name = p.get('firstName', '')
-                last_name = p.get('lastName', '')
+                first_name = p.get('firstName', '').strip()
+                last_name = p.get('lastName', '').strip()
                 number = p.get('number', '')
                 position = p.get('positionShort', 'N/A')
                 
                 feet = p.get('heightFeet', 0)
                 inches = p.get('heightInches', 0)
                 height_str = f"{feet}' {inches}\"" if feet else "N/A"
+                
                 weight = p.get('weight', 'N/A')
                 birth_date = p.get('birthDate', 'N/A')
                 birth_place = p.get('birthPlace', 'N/A')
@@ -112,6 +92,7 @@ def main():
                 else:
                     experience = "Rookie"
 
+                # Costruzione URL Foto CDN NBA tramite playerId
                 headshot_url = f"https://cdn.nba.com/headshots/nba/latest/1040x760/{player_id}.png" if player_id else ""
 
                 roster_players.append({
@@ -131,13 +112,13 @@ def main():
         teams_list.append({
             "code": team_code,
             "name": full_name,
-            "image": team_logo,
+            "image": logo,
             "headCoach": "Staff Tecnico"
         })
 
         all_rosters[team_code] = roster_players
 
-    # Ordinamento finale rigoroso A-Z sul nome completo
+    # 3. Ordinamento Alfabetico (A-Z) delle squadre
     teams_list.sort(key=lambda x: x['name'])
 
     final_output = {
@@ -148,7 +129,7 @@ def main():
     with open('nba-rosters.json', 'w', encoding='utf-8') as f:
         json.dump(final_output, f, ensure_ascii=False, indent=2)
 
-    print("File nba-rosters.json generato e popolato con successo!")
+    print(f"Completato! Elaborate {len(teams_list)} squadre e generato nba-rosters.json.")
 
 if __name__ == '__main__':
     main()
