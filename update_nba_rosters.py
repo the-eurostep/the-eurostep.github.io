@@ -21,26 +21,43 @@ def main():
     yahoo_url = "https://graphite.sports.yahoo.com/v1/query/shangrila/navDropdownTray?lang=en-US&region=US&ysp_platform=next-app-sports"
     yahoo_data = fetch_json(yahoo_url)
     
-    # STAMPA DI CONTROLLO PER VEDERE COSA RITORNA YAHOO
-    print("TIPO E CHIAVI DI YAHOO_DATA:", type(yahoo_data), list(yahoo_data.keys()) if isinstance(yahoo_data, dict) else yahoo_data)
-    
     yahoo_teams_dict = {}
-    if yahoo_data and 'nba' in yahoo_data:
-        for section in yahoo_data['nba']:
-            if 'teams' in section:
-                for t in section['teams']:
-                    display_name = t.get('displayName', '').strip() # es. "Atlanta"
-                    logo_url = t.get('teamLogo', {}).get('url', '') # es. l'URL Yahoo del logo
-                    
-                    if display_name and logo_url:
-                        # Normalizziamo la chiave rimuovendo spazi e portando in minuscolo
-                        yahoo_teams_dict[display_name.lower()] = {
-                            "name": display_name,
-                            "logo": logo_url
-                        }
+    
+    # Navighiamo dentro la struttura reale scoperta dai log: yahoo_data -> 'data' -> ...
+    try:
+        # Cerchiamo dove si trovano i dati delle leghe sportive nella risposta
+        root_data = yahoo_data.get('data', yahoo_data)
+        
+        # Spesso i dati dei menu a tendina di Yahoo sono in un dizionario o lista, cerchiamo la chiave 'nba' ovunque o nel percorso corretto
+        # Esploriamo i valori del dizionario principale per trovare la sezione con shortName == "NBA"
+        sections_to_check = []
+        if isinstance(root_data, dict):
+            for k, v in root_data.items():
+                if isinstance(v, list):
+                    sections_to_check.extend(v)
+                elif isinstance(v, dict):
+                    sections_to_check.append(v)
+        elif isinstance(root_data, list):
+            sections_to_check = root_data
+
+        for item in sections_to_check:
+            if isinstance(item, dict):
+                # Controlliamo se è la sezione NBA
+                if item.get('shortName') == 'NBA' or 'nba' in str(item.get('teamId', '')).lower():
+                    teams_array = item.get('teams', [])
+                    for t in teams_array:
+                        display_name = t.get('displayName', '').strip() # es. "Atlanta"
+                        logo_url = t.get('teamLogo', {}).get('url', '') # es. l'URL del logo
                         
-    # AGGIUNGIAMO QUESTO STAMPA PER CONTROLLO
-    print("Squadre trovate su Yahoo:", list(yahoo_teams_dict.keys()))
+                        if display_name and logo_url:
+                            yahoo_teams_dict[display_name.lower()] = {
+                                "name": display_name,
+                                "logo": logo_url
+                            }
+    except Exception as e:
+        print(f"Errore durante il parsing dei loghi Yahoo: {e}")
+
+    print("Squadre NBA trovate da Yahoo:", list(yahoo_teams_dict.keys()))
 
     # 2. Recupero Elenco Competitor da TSN (per i roster dei giocatori)
     tsn_teams_url = "https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/"
@@ -64,19 +81,19 @@ def main():
 
         team_code = str(competitor_id)
 
-        # Cerchiamo il logo corrispondente in Yahoo usando la location esatta o il nome
+        # Cerchiamo il logo corrispondente in Yahoo usando la location (es. "Atlanta")
         logo = ""
         loc_lower = location.lower()
         if loc_lower in yahoo_teams_dict:
             logo = yahoo_teams_dict[loc_lower]['logo']
         else:
-            # Ricerca di sicurezza se il nome Yahoo è contenuto nella location o viceversa
+            # Ricerca di sicurezza parziale nel caso di piccole differenze di nome
             for y_key, y_data in yahoo_teams_dict.items():
                 if y_key in loc_lower or loc_lower in y_key or y_key in full_name.lower():
                     logo = y_data['logo']
                     break
 
-        # Recupero Roster Giocatori da TSN (che funzionava perfettamente)
+        # Recupero Roster Giocatori da TSN
         roster_url = f"https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/{competitor_id}/roster?brand=tsn&lang=en"
         roster_data = fetch_json(roster_url)
 
@@ -88,10 +105,7 @@ def main():
                 last_name = p.get('lastName', '').strip()
                 
                 num_val = p.get('number')
-                if num_val is not None and num_val != "":
-                    number = str(num_val)
-                else:
-                    number = "-"
+                number = str(num_val) if num_val is not None and num_val != "" else "-"
 
                 position = p.get('positionShort', 'N/A')
                 
