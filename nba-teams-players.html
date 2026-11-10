@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Eurostep - NBA Teams & Players</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0b0f19',
+                        cardbg: '#131c2e',
+                        accent: '#f97316' // Tonalità arancio NBA
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkbg text-white min-h-screen font-sans antialiased selection:bg-accent selection:text-white">
+
+    <!-- Header / Nav -->
+    <header class="border-b border-gray-800 bg-darkbg/80 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-black tracking-wider uppercase text-white">The <span class="text-accent">Eurostep</span></h1>
+            <nav class="space-x-4 text-sm font-semibold">
+                <a href="index.html" class="hover:text-accent transition">Home</a>
+                <a href="euroleague-teams-players.html" class="hover:text-accent transition">EuroLeague</a>
+                <a href="nba-teams-players.html" class="text-accent">NBA</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-10">
+        <div class="text-center mb-10">
+            <h2 class="text-4xl font-extrabold uppercase tracking-tight">NBA Teams & Players</h2>
+            <p class="text-gray-400 mt-2">Esplora le 30 franchigie e i roster ufficiali della lega</p>
+        </div>
+
+        <!-- Sezione Griglia Squadre -->
+        <div id="teams-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <!-- Popolato dinamicamente via JS -->
+        </div>
+
+        <!-- Sezione Roster (nascosta finché non si seleziona una squadra) -->
+        <div id="roster-section" class="hidden mt-12">
+            <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-800">
+                <div class="flex items-center space-x-4">
+                    <img id="selected-team-logo" src="" alt="" class="w-16 h-16 object-contain">
+                    <div>
+                        <h3 id="selected-team-name" class="text-3xl font-bold"></h3>
+                        <p class="text-gray-400 text-sm mt-1">Stagione NBA 2026-27</p>
+                    </div>
+                </div>
+                <button onclick="backToTeams()" class="bg-gray-800 hover:bg-gray-700 text-sm px-4 py-2 rounded-xl transition font-semibold">
+                    ← Torna alle squadre
+                </button>
+            </div>
+
+            <div id="players-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <!-- Giocatori popolati dinamicamente -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modale Dettaglio Giocatore -->
+    <div id="player-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-cardbg border border-gray-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">✕</button>
+            <div class="flex flex-col items-center text-center">
+                <img id="modal-img" src="" alt="" class="w-32 h-32 object-cover rounded-full bg-gray-800 mb-4 border-2 border-accent">
+                <h4 id="modal-name" class="text-2xl font-bold"></h4>
+                <p id="modal-pos-num" class="text-accent font-semibold text-sm mb-4"></p>
+                
+                <div class="w-full grid grid-cols-2 gap-3 text-left text-sm bg-darkbg/50 p-4 rounded-xl border border-gray-800/60">
+                    <div><span class="text-gray-400 block text-xs">Altezza</span><span id="modal-height" class="font-medium"></span></div>
+                    <div><span class="text-gray-400 block text-xs">Peso</span><span id="modal-weight" class="font-medium"></span></div>
+                    <div><span class="text-gray-400 block text-xs">Nascita</span><span id="modal-birth" class="font-medium"></span></div>
+                    <div><span class="text-gray-400 block text-xs">Esperienza NBA</span><span id="modal-exp" class="font-medium"></span></div>
+                    <div class="col-span-2 mt-2"><span class="text-gray-400 block text-xs">Luogo di Nascita</span><span id="modal-birthplace" class="font-medium"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let globalData = {};
+
+        async function loadData() {
+            try {
+                const response = await fetch('nba-rosters.json');
+                globalData = await response.json();
+                renderTeams(globalData.teams);
+            } catch (error) {
+                console.error("Errore nel caricamento del file JSON NBA:", error);
+            }
+        }
+
+        function renderTeams(teams) {
+            const container = document.getElementById('teams-container');
+            container.innerHTML = teams.map(team => `
+                <div onclick="selectTeam('${team.code}')" class="bg-cardbg border border-gray-800/80 hover:border-accent rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer transition transform hover:-translate-y-1 shadow-lg group">
+                    <img src="${team.image}" alt="${team.name}" class="w-20 h-20 object-contain mb-4 group-hover:scale-105 transition">
+                    <h3 class="text-sm font-bold text-center tracking-wide">${team.name}</h3>
+                </div>
+            `).join('');
+        }
+
+        function selectTeam(code) {
+            const team = globalData.teams.find(t => t.code === code);
+            const players = globalData.rosters[code] || [];
+
+            document.getElementById('selected-team-name').innerText = team.name;
+            document.getElementById('selected-team-logo').src = team.image;
+
+            const grid = document.getElementById('players-grid');
+            grid.innerHTML = players.map(p => `
+                <div onclick='openModal(${JSON.stringify(p)})' class="bg-cardbg border border-gray-800/80 hover:border-accent rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer transition group">
+                    <div class="w-24 h-24 rounded-full bg-gray-800/50 mb-3 overflow-hidden border border-gray-700">
+                        <img src="${p.image}" alt="${p.name} ${p.surname}" class="w-full h-full object-cover object-top group-hover:scale-105 transition" onerror="this.src='https://via.placeholder.com/150/131c2e/888888?text=NBA'">
+                    </div>
+                    <span class="text-xs text-accent font-bold mb-1">#${p.number || '0'} • ${p.position}</span>
+                    <h4 class="font-bold text-sm text-white">${p.name}</h4>
+                    <h4 class="font-bold text-sm text-gray-300">${p.surname}</h4>
+                </div>
+            `).join('');
+
+            document.getElementById('teams-container').parentElement.classList.add('hidden');
+            document.getElementById('roster-section').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backToTeams() {
+            document.getElementById('roster-section').classList.add('hidden');
+            document.getElementById('teams-container').parentElement.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openModal(player) {
+            document.getElementById('modal-img').src = player.image;
+            document.getElementById('modal-name').innerText = `${player.name} ${player.surname}`;
+            document.getElementById('modal-pos-num.innerText' || 'modal-pos-num').innerText = `#${player.number || '0'} — ${player.position}`;
+            document.getElementById('modal-height').innerText = player.height;
+            document.getElementById('modal-weight').innerText = player.weight;
+            document.getElementById('modal-birth').innerText = player.birthDate;
+            document.getElementById('modal-exp').innerText = player.experience;
+            document.getElementById('modal-birthplace').innerText = player.birthPlace;
+            document.getElementById('player-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('player-modal').classList.add('hidden');
+        }
+
+        window.onload = loadData;
+    </script>
+</body>
+</html>
