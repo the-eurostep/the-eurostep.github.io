@@ -36,7 +36,7 @@ def main():
         people_data = fetch_json(people_url)
         
         roster_players = []
-        head_coach_name = "N/A"
+        coaches_list = []
 
         if isinstance(people_data, list):
             for entry in people_data:
@@ -54,13 +54,16 @@ def main():
                     name = full_name
                     surname = ""
 
-                # Estrazione Head Coach
+                # Raccolta Coach per selezione intelligente
                 if type_name == "Coach":
-                    head_coach_name = f"{name} {surname}".strip()
+                    coaches_list.append({
+                        "name": f"{name} {surname}".strip(),
+                        "active": entry.get('active', False),
+                        "startDate": entry.get('startDate', '')
+                    })
 
                 # Estrazione Giocatori (Filtro rigoroso)
                 elif type_name == "Player":
-                    # Estrazione nazionalità corretta
                     country_obj = person.get('country')
                     nat_name = country_obj.get('name') if isinstance(country_obj, dict) else 'N/A'
 
@@ -76,6 +79,17 @@ def main():
                         "birthDate": person.get('birthDate'),
                         "image": images.get('headshot') or images.get('action', '')
                     })
+
+        # Selezione Head Coach: priorità agli attivi, ordinati per data d'inizio più recente
+        head_coach_name = "N/A"
+        if coaches_list:
+            # Filtra prima i coach attivi (active == True)
+            active_coaches = [c for c in coaches_list if c['active']]
+            target_list = active_coaches if active_coaches else coaches_list
+            
+            # Ordina per startDate decrescente (la più recente per prima)
+            target_list.sort(key=lambda x: x['startDate'], reverse=True)
+            head_coach_name = target_list[0]['name']
 
         teams_list.append({
             "code": club_code,
