@@ -56,7 +56,6 @@ def main():
         # Abbinamento Logo da Yahoo in base alla città/location
         logo = logos_map.get(location, "")
         if not logo:
-            # Fallback: cerca corrispondenza parziale se la città ha nomi composti
             for city_key, logo_val in logos_map.items():
                 if city_key in location or location in city_key:
                     logo = logo_val
@@ -72,16 +71,34 @@ def main():
                 player_id = p.get('playerId')
                 first_name = p.get('firstName', '').strip()
                 last_name = p.get('lastName', '').strip()
-                number = p.get('number', '')
+                
+                # Gestione rigorosa del numero di maglia (inclusi 0 e 00)
+                num_val = p.get('number')
+                if num_val is not None and num_val != "":
+                    number = str(num_val)
+                else:
+                    number = "-"
+
                 position = p.get('positionShort', 'N/A')
                 
                 feet = p.get('heightFeet', 0)
                 inches = p.get('heightInches', 0)
                 height_str = f"{feet}' {inches}\"" if feet else "N/A"
                 
-                weight = p.get('weight', 'N/A')
-                birth_date = p.get('birthDate', 'N/A')
-                birth_place = p.get('birthPlace', 'N/A')
+                weight_val = p.get('weight')
+                weight_str = f"{weight_val} lbs" if weight_val else "N/A"
+                
+                birth_date = p.get('birthDate', '')
+                if birth_date:
+                    try:
+                        birth_date_str = birth_date.split('T')[0]
+                    except:
+                        birth_date_str = birth_date
+                else:
+                    birth_date_str = "N/A"
+
+                birth_place = p.get('birthPlace', '').strip()
+                birth_place_str = birth_place if birth_place else "N/A"
                 
                 draft_year = p.get('draftYear')
                 if draft_year and isinstance(draft_year, int):
@@ -92,9 +109,6 @@ def main():
                 else:
                     experience = "Rookie"
 
-                # Costruzione URL Foto CDN NBA tramite playerId
-                headshot_url = f"https://cdn.nba.com/headshots/nba/latest/1040x760/{player_id}.png" if player_id else ""
-
                 roster_players.append({
                     "id": player_id,
                     "name": first_name,
@@ -102,18 +116,16 @@ def main():
                     "number": number,
                     "position": position,
                     "height": height_str,
-                    "weight": f"{weight} lbs" if weight != 'N/A' and weight else 'N/A',
-                    "birthDate": birth_date,
-                    "birthPlace": birth_place if birth_place else 'N/A',
-                    "experience": experience,
-                    "image": headshot_url
+                    "weight": weight_str,
+                    "birthDate": birth_date_str,
+                    "birthPlace": birth_place_str,
+                    "experience": experience
                 })
 
         teams_list.append({
             "code": team_code,
             "name": full_name,
-            "image": logo,
-            "headCoach": "Staff Tecnico"
+            "image": logo
         })
 
         all_rosters[team_code] = roster_players
