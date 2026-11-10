@@ -23,13 +23,8 @@ def main():
     
     yahoo_teams_dict = {}
     
-    # Navighiamo dentro la struttura reale scoperta dai log: yahoo_data -> 'data' -> ...
     try:
-        # Cerchiamo dove si trovano i dati delle leghe sportive nella risposta
         root_data = yahoo_data.get('data', yahoo_data)
-        
-        # Spesso i dati dei menu a tendina di Yahoo sono in un dizionario o lista, cerchiamo la chiave 'nba' ovunque o nel percorso corretto
-        # Esploriamo i valori del dizionario principale per trovare la sezione con shortName == "NBA"
         sections_to_check = []
         if isinstance(root_data, dict):
             for k, v in root_data.items():
@@ -42,22 +37,30 @@ def main():
 
         for item in sections_to_check:
             if isinstance(item, dict):
-                # Controlliamo se è la sezione NBA
                 if item.get('shortName') == 'NBA' or 'nba' in str(item.get('teamId', '')).lower():
                     teams_array = item.get('teams', [])
                     for t in teams_array:
-                        display_name = t.get('displayName', '').strip() # es. "Atlanta"
-                        logo_url = t.get('teamLogo', {}).get('url', '') # es. l'URL del logo
+                        display_name = t.get('displayName', '').strip() # es. "Clippers", "Lakers", "Atlanta"
+                        team_id = t.get('teamId', '').strip()
+                        logo_url = t.get('teamLogo', {}).get('url', '')
                         
-                        if display_name and logo_url:
-                            yahoo_teams_dict[display_name.lower()] = {
+                        if logo_url:
+                            # Salviamo sia il displayName che l'intero blocco per sicurezza
+                            key = display_name.lower()
+                            yahoo_teams_dict[key] = {
                                 "name": display_name,
                                 "logo": logo_url
                             }
+                            # Salviamo anche mappature di riserva basate sul teamId (es. nba.t.12)
+                            if team_id:
+                                yahoo_teams_dict[team_id.lower()] = {
+                                    "name": display_name,
+                                    "logo": logo_url
+                                }
     except Exception as e:
         print(f"Errore durante il parsing dei loghi Yahoo: {e}")
 
-    print("Squadre NBA trovate da Yahoo:", list(yahoo_teams_dict.keys()))
+    print("CHIAVI SALVATE DA YAHOO:", list(yahoo_teams_dict.keys()))
 
     # 2. Recupero Elenco Competitor da TSN (per i roster dei giocatori)
     tsn_teams_url = "https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/"
@@ -73,23 +76,30 @@ def main():
 
     for team_info in tsn_teams:
         competitor_id = team_info.get('competitorId')
-        full_name = team_info.get('name', '').strip() # es. "Atlanta Hawks"
-        location = team_info.get('location', '').strip() # es. "Atlanta"
+        full_name = team_info.get('name', '').strip() # es. "Los Angeles Lakers"
+        location = team_info.get('location', '').strip() # es. "Los Angeles"
+        nickname = team_info.get('nickname', '').strip() # es. "Lakers"
         
         if not competitor_id or not full_name:
             continue
 
         team_code = str(competitor_id)
 
-        # Cerchiamo il logo corrispondente in Yahoo usando la location (es. "Atlanta")
+        # Cerchiamo il logo corrispondente in Yahoo con criteri multipli (incluso il nickname es. "lakers" o "clippers")
         logo = ""
         loc_lower = location.lower()
-        if loc_lower in yahoo_teams_dict:
+        full_lower = full_name.lower()
+        nick_lower = nickname.lower()
+
+        # Tentativi di match in ordine di precisione
+        if nick_lower and nick_lower in yahoo_teams_dict:
+            logo = yahoo_teams_dict[nick_lower]['logo']
+        elif loc_lower in yahoo_teams_dict:
             logo = yahoo_teams_dict[loc_lower]['logo']
         else:
-            # Ricerca di sicurezza parziale nel caso di piccole differenze di nome
+            # Ricerca parziale di riserva
             for y_key, y_data in yahoo_teams_dict.items():
-                if y_key in loc_lower or loc_lower in y_key or y_key in full_name.lower():
+                if y_key in full_lower or full_lower in y_key or (nick_lower and nick_lower in y_key):
                     logo = y_data['logo']
                     break
 
