@@ -33,8 +33,12 @@
         .team-name { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: #ffffff; font-weight: 700; }
 
         .roster-section { display: none; flex-direction: column; gap: 20px; }
-        .roster-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .back-to-teams-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; color: #ffffff; padding: 8px 16px; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; }
+        .roster-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; background: rgba(11, 15, 25, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 14px; backdrop-filter: blur(12px); }
+        .team-info-box h2 { font-family: 'Orbitron', sans-serif; color: #ffffff; font-size: 1.4rem; margin-bottom: 4px; }
+        .team-info-box p { color: #9ca3af; font-size: 0.85rem; }
+        .team-info-box span { color: #60a5fa; font-weight: 600; }
+        
+        .back-to-teams-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; color: #ffffff; padding: 10px 18px; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; }
         .back-to-teams-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(96, 165, 250, 0.5); }
 
         .players-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
@@ -44,7 +48,7 @@
         .player-name { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: #ffffff; font-weight: 700; margin-bottom: 4px; }
         .player-details { color: #9ca3af; font-size: 0.8rem; }
 
-        /* Modale Profilo Giocatore Anagrafica */
+        /* Modale Profilo Giocatore */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3, 5, 8, 0.85); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
         .modal-card { background: rgba(11, 15, 25, 0.95); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 20px; max-width: 480px; width: 100%; padding: 30px; display: flex; flex-direction: column; gap: 20px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
         .modal-close { position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: #9ca3af; font-size: 1.5rem; cursor: pointer; transition: color 0.2s; }
@@ -85,8 +89,11 @@
 
         <div id="rosterView" class="roster-section">
             <div class="roster-header-row">
+                <div class="team-info-box">
+                    <h2 id="selectedTeamTitle"></h2>
+                    <p>Head Coach: <span id="selectedTeamCoach">N/A</span></p>
+                </div>
                 <button class="back-to-teams-btn" onclick="showTeamsView()">&larr; Back to Teams</button>
-                <h2 id="selectedTeamTitle" style="font-family:'Orbitron', sans-serif; color:#ffffff; font-size:1.4rem;"></h2>
             </div>
             <div id="playersGrid" class="players-grid"></div>
         </div>
@@ -119,12 +126,17 @@
 
     <script>
         let globalData = null;
+        let teamsMap = {};
 
         async function loadData() {
             try {
                 const res = await fetch('euroleague-rosters.json?v=' + new Date().getTime());
                 if (!res.ok) throw new Error('File non trovato');
                 globalData = await res.json();
+                
+                // Mappa rapida per recuperare i dati della squadra (incluso l'allenatore)
+                globalData.teams.forEach(t => { teamsMap[t.code] = t; });
+
                 renderTeams(globalData.teams);
             } catch (err) {
                 console.error(err);
@@ -142,7 +154,7 @@
             teams.forEach(t => {
                 const card = document.createElement('div');
                 card.className = 'team-card';
-                card.onclick = () => openRoster(t.code, t.name);
+                card.onclick = () => openRoster(t.code);
                 card.innerHTML = `
                     <img src="${t.image || ''}" alt="${t.name}" class="team-logo" onerror="this.src='the eurostep rounded.png'">
                     <span class="team-name">${t.name}</span>
@@ -151,10 +163,14 @@
             });
         }
 
-        function openRoster(teamCode, teamName) {
+        function openRoster(teamCode) {
+            const team = teamsMap[teamCode];
+            if (!team) return;
+
             document.getElementById('teamsView').style.display = 'none';
             document.getElementById('rosterView').style.display = 'flex';
-            document.getElementById('selectedTeamTitle').textContent = teamName;
+            document.getElementById('selectedTeamTitle').textContent = team.name;
+            document.getElementById('selectedTeamCoach').textContent = team.headCoach || 'N/A';
 
             const grid = document.getElementById('playersGrid');
             grid.innerHTML = "";
@@ -191,7 +207,6 @@
             document.getElementById('mPlayerInfo').textContent = `#${p.number || '-'} • ${p.position || 'Player'}`;
             document.getElementById('mNat').textContent = p.nationality || 'N/A';
             
-            // Formattazione data di nascita pulita
             if (p.birthDate) {
                 const dateObj = new Date(p.birthDate);
                 document.getElementById('mBirth').textContent = isNaN(dateObj) ? p.birthDate.split('T')[0] : dateObj.toLocaleDateString();
