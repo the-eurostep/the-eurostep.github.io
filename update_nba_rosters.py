@@ -21,6 +21,9 @@ def main():
     yahoo_url = "https://graphite.sports.yahoo.com/v1/query/shangrila/navDropdownTray?lang=en-US&region=US&ysp_platform=next-app-sports"
     yahoo_data = fetch_json(yahoo_url)
     
+    # STAMPA DI CONTROLLO PER VEDERE COSA RITORNA YAHOO
+    print("TIPO E CHIAVI DI YAHOO_DATA:", type(yahoo_data), list(yahoo_data.keys()) if isinstance(yahoo_data, dict) else yahoo_data)
+    
     yahoo_teams_dict = {}
     if yahoo_data and 'nba' in yahoo_data:
         for section in yahoo_data['nba']:
