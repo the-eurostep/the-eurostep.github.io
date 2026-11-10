@@ -18,19 +18,18 @@ def main():
     clubs_url = "https://feeds.incrowdsports.com/provider/euroleague-feeds/v2/competitions/E/seasons/E2026/clubs"
     clubs_data = fetch_json(clubs_url)
     
-    if not clubs_data:
-        print("Impossibile recuperare i club.")
+    if not clubs_data or 'data' not in clubs_data:
+        print("Impossibile recuperare i club o struttura non valida.")
         return
 
     teams_list = []
     all_rosters = {}
 
-    # Estrazione dei club dal feed ufficiale
-    clubs = clubs_data.get('clubs', [])
+    clubs = clubs_data.get('data', [])
     for club in clubs:
         club_code = club.get('code')
         club_name = club.get('name')
-        club_image = club.get('images', {}).get('crest', '') # Logo squadra
+        club_image = club.get('images', {}).get('crest', '')
 
         teams_list.append({
             "code": club_code,
@@ -43,31 +42,32 @@ def main():
         people_data = fetch_json(people_url)
         
         roster_players = []
-        if people_data and 'persons' in people_data:
-            for person in people_data['persons']:
-                person_code = person.get('code')
+        if isinstance(people_data, list):
+            for entry in people_data:
+                person = entry.get('person', {})
+                images = entry.get('images', {})
                 
-                # Fetch delle statistiche individuali del giocatore
-                stats_url = f"https://api-live.euroleague.net/v2/competitions/E/seasons/E2026/people/{person_code}/stats"
-                stats_data = fetch_json(stats_url)
-                
-                player_stats = {}
-                if stats_data:
-                    # Estraiamo le medie tradizionali se disponibili nel feed delle stats
-                    player_stats = stats_data.get('averages', {})
+                # Nome e cognome puliti
+                full_name = person.get('name', '')
+                parts = full_name.split(',')
+                if len(parts) == 2:
+                    surname = parts[0].strip()
+                    name = parts[1].strip()
+                else:
+                    name = full_name
+                    surname = ""
 
                 roster_players.append({
-                    "code": person_code,
-                    "name": person.get('name'),
-                    "surname": person.get('surname'),
-                    "number": person.get('dossard'),
-                    "position": person.get('positionName'),
-                    "height": person.get('height'),  # es. in cm
-                    "weight": person.get('weight'),  # es. in kg
+                    "code": person.get('code'),
+                    "name": name,
+                    "surname": surname,
+                    "number": entry.get('dorsal'),
+                    "position": entry.get('positionName'),
+                    "height": person.get('height'),
+                    "weight": person.get('weight'),
                     "nationality": person.get('nationality', {}).get('name'),
                     "birthDate": person.get('birthDate'),
-                    "image": person.get('images', {}),
-                    "stats": player_stats
+                    "image": images.get('headshot') or images.get('action', '')
                 })
 
         all_rosters[club_code] = roster_players
