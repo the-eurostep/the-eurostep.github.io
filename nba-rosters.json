@@ -3,62 +3,62 @@
     {
       "code": "1",
       "name": "Atlanta Hawks",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/ESJbgNszT.NzSzqdssGpVQ--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181211/500x500/hawks.png.cf.webp"
     },
     {
       "code": "2",
       "name": "Boston Celtics",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/1zCY80ieaobLv5FVG7cp7Q--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/20181030/500x500/celtics.png.cf.webp"
     },
     {
       "code": "17",
       "name": "Brooklyn Nets",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/p8WA8mSdzp3uav7DO53LBw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181129/500x500/nets3.png.cf.webp"
     },
     {
       "code": "5312",
       "name": "Charlotte Hornets",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/HV97V85GPiT1UPR0Rry5EQ--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181211/500x500/hornets.png.cf.webp"
     },
     {
       "code": "4",
       "name": "Chicago Bulls",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/3maTxxHkwFBCkZaVm3nSUw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181212/500x500/bulls_s.png.cf.webp"
     },
     {
       "code": "5",
       "name": "Cleveland Cavaliers",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/WHifhBYi_LDFTAzQ.opc3g--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20220917/500x500/cavaliers.png.cf.webp"
     },
     {
       "code": "6",
       "name": "Dallas Mavericks",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/qevv.68IM2jgwo7wDwyq5w--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181214/500x500/mavericks.png.cf.webp"
     },
     {
       "code": "7",
       "name": "Denver Nuggets",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/gDtV_uWCFI_wi6ott73ivQ--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181213/500x500/nuggets.png.cf.webp"
     },
     {
       "code": "8",
       "name": "Detroit Pistons",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/q3CnhjyYa6BoqNUa4qEUug--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181214/500x500/pistons.png.cf.webp"
     },
     {
       "code": "9",
       "name": "Golden State Warriors",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/3HFfVjeVTgAjzTdvnPDcTg--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20191016/500x500/warriors.png.cf.webp"
     },
     {
       "code": "10",
       "name": "Houston Rockets",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/w1ogVXJtZ7RTJpvOyblEAw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/20260702/rockets_500.png.cf.webp"
     },
     {
       "code": "11",
       "name": "Indiana Pacers",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/RbvhHc8xnn9AYTKmgzvHcw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181214/500x500/pacers.png.cf.webp"
     },
     {
       "code": "12",
@@ -73,82 +73,82 @@
     {
       "code": "29",
       "name": "Memphis Grizzlies",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/rWQRa9FYKlk4Af3FI2BTpw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181218/500x500/grizzlies.png.cf.webp"
     },
     {
       "code": "14",
       "name": "Miami Heat",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/u3GSWlBfCuA0CgU4A4WpOw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181219/500x500/heat_s.png.cf.webp"
     },
     {
       "code": "15",
       "name": "Milwaukee Bucks",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/OFEIqohouKwAtt5vvd6fhQ--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181214/500x500/bucks.png.cf.webp"
     },
     {
       "code": "16",
       "name": "Minnesota Timberwolves",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/uNPgfkk5T31.ZNs_qxXDSQ--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/20260702/timberwolves_500.png.cf.webp"
     },
     {
       "code": "3",
       "name": "New Orleans Pelicans",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/LNQPhUJePfetxhX8ogXWnw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181226/500x500/pelicans.png.cf.webp"
     },
     {
       "code": "18",
       "name": "New York Knicks",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/7tVxN20J3JMcchgydhTnPw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181226/500x500/knicks.png.cf.webp"
     },
     {
       "code": "25",
       "name": "Oklahoma City Thunder",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/l4rM6CW_pOdWIwEWzfkVMg--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181218/500x500/thunder_s.png.cf.webp"
     },
     {
       "code": "19",
       "name": "Orlando Magic",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/TWPxJfK0Ge4eFzIOZuglLA--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/20250520/500px/Magic.png.cf.webp"
     },
     {
       "code": "20",
       "name": "Philadelphia 76ers",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/Qjy2WU4U_DSfKU3rJZkEkw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181217/500x500/76ers.png.cf.webp"
     },
     {
       "code": "21",
       "name": "Phoenix Suns",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/Hqp6TDWwV6gd56fPe1TB0Q--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/mlb/20190318/500x500/suns_s.png.cf.webp"
     },
     {
       "code": "22",
       "name": "Portland Trail Blazers",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/vBz.bY11sJy.h8J5sPczJQ--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181221/500x500/trailblazers_s.png.cf.webp"
     },
     {
       "code": "23",
       "name": "Sacramento Kings",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/DqNt5nbet_GFrRq6FK81dg--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181220/500x500/kings.png.cf.webp"
     },
     {
       "code": "24",
       "name": "San Antonio Spurs",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/4Y8rXsjc6RKLMPKzl7XHRA--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181221/500x500/spurs.png.cf.webp"
     },
     {
       "code": "28",
       "name": "Toronto Raptors",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/Dxd6knAN9x4umDJByNH7fw--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20190508/500x500/raptors_s.png.cf.webp"
     },
     {
       "code": "26",
       "name": "Utah Jazz",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/cp66S3UhtjXrHSXvpgknyQ--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/20250520/500px/Jazz_dbg.png.cf.webp"
     },
     {
       "code": "27",
       "name": "Washington Wizards",
-      "image": ""
+      "image": "https://s.yimg.com/iu/api/res/1.2/FGEe.6g6fYAQVJNyeC6m5w--~B/YXBwaWQ9c2hhcmVkO2ZpPWZpbGw7cT03NTtoPTEyODt3PTEyOA--/https://s.yimg.com/cv/apiv2/default/nba/20181221/500x500/wizards_wbg.png.cf.webp"
     }
   ],
   "rosters": {
