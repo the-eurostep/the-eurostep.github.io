@@ -40,7 +40,7 @@ def main():
                 if item.get('shortName') == 'NBA' or 'nba' in str(item.get('teamId', '')).lower():
                     teams_array = item.get('teams', [])
                     for t in teams_array:
-                        display_name = t.get('displayName', '').strip()
+                        display_name = t.get('displayName', '').strip() # es. "LA Lakers", "LA Clippers", "Atlanta"
                         team_id = t.get('teamId', '').strip()
                         logo_url = t.get('teamLogo', {}).get('url', '')
                         
@@ -66,42 +66,44 @@ def main():
 
     for team_info in tsn_teams:
         competitor_id = team_info.get('competitorId')
-        full_name = team_info.get('name', '').strip()
-        location = team_info.get('location', '').strip()
-        nickname = team_info.get('nickname', '').strip()
+        full_name = team_info.get('name', '').strip() # es. "Los Angeles Lakers"
+        location = team_info.get('location', '').strip() # es. "Los Angeles"
         
         if not competitor_id or not full_name:
             continue
 
         team_code = str(competitor_id)
 
-        # STAMPA DIAGNOSTICA TSN
-        if "angeles" in full_name.lower() or "lakers" in full_name.lower() or "clippers" in full_name.lower():
-            print(f"SQUADRA TSN -> Name: '{full_name}', Location: '{location}', Nickname: '{nickname}'")
-
         # Cerchiamo il logo corrispondente in Yahoo
         logo = ""
-        loc_lower = location.lower()
         full_lower = full_name.lower()
-        nick_lower = nickname.lower()
+        loc_lower = location.lower()
+        
+        # Estraiamo l'ultima parola del nome (es. "lakers" o "clippers") per gestire Los Angeles
+        parts = full_name.split()
+        team_nickname = parts[-1].lower() if parts else ""
 
-        possible_keys = [
-            f"la {nick_lower}",
-            f"LA {nickname}",
-            f"la {full_lower}",
-            nick_lower,
+        # Mappatura mirata con precedenza assoluta per Los Angeles e le altre
+        possible_keys = []
+        if "angeles" in loc_lower and team_nickname:
+            possible_keys.append(f"la {team_nickname}")      # es. "la lakers", "la clippers"
+            possible_keys.append(f"LA {parts[-1]}")          # es. "LA Lakers", "LA Clippers"
+
+        possible_keys.extend([
+            full_lower,
             loc_lower,
-            full_lower
-        ]
+            team_nickname
+        ])
 
         for key in possible_keys:
             if key in yahoo_teams_dict:
                 logo = yahoo_teams_dict[key]
                 break
 
+        # Ricerca di riserva se necessario
         if not logo:
             for y_key, y_logo in yahoo_teams_dict.items():
-                if nick_lower and nick_lower in y_key.lower():
+                if team_nickname and team_nickname in y_key.lower():
                     logo = y_logo
                     break
                 elif y_key.lower() in full_lower or full_lower in y_key.lower():
