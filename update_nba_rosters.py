@@ -40,11 +40,16 @@ def main():
                 if item.get('shortName') == 'NBA' or 'nba' in str(item.get('teamId', '')).lower():
                     teams_array = item.get('teams', [])
                     for t in teams_array:
-                        display_name = t.get('displayName', '').strip().lower() # es. "la clippers", "la lakers", "atlanta"
+                        display_name = t.get('displayName', '').strip() # es. "LA Clippers", "LA Lakers", "Atlanta"
+                        team_id = t.get('teamId', '').strip()
                         logo_url = t.get('teamLogo', {}).get('url', '')
                         
-                        if display_name and logo_url:
+                        if logo_url:
+                            # Salviamo sia il nome inminuscolo che esatto per sicurezza
+                            yahoo_teams_dict[display_name.lower()] = logo_url
                             yahoo_teams_dict[display_name] = logo_url
+                            if team_id:
+                                yahoo_teams_dict[team_id.lower()] = logo_url
     except Exception as e:
         print(f"Errore durante il parsing dei loghi Yahoo: {e}")
 
@@ -71,30 +76,35 @@ def main():
 
         team_code = str(competitor_id)
 
-        # Cerchiamo il logo corrispondente gestendo specificamente Los Angeles e le altre squadre
+        # Cerchiamo il logo corrispondente in Yahoo
         logo = ""
         loc_lower = location.lower()
         full_lower = full_name.lower()
         nick_lower = nickname.lower()
 
-        # Costruiamo le varianti di ricerca per Yahoo
-        # Se la location è "Los Angeles", Yahoo la mappa come "la lakers" o "la clippers"
-        potential_keys = [
-            f"{loc_lower} {nick_lower}", # es. "los angeles lakers" (se Yahoo lo usasse)
-            f"la {nick_lower}",         # es. "la lakers", "la clippers"
-            loc_lower,                  # es. "atlanta"
-            nick_lower                  # es. "lakers"
+        # Mappatura mirata basata sull'informazione precisa fornita
+        possible_keys = [
+            f"la {nick_lower}",         # "la lakers", "la clippers"
+            f"LA {nickname}",           # "LA Lakers", "LA Clippers"
+            nick_lower,                 # "lakers", "clippers"
+            loc_lower,                  # "los angeles"
         ]
 
-        for key in potential_keys:
+        for key in possible_keys:
             if key in yahoo_teams_dict:
                 logo = yahoo_teams_dict[key]
                 break
+            if key.lower() in yahoo_teams_dict:
+                logo = yahoo_teams_dict[key.lower()]
+                break
         
-        # Ricerca di riserva parziale se nessuna chiave diretta ha funzionato
+        # Riserva di sicurezza se non trovato direttamente
         if not logo:
             for y_key, y_logo in yahoo_teams_dict.items():
-                if y_key in full_lower or full_lower in y_key or (nick_lower and nick_lower in y_key):
+                if nick_lower and nick_lower in y_key.lower():
+                    logo = y_logo
+                    break
+                elif y_key.lower() in full_lower or full_lower in y_key.lower():
                     logo = y_logo
                     break
 
