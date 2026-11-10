@@ -44,7 +44,10 @@
         .players-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
         .player-card { background: rgba(11, 15, 25, 0.75); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; overflow: hidden; cursor: pointer; backdrop-filter: blur(12px); transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; padding: 20px; text-align: center; }
         .player-card:hover { border-color: rgba(96, 165, 250, 0.5); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .player-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.05); margin-bottom: 12px; border: 2px solid rgba(255,255,255,0.1); }
+        
+        /* Modifica mirata per abbassare leggermente le foto ed evitare il taglio delle teste */
+        .player-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; object-position: center 20%; background: rgba(255,255,255,0.05); margin-bottom: 12px; border: 2px solid rgba(255,255,255,0.1); }
+        
         .player-name { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: #ffffff; font-weight: 700; margin-bottom: 4px; }
         .player-details { color: #9ca3af; font-size: 0.8rem; }
 
@@ -54,7 +57,10 @@
         .modal-close { position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: #9ca3af; font-size: 1.5rem; cursor: pointer; transition: color 0.2s; }
         .modal-close:hover { color: #ffffff; }
         .modal-profile-header { display: flex; align-items: center; gap: 20px; }
-        .modal-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #60a5fa; background: rgba(255,255,255,0.05); }
+        
+        /* Modifica allineamento foto anche nel modale */
+        .modal-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; object-position: center 20%; border: 2px solid #60a5fa; background: rgba(255,255,255,0.05); }
+        
         .modal-title-box h2 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: #ffffff; margin-bottom: 5px; }
         .modal-title-box p { color: #9ca3af; font-size: 0.85rem; }
 
@@ -134,9 +140,7 @@
                 if (!res.ok) throw new Error('File non trovato');
                 globalData = await res.json();
                 
-                // Mappa rapida per recuperare i dati della squadra (incluso l'allenatore)
                 globalData.teams.forEach(t => { teamsMap[t.code] = t; });
-
                 renderTeams(globalData.teams);
             } catch (err) {
                 console.error(err);
