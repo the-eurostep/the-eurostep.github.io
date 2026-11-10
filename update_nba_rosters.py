@@ -40,27 +40,13 @@ def main():
                 if item.get('shortName') == 'NBA' or 'nba' in str(item.get('teamId', '')).lower():
                     teams_array = item.get('teams', [])
                     for t in teams_array:
-                        display_name = t.get('displayName', '').strip() # es. "Clippers", "Lakers", "Atlanta"
-                        team_id = t.get('teamId', '').strip()
+                        display_name = t.get('displayName', '').strip().lower() # es. "la clippers", "la lakers", "atlanta"
                         logo_url = t.get('teamLogo', {}).get('url', '')
                         
-                        if logo_url:
-                            # Salviamo sia il displayName che l'intero blocco per sicurezza
-                            key = display_name.lower()
-                            yahoo_teams_dict[key] = {
-                                "name": display_name,
-                                "logo": logo_url
-                            }
-                            # Salviamo anche mappature di riserva basate sul teamId (es. nba.t.12)
-                            if team_id:
-                                yahoo_teams_dict[team_id.lower()] = {
-                                    "name": display_name,
-                                    "logo": logo_url
-                                }
+                        if display_name and logo_url:
+                            yahoo_teams_dict[display_name] = logo_url
     except Exception as e:
         print(f"Errore durante il parsing dei loghi Yahoo: {e}")
-
-    print("CHIAVI SALVATE DA YAHOO:", list(yahoo_teams_dict.keys()))
 
     # 2. Recupero Elenco Competitor da TSN (per i roster dei giocatori)
     tsn_teams_url = "https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/"
@@ -85,22 +71,31 @@ def main():
 
         team_code = str(competitor_id)
 
-        # Cerchiamo il logo corrispondente in Yahoo con criteri multipli (incluso il nickname es. "lakers" o "clippers")
+        # Cerchiamo il logo corrispondente gestendo specificamente Los Angeles e le altre squadre
         logo = ""
         loc_lower = location.lower()
         full_lower = full_name.lower()
         nick_lower = nickname.lower()
 
-        # Tentativi di match in ordine di precisione
-        if nick_lower and nick_lower in yahoo_teams_dict:
-            logo = yahoo_teams_dict[nick_lower]['logo']
-        elif loc_lower in yahoo_teams_dict:
-            logo = yahoo_teams_dict[loc_lower]['logo']
-        else:
-            # Ricerca parziale di riserva
-            for y_key, y_data in yahoo_teams_dict.items():
+        # Costruiamo le varianti di ricerca per Yahoo
+        # Se la location è "Los Angeles", Yahoo la mappa come "la lakers" o "la clippers"
+        potential_keys = [
+            f"{loc_lower} {nick_lower}", # es. "los angeles lakers" (se Yahoo lo usasse)
+            f"la {nick_lower}",         # es. "la lakers", "la clippers"
+            loc_lower,                  # es. "atlanta"
+            nick_lower                  # es. "lakers"
+        ]
+
+        for key in potential_keys:
+            if key in yahoo_teams_dict:
+                logo = yahoo_teams_dict[key]
+                break
+        
+        # Ricerca di riserva parziale se nessuna chiave diretta ha funzionato
+        if not logo:
+            for y_key, y_logo in yahoo_teams_dict.items():
                 if y_key in full_lower or full_lower in y_key or (nick_lower and nick_lower in y_key):
-                    logo = y_data['logo']
+                    logo = y_logo
                     break
 
         # Recupero Roster Giocatori da TSN
