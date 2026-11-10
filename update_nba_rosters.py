@@ -2,7 +2,6 @@ import json
 import urllib.request
 from datetime import datetime
 
-# Mappatura statica per trasformare i nomi brevi di Yahoo nei nomi completi ufficiali NBA
 TEAM_FULL_NAMES = {
     "Atlanta": "Atlanta Hawks",
     "Boston": "Boston Celtics",
@@ -36,9 +35,6 @@ TEAM_FULL_NAMES = {
     "Washington": "Washington Wizards"
 }
 
-# Mappatura degli ID squadra di Yahoo verso gli ID numerici corrispondenti per l'endpoint TSN (o ricerca per nome)
-# Nota: L'endpoint TSN richiede l'ID numerico della squadra. Mappiamo i principali o usiamo una struttura coerente.
-# Nel frattempo, impostiamo il fetch dinamico.
 def fetch_json(url):
     req = urllib.request.Request(
         url,
@@ -62,7 +58,6 @@ def main():
         print("Impossibile contattare Yahoo Sports.")
         return
 
-    # Estrazione della sezione NBA dal JSON di Yahoo
     nba_sections = data.get('nba', [])
     raw_teams = []
     for section in nba_sections:
@@ -73,22 +68,24 @@ def main():
     all_rosters = {}
     current_year = datetime.now().year
 
-    for team in raw_teams:
+    # Ordinamento preliminare per assegnare un ID progressivo stabile da 1 a 30 basato sull'ordine alfabetico del nome completo
+    sorted_raw_teams = sorted(
+        raw_teams, 
+        key=lambda t: TEAM_FULL_NAMES.get(t.get('displayName', ''), t.get('displayName', ''))
+    )
+
+    for index, team in enumerate(sorted_raw_teams, start=1):
         short_name = team.get('displayName', '')
         full_name = TEAM_FULL_NAMES.get(short_name, f"{short_name} Team")
         team_logo = team.get('teamLogo', {}).get('url', '')
         
-        # Estraiamo un codice univoco pulito dal teamId (es. nba.t.1 -> 1)
-        team_id_str = team.get('teamId', 'nba.t.0')
-        team_num = team_id_str.split('.')[-1]
+        # Usiamo l'indice progressivo (1-30) che corrisponde alle 30 franchigie NBA ordinate alfabeticamente su TSN
+        team_code = str(index)
 
-        print(f"Elaborazione franchigia: {full_name}...")
+        print(f"Elaborazione franchigia ({team_code}/30): {full_name}...")
 
         roster_players = []
-        
-        # 2. Recupero Roster da TSN Bell Media
-        # Nota: L'endpoint TSN usa un ID progressivo da 1 a 30 per le franchigie NBA.
-        tsn_url = f"https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/{team_num}/roster?brand=tsn&lang=en"
+        tsn_url = f"https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/{index}/roster?brand=tsn&lang=en"
         tsn_data = fetch_json(tsn_url)
 
         if isinstance(tsn_data, list):
@@ -99,7 +96,6 @@ def main():
                 number = p.get('number', '')
                 position = p.get('positionShort', 'N/A')
                 
-                # Dati fisici e anagrafici
                 feet = p.get('heightFeet', 0)
                 inches = p.get('heightInches', 0)
                 height_str = f"{feet}' {inches}\"" if feet else "N/A"
@@ -107,11 +103,15 @@ def main():
                 birth_date = p.get('birthDate', 'N/A')
                 birth_place = p.get('birthPlace', 'N/A')
                 
-                # Calcolo anni di esperienza NBA dal draftYear
                 draft_year = p.get('draftYear')
-                experience = f"{current_year - draft_year} anni" if draft_year and draft_year <= current_year else "Rookie"
+                if draft_year and isinstance(draft_year, int):
+                    exp_years = current_year - draft_year
+                    experience = f"{exp_years} yr" if exp_years == 1 else f"{exp_years} yrs"
+                    if exp_years <= 0:
+                        experience = "Rookie"
+                else:
+                    experience = "Rookie"
 
-                # Foto ufficiale CDN NBA basata su personId/playerId
                 headshot_url = f"https://cdn.nba.com/headshots/nba/latest/1040x760/{player_id}.png" if player_id else ""
 
                 roster_players.append({
@@ -121,23 +121,23 @@ def main():
                     "number": number,
                     "position": position,
                     "height": height_str,
-                    "weight": f"{weight} lbs" if weight != 'N/A' else 'N/A',
+                    "weight": f"{weight} lbs" if weight != 'N/A' and weight else 'N/A',
                     "birthDate": birth_date,
-                    "birthPlace": birth_place,
+                    "birthPlace": birth_place if birth_place else 'N/A',
                     "experience": experience,
                     "image": headshot_url
                 })
 
         teams_list.append({
-            "code": team_num,
+            "code": team_code,
             "name": full_name,
             "image": team_logo,
-            "headCoach": "Staff Tecnico NBA"  # Placeholder stabile
+            "headCoach": "Staff Tecnico"
         })
 
-        all_rosters[team_num] = roster_players
+        all_rosters[team_code] = roster_players
 
-    # Ordinamento alfabetico rigoroso (A-Z) delle 30 squadre per nome completo
+    # Ordinamento finale rigoroso A-Z sul nome completo
     teams_list.sort(key=lambda x: x['name'])
 
     final_output = {
@@ -148,7 +148,7 @@ def main():
     with open('nba-rosters.json', 'w', encoding='utf-8') as f:
         json.dump(final_output, f, ensure_ascii=False, indent=2)
 
-    print("File nba-rosters.json generato con successo!")
+    print("File nba-rosters.json generato e popolato con successo!")
 
 if __name__ == '__main__':
     main()
