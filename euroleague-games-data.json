@@ -56770,7 +56770,7 @@
                     "homePlayers": [
                         {
                             "name": "DOTSON, DEVON",
-                            "min": "22:32",
+                            "min": "24:32",
                             "pts": 8,
                             "oreb": 0,
                             "dreb": 4,
@@ -56794,7 +56794,7 @@
                         },
                         {
                             "name": "WALKER IV, LONNIE",
-                            "min": "21:55",
+                            "min": "22:55",
                             "pts": 7,
                             "oreb": 0,
                             "dreb": 3,
@@ -56818,7 +56818,7 @@
                         },
                         {
                             "name": "DEJULIUS, DAVID",
-                            "min": "20:30",
+                            "min": "18:30",
                             "pts": 5,
                             "oreb": 0,
                             "dreb": 0,
@@ -56866,7 +56866,7 @@
                         },
                         {
                             "name": "MORGAN, CONOR",
-                            "min": "08:52",
+                            "min": "09:52",
                             "pts": 0,
                             "oreb": 1,
                             "dreb": 0,
@@ -56914,7 +56914,7 @@
                         },
                         {
                             "name": "WILBEKIN, SCOTTIE",
-                            "min": "08:18",
+                            "min": "09:18",
                             "pts": 0,
                             "oreb": 0,
                             "dreb": 1,
@@ -56962,7 +56962,7 @@
                         },
                         {
                             "name": "BROWN, ANTHONY",
-                            "min": "28:29",
+                            "min": "25:29",
                             "pts": 10,
                             "oreb": 2,
                             "dreb": 7,
@@ -57060,7 +57060,7 @@
                     "awayPlayers": [
                         {
                             "name": "BROWN, STERLING",
-                            "min": "21:04",
+                            "min": "20:04",
                             "pts": 7,
                             "oreb": 0,
                             "dreb": 5,
@@ -57108,7 +57108,7 @@
                         },
                         {
                             "name": "EDWARDS, CARSEN",
-                            "min": "21:56",
+                            "min": "20:56",
                             "pts": 11,
                             "oreb": 1,
                             "dreb": 1,
@@ -57150,13 +57150,13 @@
                             "fta": 4,
                             "ft_pct": "100.0%",
                             "to": 4,
-                            "pf": 1,
-                            "pir": 10,
+                            "pf": 2,
+                            "pir": 9,
                             "plusMinus": "4"
                         },
                         {
                             "name": "TUBELIS, AZUOLAS",
-                            "min": "16:22",
+                            "min": "18:22",
                             "pts": 14,
                             "oreb": 0,
                             "dreb": 3,
@@ -57252,7 +57252,7 @@
                         },
                         {
                             "name": "EVANS, KEENAN",
-                            "min": "17:25",
+                            "min": "18:25",
                             "pts": 6,
                             "oreb": 0,
                             "dreb": 1,
@@ -57300,7 +57300,7 @@
                         },
                         {
                             "name": "BUTKEVICIUS, ARNAS",
-                            "min": "22:22",
+                            "min": "21:22",
                             "pts": 3,
                             "oreb": 2,
                             "dreb": 5,
@@ -57363,7 +57363,7 @@
                     "homePlayers": [
                         {
                             "name": "MILLER-MCINTYRE, CODI",
-                            "min": "21:02",
+                            "min": "20:02",
                             "pts": 0,
                             "oreb": 0,
                             "dreb": 3,
@@ -57507,7 +57507,7 @@
                         },
                         {
                             "name": "MILUTINOV, NIKOLA",
-                            "min": "12:17",
+                            "min": "13:17",
                             "pts": 0,
                             "oreb": 4,
                             "dreb": 1,
@@ -57531,7 +57531,7 @@
                         },
                         {
                             "name": "JOSEPH, CORY",
-                            "min": "18:58",
+                            "min": "19:58",
                             "pts": 5,
                             "oreb": 1,
                             "dreb": 0,
@@ -57555,7 +57555,7 @@
                         },
                         {
                             "name": "HALL, DONTA",
-                            "min": "19:41",
+                            "min": "18:41",
                             "pts": 4,
                             "oreb": 1,
                             "dreb": 3,
@@ -57653,7 +57653,7 @@
                     "awayPlayers": [
                         {
                             "name": "JONES, CHRIS",
-                            "min": "21:35",
+                            "min": "22:35",
                             "pts": 10,
                             "oreb": 1,
                             "dreb": 1,
@@ -57677,7 +57677,7 @@
                         },
                         {
                             "name": "WEILER-BABB, NICK",
-                            "min": "18:25",
+                            "min": "17:25",
                             "pts": 3,
                             "oreb": 1,
                             "dreb": 3,
@@ -57725,7 +57725,7 @@
                         },
                         {
                             "name": "DAVIDOVAC, DEJAN",
-                            "min": "11:34",
+                            "min": "10:34",
                             "pts": 5,
                             "oreb": 0,
                             "dreb": 2,
@@ -57773,7 +57773,7 @@
                         },
                         {
                             "name": "DOBRIC, OGNJEN",
-                            "min": "08:45",
+                            "min": "07:45",
                             "pts": 3,
                             "oreb": 0,
                             "dreb": 1,
@@ -57797,7 +57797,7 @@
                         },
                         {
                             "name": "IZUNDU, EBUKA",
-                            "min": "12:03",
+                            "min": "11:03",
                             "pts": 2,
                             "oreb": 1,
                             "dreb": 1,
@@ -57845,7 +57845,7 @@
                         },
                         {
                             "name": "NWORA, JORDAN",
-                            "min": "25:15",
+                            "min": "26:15",
                             "pts": 18,
                             "oreb": 2,
                             "dreb": 11,
@@ -57869,7 +57869,7 @@
                         },
                         {
                             "name": "KOLOKO, CHRISTIAN",
-                            "min": "21:12",
+                            "min": "23:12",
                             "pts": 6,
                             "oreb": 2,
                             "dreb": 1,
@@ -57956,7 +57956,7 @@
                     "homePlayers": [
                         {
                             "name": "BELLO, RASHEED",
-                            "min": "16:42",
+                            "min": "17:42",
                             "pts": 2,
                             "oreb": 2,
                             "dreb": 3,
@@ -58004,7 +58004,7 @@
                         },
                         {
                             "name": "CARR, MARCUS",
-                            "min": "20:39",
+                            "min": "21:39",
                             "pts": 4,
                             "oreb": 0,
                             "dreb": 1,
@@ -58028,7 +58028,7 @@
                         },
                         {
                             "name": "KOKILA, KEVIN",
-                            "min": "13:42",
+                            "min": "12:42",
                             "pts": 3,
                             "oreb": 1,
                             "dreb": 0,
@@ -58052,7 +58052,7 @@
                         },
                         {
                             "name": "MOORE, WENDELL",
-                            "min": "28:04",
+                            "min": "27:04",
                             "pts": 15,
                             "oreb": 3,
                             "dreb": 2,
@@ -58070,13 +58070,13 @@
                             "fta": 3,
                             "ft_pct": "100.0%",
                             "to": 1,
-                            "pf": 2,
-                            "pir": 12,
+                            "pf": 3,
+                            "pir": 11,
                             "plusMinus": "-16"
                         },
                         {
                             "name": "EDWARDS, KESSLER",
-                            "min": "16:52",
+                            "min": "17:52",
                             "pts": 4,
                             "oreb": 0,
                             "dreb": 2,
@@ -58100,7 +58100,7 @@
                         },
                         {
                             "name": "ALSTON JR., DERRICK",
-                            "min": "16:54",
+                            "min": "17:54",
                             "pts": 2,
                             "oreb": 0,
                             "dreb": 0,
@@ -58124,7 +58124,7 @@
                         },
                         {
                             "name": "HACKETT, DANIEL",
-                            "min": "14:53",
+                            "min": "13:53",
                             "pts": 3,
                             "oreb": 1,
                             "dreb": 2,
@@ -58148,7 +58148,7 @@
                         },
                         {
                             "name": "FERRARI, FRANCESCO",
-                            "min": "08:45",
+                            "min": "06:45",
                             "pts": 0,
                             "oreb": 0,
                             "dreb": 1,
@@ -58172,7 +58172,7 @@
                         },
                         {
                             "name": "DIARRA, ALIOU",
-                            "min": "19:08",
+                            "min": "20:08",
                             "pts": 19,
                             "oreb": 5,
                             "dreb": 2,
@@ -58190,8 +58190,8 @@
                             "fta": 6,
                             "ft_pct": "83.3%",
                             "to": 0,
-                            "pf": 2,
-                            "pir": 30,
+                            "pf": 3,
+                            "pir": 29,
                             "plusMinus": "9"
                         },
                         {
@@ -58318,7 +58318,7 @@
                         },
                         {
                             "name": "BLOSSOMGAME, JARON",
-                            "min": "19:11",
+                            "min": "18:11",
                             "pts": 9,
                             "oreb": 0,
                             "dreb": 1,
@@ -58336,8 +58336,8 @@
                             "fta": 2,
                             "ft_pct": "100.0%",
                             "to": 0,
-                            "pf": 1,
-                            "pir": 10,
+                            "pf": 2,
+                            "pir": 9,
                             "plusMinus": "8"
                         },
                         {
@@ -58414,7 +58414,7 @@
                         },
                         {
                             "name": "KABENGELE, MFIONDU",
-                            "min": "21:39",
+                            "min": "22:39",
                             "pts": 16,
                             "oreb": 4,
                             "dreb": 5,
@@ -58462,7 +58462,7 @@
                         },
                         {
                             "name": "SHENGELIA, TORNIKE",
-                            "min": "22:39",
+                            "min": "23:39",
                             "pts": 14,
                             "oreb": 1,
                             "dreb": 2,
@@ -58510,7 +58510,7 @@
                         },
                         {
                             "name": "PETRUSEV, FILIP",
-                            "min": "13:35",
+                            "min": "12:35",
                             "pts": 3,
                             "oreb": 1,
                             "dreb": 2,
@@ -58549,7 +58549,7 @@
                     "homePlayers": [
                         {
                             "name": "JONES, CARLIK",
-                            "min": "24:04",
+                            "min": "25:04",
                             "pts": 7,
                             "oreb": 0,
                             "dreb": 2,
@@ -58645,7 +58645,7 @@
                         },
                         {
                             "name": "FRANKS, ROBERT",
-                            "min": "18:17",
+                            "min": "19:17",
                             "pts": 11,
                             "oreb": 1,
                             "dreb": 3,
@@ -58669,7 +58669,7 @@
                         },
                         {
                             "name": "MARINKOVIC, VANJA",
-                            "min": "12:34",
+                            "min": "11:34",
                             "pts": 9,
                             "oreb": 0,
                             "dreb": 0,
@@ -58693,7 +58693,7 @@
                         },
                         {
                             "name": "TANASKOVIC, NIKOLA",
-                            "min": "27:20",
+                            "min": "26:20",
                             "pts": 11,
                             "oreb": 2,
                             "dreb": 5,
@@ -58717,7 +58717,7 @@
                         },
                         {
                             "name": "STEVENS, LAMAR",
-                            "min": "27:49",
+                            "min": "26:49",
                             "pts": 14,
                             "oreb": 2,
                             "dreb": 6,
@@ -58741,7 +58741,7 @@
                         },
                         {
                             "name": "REEVES, ANTONIO",
-                            "min": "26:20",
+                            "min": "27:20",
                             "pts": 13,
                             "oreb": 1,
                             "dreb": 0,
@@ -58765,7 +58765,7 @@
                         },
                         {
                             "name": "LAKIC, ARIJAN",
-                            "min": "06:11",
+                            "min": "05:11",
                             "pts": 0,
                             "oreb": 0,
                             "dreb": 0,
@@ -58813,7 +58813,7 @@
                         },
                         {
                             "name": "LAUVERGNE, JOFFREY",
-                            "min": "05:56",
+                            "min": "06:56",
                             "pts": 2,
                             "oreb": 1,
                             "dreb": 3,
@@ -58839,7 +58839,7 @@
                     "awayPlayers": [
                         {
                             "name": "HOARD, JAYLEN",
-                            "min": "25:30",
+                            "min": "26:30",
                             "pts": 9,
                             "oreb": 3,
                             "dreb": 3,
@@ -58863,7 +58863,7 @@
                         },
                         {
                             "name": "CLARK III, JIMMY",
-                            "min": "23:12",
+                            "min": "22:12",
                             "pts": 8,
                             "oreb": 0,
                             "dreb": 1,
@@ -58881,13 +58881,13 @@
                             "fta": 2,
                             "ft_pct": "100.0%",
                             "to": 2,
-                            "pf": 4,
-                            "pir": 5,
+                            "pf": 5,
+                            "pir": 4,
                             "plusMinus": "-21"
                         },
                         {
                             "name": "BACOT JR., ARMANDO",
-                            "min": "10:07",
+                            "min": "12:07",
                             "pts": 0,
                             "oreb": 0,
                             "dreb": 1,
@@ -59007,7 +59007,7 @@
                         },
                         {
                             "name": "WALLACE, KEATON",
-                            "min": "14:37",
+                            "min": "15:37",
                             "pts": 6,
                             "oreb": 2,
                             "dreb": 0,
@@ -59055,7 +59055,7 @@
                         },
                         {
                             "name": "THEIS, DANIEL",
-                            "min": "17:05",
+                            "min": "15:05",
                             "pts": 11,
                             "oreb": 0,
                             "dreb": 3,
@@ -59103,7 +59103,7 @@
                         },
                         {
                             "name": "COLSON, BONZIE",
-                            "min": "22:16",
+                            "min": "21:16",
                             "pts": 8,
                             "oreb": 1,
                             "dreb": 2,
@@ -59121,8 +59121,8 @@
                             "fta": 1,
                             "ft_pct": "0.0%",
                             "to": 1,
-                            "pf": 2,
-                            "pir": 7,
+                            "pf": 3,
+                            "pir": 6,
                             "plusMinus": "-5"
                         }
                     ]
