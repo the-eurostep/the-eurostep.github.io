@@ -1,161 +1,277 @@
 <!DOCTYPE html>
-<html lang="it" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Eurostep - NBA Teams & Players</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkbg: '#0b0f19',
-                        cardbg: '#131c2e',
-                        accent: '#f97316' // Tonalità arancio NBA
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-darkbg text-white min-h-screen font-sans antialiased selection:bg-accent selection:text-white">
+    <title>NBA Teams & Players | The Eurostep</title>
+    <link rel="icon" type="image/png" href="the eurostep rounded.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: #030508; color: #f3f4f6; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+        #webgl-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; padding: 18px 45px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(3, 5, 8, 0.92); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000; }
+        .brand-container { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.3s ease, filter 0.3s ease; }
+        .brand-container:hover { transform: scale(1.02); filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)); }
+        .brand-logo { height: 52px; width: auto; object-fit: contain; }
+        .brand-title-text { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 1.5px; background: linear-gradient(135deg, #ffffff 30%, #9ca3af 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+        .nav-menu { display: flex; align-items: center; gap: 35px; list-style: none; }
+        .nav-link { color: #d1d5db; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 0; transition: color 0.3s ease; display: block; }
+        .nav-link:hover { color: #ffffff; }
 
-    <!-- Header / Nav -->
-    <header class="border-b border-gray-800 bg-darkbg/80 backdrop-blur-md sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-black tracking-wider uppercase text-white">The <span class="text-accent">Eurostep</span></h1>
-            <nav class="space-x-4 text-sm font-semibold">
-                <a href="index.html" class="hover:text-accent transition">Home</a>
-                <a href="euroleague-teams-players.html" class="hover:text-accent transition">EuroLeague</a>
-                <a href="nba-teams-players.html" class="text-accent">NBA</a>
-            </nav>
-        </div>
+        .container { max-width: 1350px; margin: 40px auto; padding: 0 20px; z-index: 1; width: 100%; display: flex; flex-direction: column; gap: 30px; }
+        .page-header-section { text-align: center; }
+        .page-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #ffffff; margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
+        .page-subtitle { color: #9ca3af; font-size: 0.95rem; }
+
+        .teams-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .team-card { background: rgba(11, 15, 25, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; backdrop-filter: blur(12px); transition: all 0.3s ease; }
+        .team-card:hover { border-color: rgba(249, 115, 22, 0.5); background: rgba(15, 22, 36, 0.85); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .team-logo { width: 50px; height: 50px; object-fit: contain; }
+        .team-name { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: #ffffff; font-weight: 700; }
+
+        .roster-section { display: none; flex-direction: column; gap: 20px; }
+        .roster-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; background: rgba(11, 15, 25, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 14px; backdrop-filter: blur(12px); }
+        .team-info-box h2 { font-family: 'Orbitron', sans-serif; color: #ffffff; font-size: 1.4rem; margin-bottom: 4px; }
+        .team-info-box p { color: #9ca3af; font-size: 0.85rem; }
+        .team-info-box span { color: #f97316; font-weight: 600; }
+        
+        .back-to-teams-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; color: #ffffff; padding: 10px 18px; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; }
+        .back-to-teams-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(249, 115, 22, 0.5); }
+
+        .players-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .player-card { background: rgba(11, 15, 25, 0.75); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; overflow: hidden; cursor: pointer; backdrop-filter: blur(12px); transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; padding: 20px; text-align: center; }
+        .player-card:hover { border-color: rgba(249, 115, 22, 0.5); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        
+        .player-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; object-position: center 20%; background: rgba(255,255,255,0.05); margin-bottom: 12px; border: 2px solid rgba(255,255,255,0.1); }
+        
+        .player-name { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: #ffffff; font-weight: 700; margin-bottom: 4px; }
+        .player-details { color: #9ca3af; font-size: 0.8rem; }
+
+        /* Modale Profilo Giocatore */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3, 5, 8, 0.85); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        .modal-card { background: rgba(11, 15, 25, 0.95); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 20px; max-width: 480px; width: 100%; padding: 30px; display: flex; flex-direction: column; gap: 20px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: #9ca3af; font-size: 1.5rem; cursor: pointer; transition: color 0.2s; }
+        .modal-close:hover { color: #ffffff; }
+        .modal-profile-header { display: flex; align-items: center; gap: 20px; }
+        
+        .modal-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; object-position: center 20%; border: 2px solid #f97316; background: rgba(255,255,255,0.05); }
+        
+        .modal-title-box h2 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: #ffffff; margin-bottom: 5px; }
+        .modal-title-box p { color: #9ca3af; font-size: 0.85rem; }
+
+        .loading-text { text-align: center; padding: 40px; color: #9ca3af; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; width: 100%; }
+
+        footer { text-align: center; padding: 25px; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #4b5563; font-size: 0.85rem; letter-spacing: 1px; z-index: 1; display: flex; justify-content: center; gap: 20px; align-items: center; }
+        footer a { color: #6b7280; text-decoration: none; transition: color 0.2s ease; }
+        footer a:hover { color: #ffffff; }
+    </style>
+</head>
+<body>
+    <div id="webgl-container"></div>
+    <header>
+        <a href="index.html" class="brand-container" title="The Eurostep Home">
+            <img src="the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
+            <span class="brand-title-text">The Eurostep</span>
+        </a>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="euroleague-teams-players.html" class="nav-link">EuroLeague</a></li>
+        </ul>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 py-10">
-        <div class="text-center mb-10">
-            <h2 class="text-4xl font-extrabold uppercase tracking-tight">NBA Teams & Players</h2>
-            <p class="text-gray-400 mt-2">Esplora le 30 franchigie e i roster ufficiali della lega</p>
+    <main class="container">
+        <div class="page-header-section">
+            <h1 class="page-title">NBA Teams & Rosters</h1>
+            <p class="page-subtitle">All the NBA teams and players, updated daily.</p>
         </div>
 
-        <!-- Sezione Griglia Squadre -->
-        <div id="teams-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            <!-- Popolato dinamicamente via JS -->
+        <div id="teamsView" class="teams-grid">
+            <div class="loading-text">Loading NBA teams...</div>
         </div>
 
-        <!-- Sezione Roster (nascosta finché non si seleziona una squadra) -->
-        <div id="roster-section" class="hidden mt-12">
-            <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-800">
-                <div class="flex items-center space-x-4">
-                    <img id="selected-team-logo" src="" alt="" class="w-16 h-16 object-contain">
-                    <div>
-                        <h3 id="selected-team-name" class="text-3xl font-bold"></h3>
-                        <p class="text-gray-400 text-sm mt-1">Stagione NBA 2026-27</p>
-                    </div>
+        <div id="rosterView" class="roster-section">
+            <div class="roster-header-row">
+                <div class="team-info-box">
+                    <h2 id="selectedTeamTitle"></h2>
+                    <p>Head Coach: <span id="selectedTeamCoach">N/A</span></p>
                 </div>
-                <button onclick="backToTeams()" class="bg-gray-800 hover:bg-gray-700 text-sm px-4 py-2 rounded-xl transition font-semibold">
-                    ← Torna alle squadre
-                </button>
+                <button class="back-to-teams-btn" onclick="showTeamsView()">&larr; Back to Teams</button>
             </div>
-
-            <div id="players-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                <!-- Giocatori popolati dinamicamente -->
-            </div>
+            <div id="playersGrid" class="players-grid"></div>
         </div>
     </main>
 
-    <!-- Modale Dettaglio Giocatore -->
-    <div id="player-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-cardbg border border-gray-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">✕</button>
-            <div class="flex flex-col items-center text-center">
-                <img id="modal-img" src="" alt="" class="w-32 h-32 object-cover rounded-full bg-gray-800 mb-4 border-2 border-accent">
-                <h4 id="modal-name" class="text-2xl font-bold"></h4>
-                <p id="modal-pos-num" class="text-accent font-semibold text-sm mb-4"></p>
-                
-                <div class="w-full grid grid-cols-2 gap-3 text-left text-sm bg-darkbg/50 p-4 rounded-xl border border-gray-800/60">
-                    <div><span class="text-gray-400 block text-xs">Altezza</span><span id="modal-height" class="font-medium"></span></div>
-                    <div><span class="text-gray-400 block text-xs">Peso</span><span id="modal-weight" class="font-medium"></span></div>
-                    <div><span class="text-gray-400 block text-xs">Nascita</span><span id="modal-birth" class="font-medium"></span></div>
-                    <div><span class="text-gray-400 block text-xs">Esperienza NBA</span><span id="modal-exp" class="font-medium"></span></div>
-                    <div class="col-span-2 mt-2"><span class="text-gray-400 block text-xs">Luogo di Nascita</span><span id="modal-birthplace" class="font-medium"></span></div>
+    <!-- Modale Profilo Giocatore -->
+    <div id="playerModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModalDirect()">&times;</button>
+            <div class="modal-profile-header">
+                <img id="mPlayerImg" src="" alt="" class="modal-img" onerror="this.src='the eurostep rounded.png'">
+                <div class="modal-title-box">
+                    <h2 id="mPlayerName"></h2>
+                    <p id="mPlayerInfo"></p>
                 </div>
+            </div>
+            <div style="color: #9ca3af; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px; display: flex; flex-direction: column; gap: 8px;">
+                <div><strong>Birthplace:</strong> <span id="mBirthplace" style="color:#fff;">-</span></div>
+                <div><strong>Birth Date:</strong> <span id="mBirth" style="color:#fff;">-</span></div>
+                <div><strong>Height:</strong> <span id="mHeight" style="color:#fff;">-</span></div>
+                <div><strong>Weight:</strong> <span id="mWeight" style="color:#fff;">-</span></div>
+                <div><strong>NBA Experience:</strong> <span id="mExp" style="color:#fff;">-</span></div>
             </div>
         </div>
     </div>
 
+    <footer>
+        <span>&copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.</span>
+        <a href="privacy.html">Privacy Policy</a>
+    </footer>
+
     <script>
-        let globalData = {};
+        let globalData = null;
+        let teamsMap = {};
 
         async function loadData() {
             try {
-                const response = await fetch('nba-rosters.json');
-                globalData = await response.json();
+                const res = await fetch('nba-rosters.json?v=' + new Date().getTime());
+                if (!res.ok) throw new Error('File non trovato');
+                globalData = await res.json();
+                
+                globalData.teams.forEach(t => { teamsMap[t.code] = t; });
                 renderTeams(globalData.teams);
-            } catch (error) {
-                console.error("Errore nel caricamento del file JSON NBA:", error);
+            } catch (err) {
+                console.error(err);
+                document.getElementById('teamsView').innerHTML = '<div class="loading-text">Syncing daily NBA rosters feed in progress...</div>';
             }
         }
 
         function renderTeams(teams) {
-            const container = document.getElementById('teams-container');
-            container.innerHTML = teams.map(team => `
-                <div onclick="selectTeam('${team.code}')" class="bg-cardbg border border-gray-800/80 hover:border-accent rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer transition transform hover:-translate-y-1 shadow-lg group">
-                    <img src="${team.image}" alt="${team.name}" class="w-20 h-20 object-contain mb-4 group-hover:scale-105 transition">
-                    <h3 class="text-sm font-bold text-center tracking-wide">${team.name}</h3>
-                </div>
-            `).join('');
+            const grid = document.getElementById('teamsView');
+            grid.innerHTML = "";
+            if (!teams || teams.length === 0) {
+                grid.innerHTML = '<div class="loading-text">No teams available right now.</div>';
+                return;
+            }
+            teams.forEach(t => {
+                const card = document.createElement('div');
+                card.className = 'team-card';
+                card.onclick = () => openRoster(t.code);
+                card.innerHTML = `
+                    <img src="${t.image || ''}" alt="${t.name}" class="team-logo" onerror="this.src='the eurostep rounded.png'">
+                    <span class="team-name">${t.name}</span>
+                `;
+                grid.appendChild(card);
+            });
         }
 
-        function selectTeam(code) {
-            const team = globalData.teams.find(t => t.code === code);
-            const players = globalData.rosters[code] || [];
+        function openRoster(teamCode) {
+            const team = teamsMap[teamCode];
+            if (!team) return;
 
-            document.getElementById('selected-team-name').innerText = team.name;
-            document.getElementById('selected-team-logo').src = team.image;
+            document.getElementById('teamsView').style.display = 'none';
+            document.getElementById('rosterView').style.display = 'flex';
+            document.getElementById('selectedTeamTitle').textContent = team.name;
+            document.getElementById('selectedTeamCoach').textContent = team.headCoach || 'N/A';
 
-            const grid = document.getElementById('players-grid');
-            grid.innerHTML = players.map(p => `
-                <div onclick='openModal(${JSON.stringify(p)})' class="bg-cardbg border border-gray-800/80 hover:border-accent rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer transition group">
-                    <div class="w-24 h-24 rounded-full bg-gray-800/50 mb-3 overflow-hidden border border-gray-700">
-                        <img src="${p.image}" alt="${p.name} ${p.surname}" class="w-full h-full object-cover object-top group-hover:scale-105 transition" onerror="this.src='https://via.placeholder.com/150/131c2e/888888?text=NBA'">
-                    </div>
-                    <span class="text-xs text-accent font-bold mb-1">#${p.number || '0'} • ${p.position}</span>
-                    <h4 class="font-bold text-sm text-white">${p.name}</h4>
-                    <h4 class="font-bold text-sm text-gray-300">${p.surname}</h4>
-                </div>
-            `).join('');
+            const grid = document.getElementById('playersGrid');
+            grid.innerHTML = "";
 
-            document.getElementById('teams-container').parentElement.classList.add('hidden');
-            document.getElementById('roster-section').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const players = globalData.rosters[teamCode] || [];
+            if (players.length === 0) {
+                grid.innerHTML = '<div class="loading-text">No players found for this team.</div>';
+                return;
+            }
+
+            players.forEach(p => {
+                const pCard = document.createElement('div');
+                pCard.className = 'player-card';
+                pCard.onclick = () => openPlayerModal(p);
+                
+                let imgSrc = p.image ? p.image : 'the eurostep rounded.png';
+                
+                pCard.innerHTML = `
+                    <img src="${imgSrc}" alt="${p.name} ${p.surname}" class="player-img" onerror="this.src='the eurostep rounded.png'">
+                    <div class="player-name">${p.name || ''} ${p.surname || ''}</div>
+                    <div class="player-details">#${p.number || '-'} &bull; ${p.position || 'Player'}</div>
+                `;
+                grid.appendChild(pCard);
+            });
         }
 
-        function backToTeams() {
-            document.getElementById('roster-section').classList.add('hidden');
-            document.getElementById('teams-container').parentElement.classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function showTeamsView() {
+            document.getElementById('rosterView').style.display = 'none';
+            document.getElementById('teamsView').style.display = 'grid';
         }
 
-        function openModal(player) {
-            document.getElementById('modal-img').src = player.image;
-            document.getElementById('modal-name').innerText = `${player.name} ${player.surname}`;
-            document.getElementById('modal-pos-num.innerText' || 'modal-pos-num').innerText = `#${player.number || '0'} — ${player.position}`;
-            document.getElementById('modal-height').innerText = player.height;
-            document.getElementById('modal-weight').innerText = player.weight;
-            document.getElementById('modal-birth').innerText = player.birthDate;
-            document.getElementById('modal-exp').innerText = player.experience;
-            document.getElementById('modal-birthplace').innerText = player.birthPlace;
-            document.getElementById('player-modal').classList.remove('hidden');
+        function openPlayerModal(p) {
+            document.getElementById('mPlayerName').textContent = `${p.name || ''} ${p.surname || ''}`;
+            document.getElementById('mPlayerInfo').textContent = `#${p.number || '-'} • ${p.position || 'Player'}`;
+            document.getElementById('mBirthplace').textContent = p.birthPlace || 'N/A';
+            
+            if (p.birthDate) {
+                const dateObj = new Date(p.birthDate);
+                document.getElementById('mBirth').textContent = isNaN(dateObj) ? p.birthDate.split('T')[0] : dateObj.toLocaleDateString();
+            } else {
+                document.getElementById('mBirth').textContent = 'N/A';
+            }
+
+            document.getElementById('mHeight').textContent = p.height || 'N/A';
+            document.getElementById('mWeight').textContent = p.weight || 'N/A';
+            document.getElementById('mExp').textContent = p.experience || 'N/A';
+
+            let imgSrc = p.image ? p.image : 'the eurostep rounded.png';
+            document.getElementById('mPlayerImg').src = imgSrc;
+
+            document.getElementById('playerModal').style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById('player-modal').classList.add('hidden');
+        function closeModal(e) {
+            if(e.target.id === 'playerModal') closeModalDirect();
         }
 
-        window.onload = loadData;
+        function closeModalDirect() {
+            document.getElementById('playerModal').style.display = 'none';
+        }
+
+        loadData();
+
+        // Canvas 3D Background
+        const container = document.getElementById('webgl-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+        const posArray = new Float32Array(particlesCount * 3);
+        for(let i = 0; i < particlesCount * 3; i++) posArray[i] = (Math.random() - 0.5) * 10;
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMesh = new THREE.Points(particlesGeometry, new THREE.PointsMaterial({ size: 0.015, color: 0xffffff, transparent: true, opacity: 0.6 }));
+        scene.add(particlesMesh);
+        camera.position.z = 3;
+
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX - window.innerWidth / 2) / 500;
+            mouseY = (e.clientY - window.innerHeight / 2) / 500;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.y += 0.001 + (mouseX * 0.5 - particlesMesh.rotation.y) * 0.05;
+            particlesMesh.rotation.x += 0.001 + (mouseY * 0.5 - particlesMesh.rotation.x) * 0.05;
+            renderer.render(scene, camera);
+        }
+        animate();
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
 </body>
 </html>
