@@ -35,6 +35,9 @@ def main():
                             "name": display_name,
                             "logo": logo_url
                         }
+                        
+    # AGGIUNGIAMO QUESTO STAMPA PER CONTROLLO
+    print("Squadre trovate su Yahoo:", list(yahoo_teams_dict.keys()))
 
     # 2. Recupero Elenco Competitor da TSN (per i roster dei giocatori)
     tsn_teams_url = "https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/"
