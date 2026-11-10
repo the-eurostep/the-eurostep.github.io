@@ -17,28 +17,26 @@ def fetch_json(url):
 def main():
     print("Avvio sincronizzazione NBA...")
 
-    # 1. Recupero Squadre e Loghi Ufficiali DIRETTAMENTE da Yahoo Sports
+    # 1. Recupero Squadre e Loghi DIRETTAMENTE da Yahoo Sports
     yahoo_url = "https://graphite.sports.yahoo.com/v1/query/shangrila/navDropdownTray?lang=en-US&region=US&ysp_platform=next-app-sports"
     yahoo_data = fetch_json(yahoo_url)
     
-    yahoo_teams_map = {}
+    yahoo_teams_dict = {}
     if yahoo_data and 'nba' in yahoo_data:
         for section in yahoo_data['nba']:
             if 'teams' in section:
                 for t in section['teams']:
-                    display_name = t.get('displayName', '').strip() # es. "Atlanta", "Boston"
-                    # Estrazione sicura del logo esattamente dal campo richiesto
-                    logo_url = t.get('teamLogo', {}).get('url', '')
+                    display_name = t.get('displayName', '').strip() # es. "Atlanta"
+                    logo_url = t.get('teamLogo', {}).get('url', '') # es. l'URL Yahoo del logo
                     
                     if display_name and logo_url:
-                        # Normalizziamo la chiave per facilitare il match con TSN
-                        key = display_name.lower()
-                        yahoo_teams_map[key] = {
-                            "displayName": display_name,
+                        # Normalizziamo la chiave rimuovendo spazi e portando in minuscolo
+                        yahoo_teams_dict[display_name.lower()] = {
+                            "name": display_name,
                             "logo": logo_url
                         }
 
-    # 2. Recupero Elenco Competitor da TSN (per associare i roster)
+    # 2. Recupero Elenco Competitor da TSN (per i roster dei giocatori)
     tsn_teams_url = "https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/"
     tsn_teams = fetch_json(tsn_teams_url)
 
@@ -53,21 +51,26 @@ def main():
     for team_info in tsn_teams:
         competitor_id = team_info.get('competitorId')
         full_name = team_info.get('name', '').strip() # es. "Atlanta Hawks"
-        location = team_info.get('location', '').strip().lower() # es. "atlanta"
+        location = team_info.get('location', '').strip() # es. "Atlanta"
         
         if not competitor_id or not full_name:
             continue
 
         team_code = str(competitor_id)
 
-        # Cerchiamo il logo corrispondente nei dati di Yahoo tramite la location o il nome
+        # Cerchiamo il logo corrispondente in Yahoo usando la location esatta o il nome
         logo = ""
-        for y_key, y_data in yahoo_teams_map.items():
-            if y_key in location or location in y_key or y_key in full_name.lower():
-                logo = y_data['logo']
-                break
+        loc_lower = location.lower()
+        if loc_lower in yahoo_teams_dict:
+            logo = yahoo_teams_dict[loc_lower]['logo']
+        else:
+            # Ricerca di sicurezza se il nome Yahoo è contenuto nella location o viceversa
+            for y_key, y_data in yahoo_teams_dict.items():
+                if y_key in loc_lower or loc_lower in y_key or y_key in full_name.lower():
+                    logo = y_data['logo']
+                    break
 
-        # Recupero Roster per la squadra attuale da TSN
+        # Recupero Roster Giocatori da TSN (che funzionava perfettamente)
         roster_url = f"https://next-gen.sports.bellmedia.ca/v2/competitor/basketball/nba/{competitor_id}/roster?brand=tsn&lang=en"
         roster_data = fetch_json(roster_url)
 
@@ -78,7 +81,6 @@ def main():
                 first_name = p.get('firstName', '').strip()
                 last_name = p.get('lastName', '').strip()
                 
-                # Gestione rigorosa del numero di maglia (inclusi 0 e 00)
                 num_val = p.get('number')
                 if num_val is not None and num_val != "":
                     number = str(num_val)
@@ -136,7 +138,6 @@ def main():
 
         all_rosters[team_code] = roster_players
 
-    # 3. Ordinamento Alfabetico (A-Z) delle squadre
     teams_list.sort(key=lambda x: x['name'])
 
     final_output = {
@@ -147,7 +148,7 @@ def main():
     with open('nba-rosters.json', 'w', encoding='utf-8') as f:
         json.dump(final_output, f, ensure_ascii=False, indent=2)
 
-    print(f"Completato! Elaborate {len(teams_list)} squadre e generato nba-rosters.json correttamente.")
+    print(f"Completato! Elaborate {len(teams_list)} squadre con loghi Yahoo e generato nba-rosters.json.")
 
 if __name__ == '__main__':
     main()
