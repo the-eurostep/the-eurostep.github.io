@@ -40,12 +40,11 @@ def main():
                 if item.get('shortName') == 'NBA' or 'nba' in str(item.get('teamId', '')).lower():
                     teams_array = item.get('teams', [])
                     for t in teams_array:
-                        display_name = t.get('displayName', '').strip() # es. "LA Clippers", "LA Lakers", "Atlanta"
+                        display_name = t.get('displayName', '').strip()
                         team_id = t.get('teamId', '').strip()
                         logo_url = t.get('teamLogo', {}).get('url', '')
                         
                         if logo_url and display_name:
-                            # Salviamo sia la versione in minuscolo che l'originale
                             yahoo_teams_dict[display_name.lower()] = logo_url
                             yahoo_teams_dict[display_name] = logo_url
                             if team_id:
@@ -67,16 +66,16 @@ def main():
 
     for team_info in tsn_teams:
         competitor_id = team_info.get('competitorId')
-        full_name = team_info.get('name', '').strip() # es. "Los Angeles Lakers" o "Lakers"
-        location = team_info.get('location', '').strip() # es. "Los Angeles"
-        nickname = team_info.get('nickname', '').strip() # es. "Lakers"
+        full_name = team_info.get('name', '').strip()
+        location = team_info.get('location', '').strip()
+        nickname = team_info.get('nickname', '').strip()
         
         if not competitor_id or not full_name:
             continue
 
         team_code = str(competitor_id)
 
-        # STAMPA DIAGNOSTICA: vediamo nei log come TSN invia i Lakers e Clippers
+        # STAMPA DIAGNOSTICA TSN
         if "angeles" in full_name.lower() or "lakers" in full_name.lower() or "clippers" in full_name.lower():
             print(f"SQUADRA TSN -> Name: '{full_name}', Location: '{location}', Nickname: '{nickname}'")
 
@@ -86,7 +85,6 @@ def main():
         full_lower = full_name.lower()
         nick_lower = nickname.lower()
 
-        # Proviamo le chiavi possibili (inclusi i casi "LA Lakers" / "LA Clippers")
         possible_keys = [
             f"la {nick_lower}",
             f"LA {nickname}",
@@ -101,7 +99,6 @@ def main():
                 logo = yahoo_teams_dict[key]
                 break
 
-        # Se non trovato direttamente, facciamo una ricerca per contenimento del nickname
         if not logo:
             for y_key, y_logo in yahoo_teams_dict.items():
                 if nick_lower and nick_lower in y_key.lower():
@@ -156,4 +153,37 @@ def main():
                     experience = "Rookie"
 
                 roster_players.append({
-                    "
+                    "id": player_id,
+                    "name": first_name,
+                    "surname": last_name,
+                    "number": number,
+                    "position": position,
+                    "height": height_str,
+                    "weight": weight_str,
+                    "birthDate": birth_date_str,
+                    "birthPlace": birth_place_str,
+                    "experience": experience
+                })
+
+        teams_list.append({
+            "code": team_code,
+            "name": full_name,
+            "image": logo
+        })
+
+        all_rosters[team_code] = roster_players
+
+    teams_list.sort(key=lambda x: x['name'])
+
+    final_output = {
+        "teams": teams_list,
+        "rosters": all_rosters
+    }
+
+    with open('nba-rosters.json', 'w', encoding='utf-8') as f:
+        json.dump(final_output, f, ensure_ascii=False, indent=2)
+
+    print(f"Completato! Elaborate {len(teams_list)} squadre con loghi Yahoo e generato nba-rosters.json.")
+
+if __name__ == '__main__':
+    main()
