@@ -229,11 +229,14 @@
             backdrop-filter: blur(12px);
             display: flex;
             flex-direction: column;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+            color: inherit;
         }
 
         .main-featured-article:hover {
             border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
         }
 
         .article-img-placeholder {
@@ -248,6 +251,8 @@
             font-size: 0.85rem;
             letter-spacing: 1px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background-size: cover;
+            background-position: center;
         }
 
         .article-content {
@@ -295,6 +300,8 @@
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            text-decoration: none;
+            color: inherit;
         }
 
         .side-article-card:hover {
@@ -314,6 +321,8 @@
             font-size: 0.65rem;
             letter-spacing: 1px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background-size: cover;
+            background-position: center;
         }
 
         .side-content {
@@ -343,6 +352,10 @@
             overflow: hidden;
             backdrop-filter: blur(12px);
             transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
         }
 
         .grid-article-card:hover {
@@ -361,6 +374,8 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 0.75rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background-size: cover;
+            background-position: center;
         }
 
         .grid-content {
@@ -480,7 +495,7 @@
             <li class="nav-item">
                 <a href="#" class="nav-link">NBA</a>
                 <div class="dropdown-content">
-                    <a href="#">Articles</a>
+                    <a href="see-more-articles.html?category=nba">Articles</a>
                     <a href="nba-fantasy.html">Fantasy</a>
                     <a href="nba-stats.html">Stats</a>
                     <a href="nba-standings.html">Standings</a>
@@ -492,7 +507,7 @@
             <li class="nav-item">
                 <a href="#" class="nav-link">Euroleague</a>
                 <div class="dropdown-content">
-                    <a href="#">Articles</a>
+                    <a href="see-more-articles.html?category=euroleague">Articles</a>
                     <a href="euroleague-fantasy.html">Fantasy</a>
                     <a href="euroleague-stats.html">Stats</a>
                     <a href="euroleague-standings.html">Standings</a>
@@ -532,7 +547,7 @@
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                 </span>
-                <input type="text" class="search-input" placeholder="Search">
+                <input type="text" id="search-input" class="search-input" placeholder="Search">
             </div>
         </div>
     </header>
@@ -541,77 +556,36 @@
         
         <div class="hero-magazine-grid">
             
-            <article class="main-featured-article">
-                <div class="article-img-placeholder">[ FEATURED ARTICLE IMAGE ]</div>
+            <!-- Articolo in Evidenza Principale -->
+            <a id="featured-article-link" href="#" class="main-featured-article">
+                <div id="featured-img" class="article-img-placeholder">[ FEATURED ARTICLE IMAGE ]</div>
                 <div class="article-content">
-                    <div class="article-tag">Deep Analysis &bull; NBA</div>
-                    <h2 class="article-title">Decoding defensive switches and high-screen strategies in the modern Western Conference finals.</h2>
-                    <p class="article-snippet">An exhaustive tactical breakdown of how elite defenses counter heavy pick-and-roll systems, altering spatial geometry on the perimeter.</p>
+                    <div id="featured-tag" class="article-tag">Deep Analysis • NBA</div>
+                    <h2 id="featured-title" class="article-title">Loading featured article...</h2>
+                    <p id="featured-snippet" class="article-snippet">Loading tactical breakdown...</p>
                 </div>
-            </article>
+            </a>
 
-            <div class="side-articles-column">
-                <div class="side-article-card">
-                    <div class="side-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
-                    <div class="side-content">
-                        <div class="article-tag">Euroleague</div>
-                        <h3 class="side-article-title">The tactical evolution of drop coverages across European powerhouses.</h3>
-                    </div>
-                </div>
-                <div class="side-article-card">
-                    <div class="side-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
-                    <div class="side-content">
-                        <div class="article-tag">Scouting</div>
-                        <h3 class="side-article-title">Next-gen metrics: Evaluating off-ball gravity and tracking defensive impact.</h3>
-                    </div>
-                </div>
-                <div class="side-article-card">
-                    <div class="side-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
-                    <div class="side-content">
-                        <div class="article-tag">Opinion</div>
-                        <h3 class="side-article-title">Why pacing mechanics are rewriting regular season offensive ceilings.</h3>
-                    </div>
-                </div>
+            <!-- Colonna Laterale (3 Articoli) -->
+            <div id="side-articles-container" class="side-articles-column">
+                <!-- Verrà popolato da JS -->
             </div>
 
         </div>
 
-        <div class="secondary-articles-grid">
-            
-            <div class="grid-article-card">
-                <div class="grid-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
-                <div class="grid-content">
-                    <div class="article-tag">NBA Analytics</div>
-                    <h3 class="grid-title">Pacing the floor: Corner three frequencies in transition offense.</h3>
-                </div>
-            </div>
-
-            <div class="grid-article-card">
-                <div class="grid-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
-                <div class="grid-content">
-                    <div class="article-tag">Euroleague Focus</div>
-                    <h3 class="grid-title">Decoding defensive rotations inside the paint in tight clutch moments.</h3>
-                </div>
-            </div>
-
-            <div class="grid-article-card">
-                <div class="grid-img-placeholder">[ ARTICLE THUMBNAIL ]</div>
-                <div class="grid-content">
-                    <div class="article-tag">Special Feature</div>
-                    <h3 class="grid-title">The blueprint of modern playmaking: Point guards masterclasses.</h3>
-                </div>
-            </div>
-
+        <!-- Griglia Secondaria (3 Articoli) -->
+        <div id="secondary-articles-container" class="secondary-articles-grid">
+            <!-- Verrà popolato da JS -->
         </div>
 
         <div class="see-more-container">
-            <a href="#" class="see-more-btn">See more articles &rarr;</a>
+            <a href="see-more-articles.html" class="see-more-btn">See more articles →</a>
         </div>
 
     </main>
 
     <footer>
-        <span>&copy; 2026 The Eurostep | Basketball Analysis. All rights reserved.</span>
+        <span>© 2026 The Eurostep | Basketball Analysis. All rights reserved.</span>
         <a href="privacy.html">Privacy Policy</a>
     </footer>
 
@@ -675,5 +649,8 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
+
+    <!-- Carichiamo lo script che gestirà la dinamicità degli articoli -->
+    <script src="js/main.js"></script>
 </body>
 </html>
