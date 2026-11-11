@@ -6,7 +6,6 @@
     <title id="page-title">Article | The Eurostep</title>
     <link rel="icon" type="image/png" href="the eurostep rounded.png">
     
-    <!-- Meta Tag Open Graph per le anteprime social -->
     <meta property="og:title" id="og-title" content="The Eurostep | Basketball Analysis">
     <meta property="og:description" id="og-desc" content="Advanced basketball analysis, tactics, and insights.">
     <meta property="og:image" id="og-image" content="">
@@ -109,7 +108,6 @@
             color: #ffffff;
         }
 
-        /* Contenitore principale dell'articolo */
         .article-container {
             max-width: 850px;
             margin: 50px auto;
@@ -187,7 +185,6 @@
             margin-bottom: 20px;
         }
 
-        /* Sezione Interattiva (Stelle e Condivisione) */
         .interactive-section {
             display: flex;
             flex-direction: column;
@@ -285,7 +282,6 @@
             color: #ffffff;
         }
 
-        /* Sezione Commenti Liberi */
         .comments-wrapper {
             background: rgba(11, 15, 25, 0.65);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -455,7 +451,6 @@
             <p>Loading full tactical analysis...</p>
         </div>
 
-        <!-- Box Interattivo (Stelle Progressive + Condivisione) -->
         <div class="interactive-section">
             <div class="rating-box">
                 <div>
@@ -482,7 +477,6 @@
             </div>
         </div>
 
-        <!-- Sezione Commenti Liberi -->
         <div class="comments-wrapper">
             <h3 class="comments-title">Discussion & Comments</h3>
             
@@ -493,7 +487,6 @@
             </div>
 
             <div id="comments-list" class="comments-list">
-                <!-- I commenti vengono caricati qui -->
             </div>
         </div>
 
@@ -505,7 +498,6 @@
     </footer>
 
     <script>
-        // Sfondo 3D Three.js Reattivo al Mouse (Standard unificato)
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -565,7 +557,6 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Script Logica Articolo basato sugli Slug ID
         document.addEventListener('DOMContentLoaded', function() {
             var urlParams = new URLSearchParams(window.location.search);
             var articleId = urlParams.get('id');
@@ -583,7 +574,6 @@
                         return;
                     }
 
-                    // Popolamento dei campi visivi
                     document.getElementById('page-title').textContent = article.title + ' | The Eurostep';
                     document.getElementById('article-category').textContent = (article.category || 'Analysis') + ' • ' + (article.tags ? article.tags.join(', ') : '');
                     document.getElementById('article-date').textContent = article.date || '';
@@ -604,14 +594,12 @@
                         coverEl.textContent = '[ ARTICLE COVER IMAGE ]';
                     }
 
-                    // Meta Tag Open Graph
                     document.getElementById('og-title').setAttribute('content', article.title);
                     document.getElementById('og-desc').setAttribute('content', article.snippet || 'Tactical basketball breakdown by The Eurostep.');
                     if (article.coverImage) {
                         document.getElementById('og-image').setAttribute('content', window.location.origin + '/' + article.coverImage);
                     }
 
-                    // Condivisione Social
                     var currentUrl = window.location.href;
                     var encodedUrl = encodeURIComponent(currentUrl);
                     var encodedTitle = encodeURIComponent(article.title);
@@ -630,7 +618,6 @@
                         });
                     }
 
-                    // Inizializzazione Stelline e Commenti
                     initRatingSystem(articleId);
                     initCommentsSystem(articleId, article);
                 })
@@ -640,7 +627,6 @@
                     document.getElementById('article-content').innerHTML = '<p>Could not load article data.</p>';
                 });
 
-            // Sistema Stelline Progressive
             function initRatingSystem(id) {
                 var stars = document.querySelectorAll('.star-icon');
                 var statusText = document.getElementById('rating-status');
@@ -693,7 +679,6 @@
                 });
             }
 
-            // Sistema Commenti (integra quelli nel JSON e quelli locali)
             function initCommentsSystem(id, article) {
                 var storageKey = 'eurostep_comments_' + id;
                 var submitBtn = document.getElementById('submit-comment-btn');
