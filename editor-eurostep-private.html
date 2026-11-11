@@ -236,7 +236,7 @@
     }
 
     function check(r) {
-        if (r.ok) { return r; }
+        if (r.ok) { return Promise.resolve(r); }
         return r.json().catch(function () { return {}; }).then(function (j) {
             var m = 'GitHub ' + r.status;
             if (r.status === 401) { m += ' - token non valido o scaduto'; }
