@@ -732,7 +732,9 @@
             }
 
             function escapeHtml(str) {
-    return str.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">").replace(/"/g, """).replace(/'/g, "'");
+    var d = document.createElement('div');
+    d.textContent = String(str);
+    return d.innerHTML;
 }
         });
     </script>
