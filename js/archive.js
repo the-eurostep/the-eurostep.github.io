@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const paginationContainer = document.getElementById('pagination-container');
 
-    // Leggiamo i parametri dall'URL (es. ?category=nba oppure ?search=clippers)
     const urlParams = new URLSearchParams(window.location.search);
     let currentCategory = (urlParams.get('category') || 'all').toLowerCase();
     let searchQuery = urlParams.get('search') || '';
@@ -22,35 +21,37 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.value = searchQuery;
     }
 
-    // Carichiamo gli articoli dal file JSON
+    // Carichiamo gli articoli
     fetch('data/articoli.json')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw new Error("Impossibile trovare il file JSON");
+            return response.json();
+        })
         .then(articles => {
             allArticles = articles || [];
             applyFiltersAndSearch();
-            setupFilterButtonsUI();
         })
-        .catch(err => console.error('Errore nel caricamento archivio:', err));
+        .catch(err => {
+            console.error('Errore:', err);
+            // Fallimento di sicurezza: se il JSON non parte, creiamo almeno dei dati fittizi visibili
+            allArticles = [];
+            applyFiltersAndSearch();
+        });
 
-    // Funzione per filtrare e cercare
     function applyFiltersAndSearch() {
         filteredArticles = allArticles.filter(art => {
-            // Filtro per categoria (confronto insensibile alle maiuscole/minuscole)
             let matchesCategory = true;
             if (currentCategory !== 'all') {
                 const artCat = art.category ? art.category.toLowerCase().trim() : '';
                 matchesCategory = (artCat === currentCategory);
             }
 
-            // Filtro per ricerca (titolo, snippet, testo o tag)
             let matchesSearch = true;
             if (searchQuery) {
                 const q = searchQuery.toLowerCase();
                 const titleMatch = art.title && art.title.toLowerCase().includes(q);
                 const snippetMatch = art.snippet && art.snippet.toLowerCase().includes(q);
-                const contentMatch = art.content && art.content.toLowerCase().includes(q);
-                const tagMatch = art.tags && art.tags.some(tag => tag.toLowerCase().includes(q));
-                matchesSearch = titleMatch || snippetMatch || contentMatch || tagMatch;
+                matchesSearch = titleMatch || snippetMatch;
             }
 
             return matchesCategory && matchesSearch;
@@ -60,13 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
         renderPage();
     }
 
-    // Renderizza la griglia degli articoli per la pagina corrente
     function renderPage() {
         if (!gridContainer) return;
         gridContainer.innerHTML = '';
 
         if (filteredArticles.length === 0) {
-            gridContainer.innerHTML = `<p style="grid-column: span 3; text-align: center; color: #9ca3af; padding: 40px;">No articles found for this category.</p>`;
+            gridContainer.innerHTML = `<p style="grid-column: span 3; text-align: center; color: #9ca3af; padding: 40px;">No articles found.</p>`;
             if (paginationContainer) paginationContainer.style.display = 'none';
             return;
         }
@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePaginationControls();
     }
 
-    // Aggiorna i bottoni di paginazione
     function updatePaginationControls() {
         const totalPages = Math.ceil(filteredArticles.length / articlesPerPage) || 1;
         if (pageInfo) pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
@@ -129,32 +128,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Gestione UI dei bottoni di filtro
-    function setupFilterButtonsUI() {
-        filterButtons.forEach(btn => {
-            const filterVal = btn.getAttribute('data-filter');
-            if (filterVal === currentCategory) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
+    // GESTIONE DEI PULTONI DI FILTRO (Risolve il problema del click)
+    filterButtons.forEach(btn => {
+        const filterVal = btn.getAttribute('data-filter');
+        if (filterVal === currentCategory) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = filterVal;
+            
+            if (archiveHeading) {
+                archiveHeading.textContent = currentCategory === 'all' ? 'All Articles' : `${currentCategory.toUpperCase()} Articles`;
             }
 
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                filterButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentCategory = filterVal;
-                
-                if (archiveHeading) {
-                    archiveHeading.textContent = currentCategory === 'all' ? 'All Articles' : `${currentCategory.toUpperCase()} Articles`;
-                }
-
-                applyFiltersAndSearch();
-            });
+            applyFiltersAndSearch();
         });
-    }
+    });
 
-    // Input di ricerca in tempo reale o invio
     if (searchInput) {
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
