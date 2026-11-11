@@ -59,11 +59,6 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            transition: transform 0.3s ease;
-        }
-
-        .brand-container:hover {
-            transform: scale(1.02);
         }
 
         .brand-logo {
@@ -232,7 +227,6 @@
             line-height: 1.8;
         }
 
-        /* Sezione Valutazione Stelle & Condivisione */
         .interactive-section {
             display: flex;
             flex-direction: column;
@@ -262,19 +256,21 @@
             letter-spacing: 1px;
         }
 
+        /* CORRETTO: Gestione hover progressivo delle stelle */
         .stars-container {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
         }
 
         .star-icon {
             font-size: 1.6rem;
             color: #4b5563;
-            transition: color 0.2s ease, transform 0.2s ease;
+            transition: color 0.15s ease, transform 0.15s ease;
         }
 
-        .star-icon.active, .star-icon:hover {
+        .star-icon.active, 
+        .star-icon.hovered {
             color: #f59e0b;
             transform: scale(1.1);
         }
@@ -329,22 +325,100 @@
             color: #ffffff;
         }
 
-        /* Sezione Commenti Utterances */
+        /* SEZIONE COMMENTI APERTI E LIBERI (Senza Login) */
         .comments-wrapper {
             background: rgba(11, 15, 25, 0.65);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             padding: 30px;
             backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .comments-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.1rem;
             color: #ffffff;
-            margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .comment-input, .comment-textarea {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            color: #f3f4f6;
+            font-size: 0.95rem;
+            outline: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .comment-input:focus, .comment-textarea:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .comment-textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .submit-comment-btn {
+            align-self: flex-end;
+            background: #2563eb;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .submit-comment-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .comment-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .comment-author {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: #60a5fa;
+            font-weight: 700;
+        }
+
+        .comment-text {
+            color: #d1d5db;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         footer {
@@ -471,10 +545,19 @@
             </div>
         </div>
 
-        <!-- Sezione Commenti Pubblici Utterances -->
+        <!-- Sezione Commenti Liberi (Senza login) -->
         <div class="comments-wrapper">
             <h3 class="comments-title">Discussion & Comments</h3>
-            <div id="utterances-container"></div>
+            
+            <div class="comment-form">
+                <input type="text" id="comment-author-input" class="comment-input" placeholder="Your Name / Nickname">
+                <textarea id="comment-text-input" class="comment-textarea" placeholder="Write your thoughts about this tactical analysis..."></textarea>
+                <button id="submit-comment-btn" class="submit-comment-btn">Post Comment</button>
+            </div>
+
+            <div id="comments-list" class="comments-list">
+                <!-- I commenti verranno caricati qui -->
+            </div>
         </div>
 
     </main>
@@ -511,7 +594,7 @@
         }
         animate();
 
-        // Logica Articolo + Stelline + Utterances
+        // Logica Articolo + Stelline Progressive + Commenti Liberi
         document.addEventListener('DOMContentLoaded', function() {
             var urlParams = new URLSearchParams(window.location.search);
             var articleId = urlParams.get('id') || '1';
@@ -549,60 +632,120 @@
                         setTimeout(function() { b.textContent = 'Copy Link'; }, 2000);
                     });
 
-                    // Caricamento commenti Utterances
-                    loadUtterancesComments();
-                    
-                    // Logica Stelline Pubbliche (CountAPI)
-                    initPublicRatingSystem(articleId);
+                    // Inizializzazione Stelline e Commenti locali
+                    initRatingSystem(articleId);
+                    initCommentsSystem(articleId);
                 });
 
-            function loadUtterancesComments() {
-                var script = document.createElement('script');
-                script.src = 'https://utteranc.es/client.js';
-                script.setAttribute('repo', 'the-eurostep/the-eurostep.github.io');
-                script.setAttribute('issue-term', 'pathname');
-                script.setAttribute('theme', 'github-dark');
-                script.setAttribute('crossorigin', 'anonymous');
-                script.async = true;
-                document.getElementById('utterances-container').appendChild(script);
-            }
-
-            function initPublicRatingSystem(id) {
+            // Logica Stelline Progressive (Hover e Click da 1 a N)
+            function initRatingSystem(id) {
                 var stars = document.querySelectorAll('.star-icon');
                 var statusText = document.getElementById('rating-status');
                 var storageKey = 'eurostep_voted_art_' + id;
                 var userVoted = localStorage.getItem(storageKey);
 
-                // Carichiamo conteggi globali trasparenti tramite API serverless di conteggio
-                var apiBase = 'https://api.countapi.xyz/v1/the-eurostep-portal/article_' + id;
-                
-                function updateStarsUI(val) {
+                function paintStars(val) {
                     stars.forEach(function(s) {
-                        if (parseInt(s.getAttribute('data-value')) <= val) {
-                            s.classList.add('active');
+                        var sVal = parseInt(s.getAttribute('data-value'));
+                        if (sVal <= val) {
+                            s.classList.add('hovered');
                         } else {
-                            s.classList.remove('active');
+                            s.classList.remove('hovered');
                         }
                     });
                 }
 
+                function clearHover() {
+                    stars.forEach(function(s) { s.classList.remove('hovered'); });
+                }
+
                 if (userVoted) {
-                    updateStarsUI(parseInt(userVoted));
-                    statusText.textContent = 'You rated this article ' + userVoted + ' ★';
+                    var v = parseInt(userVoted);
+                    stars.forEach(function(s) {
+                        if (parseInt(s.getAttribute('data-value')) <= v) s.classList.add('active');
+                    });
+                    statusText.textContent = 'You rated this article ' + v + ' ★';
                 }
 
                 stars.forEach(function(star) {
+                    var val = parseInt(star.getAttribute('data-value'));
+
+                    star.addEventListener('mouseenter', function() {
+                        paintStars(val);
+                    });
+
+                    star.addEventListener('mouseleave', function() {
+                        clearHover();
+                    });
+
                     star.addEventListener('click', function() {
                         if (localStorage.getItem(storageKey)) {
                             statusText.textContent = 'You have already rated this article!';
                             return;
                         }
-                        var val = parseInt(this.getAttribute('data-value'));
                         localStorage.setItem(storageKey, val);
-                        updateStarsUI(val);
+                        stars.forEach(function(s) {
+                            if (parseInt(s.getAttribute('data-value')) <= val) {
+                                s.classList.add('active');
+                            } else {
+                                s.classList.remove('active');
+                            }
+                        });
                         statusText.textContent = 'Thank you! Rating saved (' + val + ' ★)';
                     });
                 });
+            }
+
+            // Sistema Commenti senza login (Salvati in localStorage per articolo)
+            function initCommentsSystem(id) {
+                var storageKey = 'eurostep_comments_' + id;
+                var submitBtn = document.getElementById('submit-comment-btn');
+                var authorInput = document.getElementById('comment-author-input');
+                var textInput = document.getElementById('comment-text-input');
+                var listContainer = document.getElementById('comments-list');
+
+                function renderComments() {
+                    var comments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                    listContainer.innerHTML = '';
+
+                    if (comments.length === 0) {
+                        listContainer.innerHTML = '<p style="color: #6b7280; font-size: 0.9rem;">No comments yet. Be the first to share your thoughts!</p>';
+                        return;
+                    }
+
+                    comments.forEach(function(c) {
+                        var card = document.createElement('div');
+                        card.className = 'comment-card';
+                        card.innerHTML = 
+                            '<div class="comment-author">' + escapeHtml(c.author) + '</div>' +
+                            '<div class="comment-text">' + escapeHtml(c.text) + '</div>';
+                        listContainer.appendChild(card);
+                    });
+                }
+
+                submitBtn.addEventListener('click', function() {
+                    var author = authorInput.value.trim();
+                    var text = textInput.value.trim();
+
+                    if (!author || !text) {
+                        alert('Please fill in both your name and comment.');
+                        return;
+                    }
+
+                    var comments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                    comments.unshift({ author: author, text: text, date: new Date().toISOString() });
+                    localStorage.setItem(storageKey, JSON.stringify(comments));
+
+                    authorInput.value = '';
+                    textInput.value = '';
+                    renderComments();
+                });
+
+                renderComments();
+            }
+
+            function escapeHtml(str) {
+                return str.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">").replace(/"/g, """).replace(/'/g, "'");
             }
         });
     </script>
