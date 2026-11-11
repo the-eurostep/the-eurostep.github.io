@@ -11,10 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const archiveHeading = document.getElementById('archive-heading');
     const searchInput = document.getElementById('search-input');
+    const paginationContainer = document.getElementById('pagination-container');
 
     // Leggiamo i parametri dall'URL (es. ?category=nba oppure ?search=clippers)
     const urlParams = new URLSearchParams(window.location.search);
-    let currentCategory = urlParams.get('category') || 'all';
+    let currentCategory = (urlParams.get('category') || 'all').toLowerCase();
     let searchQuery = urlParams.get('search') || '';
 
     if (searchQuery && searchInput) {
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('data/articoli.json')
         .then(response => response.json())
         .then(articles => {
-            allArticles = articles;
+            allArticles = articles || [];
             applyFiltersAndSearch();
             setupFilterButtonsUI();
         })
@@ -34,10 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Funzione per filtrare e cercare
     function applyFiltersAndSearch() {
         filteredArticles = allArticles.filter(art => {
-            // Filtro per categoria
+            // Filtro per categoria (confronto insensibile alle maiuscole/minuscole)
             let matchesCategory = true;
             if (currentCategory !== 'all') {
-                matchesCategory = art.category && art.category.toLowerCase() === currentCategory.toLowerCase();
+                const artCat = art.category ? art.category.toLowerCase().trim() : '';
+                matchesCategory = (artCat === currentCategory);
             }
 
             // Filtro per ricerca (titolo, snippet, testo o tag)
@@ -64,10 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
         gridContainer.innerHTML = '';
 
         if (filteredArticles.length === 0) {
-            gridContainer.innerHTML = `<p style="grid-column: span 3; text-align: center; color: #9ca3af; padding: 40px;">No articles found.</p>';
+            gridContainer.innerHTML = `<p style="grid-column: span 3; text-align: center; color: #9ca3af; padding: 40px;">No articles found for this category.</p>`;
             if (paginationContainer) paginationContainer.style.display = 'none';
             return;
         }
+
+        if (paginationContainer) paginationContainer.style.display = 'flex';
 
         const startIndex = (currentPage - 1) * articlesPerPage;
         const endIndex = startIndex + articlesPerPage;
@@ -84,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <div class="archive-img-placeholder" ${imgBg}>${imgText}</div>
                 <div class="archive-content">
-                    <div class="article-tag">${art.category} • ${art.date || ''}</div>
+                    <div class="article-tag">${art.category || 'Article'} • ${art.date || ''}</div>
                     <h3 class="archive-card-title">${art.title}</h3>
                     <p class="archive-snippet">${art.snippet || ''}</p>
                 </div>
@@ -101,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pageInfo) pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
         
         if (prevBtn) prevBtn.disabled = currentPage === 1;
-        if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+        if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
     }
 
     if (prevBtn) {
