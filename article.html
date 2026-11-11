@@ -6,7 +6,6 @@
     <title id="page-title">Article | The Eurostep</title>
     <link rel="icon" type="image/png" href="the eurostep rounded.png">
     
-    <!-- Meta Tag Dinamici Open Graph (Predisposti per la condivisione social) -->
     <meta property="og:title" id="og-title" content="The Eurostep | Basketball Analysis">
     <meta property="og:description" id="og-desc" content="Advanced basketball analysis, tactics, and insights.">
     <meta property="og:image" id="og-image" content="">
@@ -60,18 +59,16 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            transition: transform 0.3s ease, filter 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .brand-container:hover {
             transform: scale(1.02);
-            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
         }
 
         .brand-logo {
             height: 52px;
             width: auto;
-            object-fit: contain;
         }
 
         .brand-title-text {
@@ -143,23 +140,13 @@
             color: #9ca3af;
             text-decoration: none;
             font-size: 0.85rem;
-            font-weight: 500;
             text-align: center;
             transition: all 0.2s ease;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            text-transform: none;
-            letter-spacing: normal;
         }
 
         .dropdown-content a:hover {
             background: rgba(255, 255, 255, 0.08);
             color: #ffffff;
-            padding-left: 20px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
         }
 
         .search-bar-container {
@@ -171,27 +158,6 @@
             padding: 7px 12px;
             gap: 8px;
             width: 170px;
-            transition: all 0.3s ease;
-        }
-
-        .search-bar-container:focus-within {
-            border-color: rgba(255, 255, 255, 0.25);
-            background: rgba(255, 255, 255, 0.06);
-            width: 200px;
-        }
-
-        .search-icon {
-            display: flex;
-            align-items: center;
-            color: #9ca3af;
-        }
-
-        .search-icon svg {
-            width: 15px;
-            height: 15px;
-            stroke: currentColor;
-            stroke-width: 2;
-            fill: none;
         }
 
         .search-input {
@@ -201,15 +167,8 @@
             color: #f3f4f6;
             font-size: 0.85rem;
             width: 100%;
-            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        .search-input::placeholder {
-            color: #6b7280;
-            letter-spacing: 0.5px;
-        }
-
-        /* Contenuto dell'articolo */
         .article-container {
             max-width: 850px;
             margin: 50px auto;
@@ -219,12 +178,6 @@
             display: flex;
             flex-direction: column;
             gap: 30px;
-        }
-
-        .article-header-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
         }
 
         .article-meta-info {
@@ -244,8 +197,6 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 500;
             font-size: 0.9rem;
-            letter-spacing: normal;
-            text-transform: none;
         }
 
         .article-main-title {
@@ -268,8 +219,6 @@
             justify-content: center;
             color: #4b5563;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
         }
 
         .article-body-content {
@@ -283,28 +232,63 @@
             line-height: 1.8;
         }
 
-        .article-body-content p {
-            margin-bottom: 20px;
+        /* Sezione Valutazione Stelle & Condivisione */
+        .interactive-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: rgba(11, 15, 25, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(12px);
         }
 
-        .article-body-content h3 {
+        .rating-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .rating-title {
             font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
             color: #ffffff;
-            font-size: 1.3rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Pulsanti di Condivisione */
+        .stars-container {
+            display: flex;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .star-icon {
+            font-size: 1.6rem;
+            color: #4b5563;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .star-icon.active, .star-icon:hover {
+            color: #f59e0b;
+            transform: scale(1.1);
+        }
+
+        .rating-score {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
         .share-section {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(11, 15, 25, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 20px 25px;
-            backdrop-filter: blur(12px);
             flex-wrap: wrap;
             gap: 15px;
         }
@@ -345,54 +329,40 @@
             color: #ffffff;
         }
 
+        /* Sezione Commenti Utterances */
+        .comments-wrapper {
+            background: rgba(11, 15, 25, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+        }
+
+        .comments-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
         footer {
             text-align: center;
             padding: 25px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: #4b5563;
             font-size: 0.85rem;
-            letter-spacing: 1px;
             z-index: 1;
             margin-top: 50px;
             display: flex;
             justify-content: center;
             gap: 20px;
-            align-items: center;
         }
 
         footer a {
             color: #6b7280;
             text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        footer a:hover {
-            color: #ffffff;
-        }
-
-        @media (max-width: 768px) {
-            .article-main-title {
-                font-size: 1.7rem;
-            }
-            .article-cover-img {
-                height: 250px;
-            }
-            .article-body-content {
-                padding: 20px;
-            }
-            header {
-                padding: 15px 20px;
-                flex-wrap: wrap;
-                gap: 15px;
-            }
-            .nav-menu {
-                gap: 20px;
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                overflow-x: auto;
-                padding-bottom: 5px;
-            }
         }
     </style>
 </head>
@@ -401,7 +371,7 @@
     <div id="webgl-container"></div>
 
     <header>
-        <a href="index.html" class="brand-container" title="The Eurostep Home">
+        <a href="index.html" class="brand-container">
             <img src="the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
             <span class="brand-title-text">The Eurostep</span>
         </a>
@@ -418,7 +388,6 @@
                     <a href="nba-teams-players.html">Teams & Players</a>
                 </div>
             </li>
-
             <li class="nav-item">
                 <a href="#" class="nav-link">Euroleague</a>
                 <div class="dropdown-content">
@@ -430,7 +399,6 @@
                     <a href="euroleague-teams-players.html">Teams & Players</a>
                 </div>
             </li>
-
             <li class="nav-item">
                 <a href="#" class="nav-link">Minigames</a>
                 <div class="dropdown-content">
@@ -438,30 +406,22 @@
                     <a href="draft/draft-board.html">Draft Board</a>
                 </div>
             </li>
-
             <li class="nav-item">
                 <a href="contact.html" class="nav-link">Contact</a>
             </li>
-
             <li class="nav-item">
                 <a href="#" class="nav-link">Other</a>
                 <div class="dropdown-content">
-                    <a href="https://www.youtube.com/@the.eurostep" target="_blank" rel="noopener noreferrer">YouTube</a>
-                    <a href="https://www.instagram.com/the.eurostep/" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://www.patreon.com/theeurostep" target="_blank" rel="noopener noreferrer">Patreon</a>
-                    <a href="https://theeurostep.gumroad.com/" target="_blank" rel="noopener noreferrer">Gumroad</a>
+                    <a href="https://www.youtube.com/@the.eurostep" target="_blank">YouTube</a>
+                    <a href="https://www.instagram.com/the.eurostep/" target="_blank">Instagram</a>
+                    <a href="https://www.patreon.com/theeurostep" target="_blank">Patreon</a>
+                    <a href="https://theeurostep.gumroad.com/" target="_blank">Gumroad</a>
                 </div>
             </li>
         </ul>
 
         <div class="header-right">
             <div class="search-bar-container">
-                <span class="search-icon">
-                    <svg viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </span>
                 <input type="text" id="search-input" class="search-input" placeholder="Search">
             </div>
         </div>
@@ -478,23 +438,43 @@
             <div id="article-author" class="article-author-date" style="font-style: italic;">By The Eurostep Staff</div>
         </div>
 
-        <div id="article-cover" class="article-cover-img">
-            [ ARTICLE COVER IMAGE ]
-        </div>
+        <div id="article-cover" class="article-cover-img">[ ARTICLE COVER IMAGE ]</div>
 
         <div id="article-content" class="article-body-content">
             <p>Loading full tactical analysis...</p>
         </div>
 
-        <!-- Sezione Condivisione Social -->
-        <div class="share-section">
-            <span class="share-label">Share this analysis</span>
-            <div class="share-buttons">
-                <button id="copy-link-btn" class="share-btn">Copy Link</button>
-                <a id="whatsapp-share" href="#" target="_blank" class="share-btn">WhatsApp</a>
-                <a id="telegram-share" href="#" target="_blank" class="share-btn">Telegram</a>
-                <a id="twitter-share" href="#" target="_blank" class="share-btn">X (Twitter)</a>
+        <!-- Box Interattivo Stelline + Condivisione -->
+        <div class="interactive-section">
+            <div class="rating-box">
+                <div>
+                    <div class="rating-title">Rate this analysis</div>
+                    <div id="rating-status" class="rating-score">Click to cast your vote</div>
+                </div>
+                <div class="stars-container" id="stars-wrapper">
+                    <span class="star-icon" data-value="1">★</span>
+                    <span class="star-icon" data-value="2">★</span>
+                    <span class="star-icon" data-value="3">★</span>
+                    <span class="star-icon" data-value="4">★</span>
+                    <span class="star-icon" data-value="5">★</span>
+                </div>
             </div>
+
+            <div class="share-section">
+                <span class="share-label">Share article</span>
+                <div class="share-buttons">
+                    <button id="copy-link-btn" class="share-btn">Copy Link</button>
+                    <a id="whatsapp-share" href="#" target="_blank" class="share-btn">WhatsApp</a>
+                    <a id="telegram-share" href="#" target="_blank" class="share-btn">Telegram</a>
+                    <a id="twitter-share" href="#" target="_blank" class="share-btn">X</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Commenti Pubblici Utterances -->
+        <div class="comments-wrapper">
+            <h3 class="comments-title">Discussion & Comments</h3>
+            <div id="utterances-container"></div>
         </div>
 
     </main>
@@ -505,141 +485,123 @@
     </footer>
 
     <script>
+        // Sfondo Particelle 3D
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
         renderer.setSize(window.innerWidth, window.innerHeight);
         container.appendChild(renderer.domElement);
 
         const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 1500;
+        const particlesCount = 1200;
         const posArray = new Float32Array(particlesCount * 3);
-
-        for(let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 10;
-        }
-
+        for(let i = 0; i < particlesCount * 3; i++) posArray[i] = (Math.random() - 0.5) * 10;
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.015,
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0.6
-        });
-
+        const particlesMaterial = new THREE.PointsMaterial({ size: 0.015, color: 0xffffff, transparent: true, opacity: 0.5 });
         const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particlesMesh);
-
         camera.position.z = 3;
-
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetX = 0;
-        let targetY = 0;
-
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX - window.innerWidth / 2) / 500;
-            mouseY = (event.clientY - window.innerHeight / 2) / 500;
-        });
 
         function animate() {
             requestAnimationFrame(animate);
-            targetX = mouseX * 0.5;
-            targetY = mouseY * 0.5;
-
-            particlesMesh.rotation.y += 0.001 + (targetX - particlesMesh.rotation.y) * 0.05;
-            particlesMesh.rotation.x += 0.001 + (targetY - particlesMesh.rotation.x) * 0.05;
-
+            particlesMesh.rotation.y += 0.0008;
             renderer.render(scene, camera);
         }
-
         animate();
 
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Script logica caricamento articolo singolo
+        // Logica Articolo + Stelline + Utterances
         document.addEventListener('DOMContentLoaded', function() {
             var urlParams = new URLSearchParams(window.location.search);
-            var articleId = urlParams.get('id');
+            var articleId = urlParams.get('id') || '1';
 
             fetch('data/articoli.json')
-                .then(function(response) { return response.json(); })
+                .then(function(res) { return res.json(); })
                 .then(function(articles) {
                     var article = articles.find(function(a) { return String(a.id) === String(articleId); });
+                    if (!article) return;
 
-                    if (!article) {
-                        document.getElementById('article-title').textContent = 'Article not found';
-                        document.getElementById('article-content').innerHTML = '<p>The requested article does not exist or has been removed.</p>';
-                        return;
-                    }
-
-                    // Popoliamo i campi visivi
                     document.getElementById('page-title').textContent = article.title + ' | The Eurostep';
-                    document.getElementById('article-category').textContent = (article.category || 'Analysis') + ' • ' + (article.tags ? article.tags.join(', ') : '');
+                    document.getElementById('article-category').textContent = (article.category || 'Analysis');
                     document.getElementById('article-date').textContent = article.date || '';
                     document.getElementById('article-title').textContent = article.title;
                     document.getElementById('article-author').textContent = 'By ' + (article.author || 'The Eurostep Staff');
-                    
-                    if (article.content) {
-                        document.getElementById('article-content').innerHTML = article.content;
-                    } else if (article.snippet) {
-                        document.getElementById('article-content').innerHTML = '<p>' + article.snippet + '</p>';
-                    }
+                    document.getElementById('article-content').innerHTML = article.content || article.snippet;
 
-                    var coverEl = document.getElementById('article-cover');
                     if (article.coverImage) {
+                        var coverEl = document.getElementById('article-cover');
                         coverEl.style.backgroundImage = 'url(\'' + article.coverImage + '\')';
                         coverEl.textContent = '';
-                    } else {
-                        coverEl.textContent = '[ ARTICLE COVER IMAGE ]';
                     }
 
-                    // Aggiorniamo i Meta Tag Open Graph (dinamici per WhatsApp, Telegram, X)
-                    document.getElementById('og-title').setAttribute('content', article.title);
-                    document.getElementById('og-desc').setAttribute('content', article.snippet || 'Tactical basketball breakdown by The Eurostep.');
-                    if (article.coverImage) {
-                        document.getElementById('og-image').setAttribute('content', window.location.origin + '/' + article.coverImage);
-                    }
+                    // Social Share Links
+                    var currentUrl = encodeURIComponent(window.location.href);
+                    var titleEnc = encodeURIComponent(article.title);
+                    document.getElementById('whatsapp-share').href = 'https://api.whatsapp.com/send?text=' + titleEnc + '%20-' + currentUrl;
+                    document.getElementById('telegram-share').href = 'https://t.me/share/url?url=' + currentUrl + '&text=' + titleEnc;
+                    document.getElementById('twitter-share').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + titleEnc;
 
-                    // Configurazione dei pulsanti di condivisione
-                    var currentUrl = window.location.href;
-                    var encodedUrl = encodeURIComponent(currentUrl);
-                    var encodedTitle = encodeURIComponent(article.title);
+                    document.getElementById('copy-link-btn').addEventListener('click', function() {
+                        navigator.clipboard.writeText(window.location.href);
+                        this.textContent = 'Copied!';
+                        var b = this;
+                        setTimeout(function() { b.textContent = 'Copy Link'; }, 2000);
+                    });
 
-                    document.getElementById('whatsapp-share').href = 'https://api.whatsapp.com/send?text=' + encodedTitle + '%20-%20' + encodedUrl;
-                    document.getElementById('telegram-share').href = 'https://t.me/share/url?url=' + encodedUrl + '&text=' + encodedTitle;
-                    document.getElementById('twitter-share').href = 'https://twitter.com/intent/tweet?url=' + encodedUrl + '&text=' + encodedTitle;
-
-                    var copyBtn = document.getElementById('copy-link-btn');
-                    if (copyBtn) {
-                        copyBtn.addEventListener('click', function() {
-                            navigator.clipboard.writeText(currentUrl).then(function() {
-                                copyBtn.textContent = 'Link Copied!';
-                                setTimeout(function() { copyBtn.textContent = 'Copy Link'; }, 2000);
-                            });
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    console.error('Errore caricamento articolo:', err);
+                    // Caricamento commenti Utterances
+                    loadUtterancesComments();
+                    
+                    // Logica Stelline Pubbliche (CountAPI)
+                    initPublicRatingSystem(articleId);
                 });
 
-            var searchInput = document.getElementById('search-input');
-            if (searchInput) {
-                searchInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        var query = searchInput.value.trim();
-                        if (query) {
-                            window.location.href = 'see-more-articles.html?search=' + encodeURIComponent(query);
+            function loadUtterancesComments() {
+                var script = document.createElement('script');
+                script.src = 'https://utteranc.es/client.js';
+                script.setAttribute('repo', 'the-eurostep/the-eurostep.github.io');
+                script.setAttribute('issue-term', 'pathname');
+                script.setAttribute('theme', 'github-dark');
+                script.setAttribute('crossorigin', 'anonymous');
+                script.async = true;
+                document.getElementById('utterances-container').appendChild(script);
+            }
+
+            function initPublicRatingSystem(id) {
+                var stars = document.querySelectorAll('.star-icon');
+                var statusText = document.getElementById('rating-status');
+                var storageKey = 'eurostep_voted_art_' + id;
+                var userVoted = localStorage.getItem(storageKey);
+
+                // Carichiamo conteggi globali trasparenti tramite API serverless di conteggio
+                var apiBase = 'https://api.countapi.xyz/v1/the-eurostep-portal/article_' + id;
+                
+                function updateStarsUI(val) {
+                    stars.forEach(function(s) {
+                        if (parseInt(s.getAttribute('data-value')) <= val) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
                         }
-                    }
+                    });
+                }
+
+                if (userVoted) {
+                    updateStarsUI(parseInt(userVoted));
+                    statusText.textContent = 'You rated this article ' + userVoted + ' ★';
+                }
+
+                stars.forEach(function(star) {
+                    star.addEventListener('click', function() {
+                        if (localStorage.getItem(storageKey)) {
+                            statusText.textContent = 'You have already rated this article!';
+                            return;
+                        }
+                        var val = parseInt(this.getAttribute('data-value'));
+                        localStorage.setItem(storageKey, val);
+                        updateStarsUI(val);
+                        statusText.textContent = 'Thank you! Rating saved (' + val + ' ★)';
+                    });
                 });
             }
         });
