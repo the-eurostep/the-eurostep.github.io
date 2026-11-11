@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Editor privato | The Eurostep</title>
+    <link rel="icon" type="image/png" href="the eurostep rounded.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #030508; color: #f3f4f6; min-height: 100vh; padding: 30px 20px 60px; }
+        .wrap { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 1.5px; text-transform: uppercase; }
+        h2 { font-family: 'Orbitron', sans-serif; font-size: 1rem; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 14px; }
+        .card { background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 24px; }
+        .hidden { display: none !important; }
+        label { display: block; font-size: 0.8rem; color: #9ca3af; margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 1px; }
+        input[type=text], input[type=password], select, textarea {
+            width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px; padding: 11px; color: #f3f4f6; font-size: 0.95rem; outline: none;
+        }
+        select option { background: #0b0f19; }
+        input:focus, select:focus, textarea:focus { border-color: rgba(255,255,255,0.35); }
+        textarea { min-height: 80px; resize: vertical; }
+        .btn { background: #2563eb; border: none; border-radius: 8px; padding: 10px 18px; color: #fff; font-family: 'Orbitron', sans-serif;
+               font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
+        .btn:hover { background: #1d4ed8; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn.grey { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); }
+        .btn.grey:hover { background: rgba(255,255,255,0.15); }
+        .btn.red { background: #b91c1c; }
+        .btn.red:hover { background: #991b1b; }
+        .row-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+        .toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+        .tbtn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 6px; color: #f3f4f6;
+                padding: 6px 11px; font-size: 0.85rem; cursor: pointer; }
+        .tbtn:hover { background: rgba(255,255,255,0.15); }
+        #editor { min-height: 320px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px;
+                  padding: 16px; line-height: 1.7; color: #d1d5db; outline: none; }
+        #editor:focus { border-color: rgba(255,255,255,0.35); }
+        #editor p { margin-bottom: 14px; }
+        #editor h2, #editor h3 { font-family: 'Orbitron', sans-serif; color: #fff; margin: 18px 0 10px; text-transform: none; letter-spacing: 0; }
+        #editor blockquote { border-left: 3px solid #60a5fa; padding-left: 14px; margin: 14px 0; color: #9ca3af; }
+        #editor ul, #editor ol { margin: 0 0 14px 24px; }
+        #editor img, #preview img { max-width: 100%; border-radius: 10px; }
+        #editor a, #preview a { color: #60a5fa; }
+        #preview { background: rgba(11,15,25,0.9); border: 1px dashed rgba(255,255,255,0.2); border-radius: 10px; padding: 20px; line-height: 1.8; color: #d1d5db; margin-top: 16px; }
+        #preview h1 { font-size: 1.4rem; margin-bottom: 14px; }
+        #preview p { margin-bottom: 14px; }
+        .status { padding: 12px 14px; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; }
+        .status.info { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.5); }
+        .status.ok { background: rgba(22,163,74,0.15); border: 1px solid rgba(22,163,74,0.5); }
+        .status.err { background: rgba(220,38,38,0.15); border: 1px solid rgba(220,38,38,0.5); }
+        .status a { color: #93c5fd; }
+        .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); flex-wrap: wrap; }
+        .row-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
+        .row-info span { color: #6b7280; font-size: 0.8rem; word-break: break-all; }
+        .row-actions { display: flex; gap: 8px; }
+        .hint { color: #6b7280; font-size: 0.8rem; margin-top: 6px; line-height: 1.5; }
+        .editing-banner { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.5); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <h1>Editor privato · The Eurostep</h1>
+
+    <div id="status" class="status hidden"></div>
+
+    <!-- SCHERMATA TOKEN -->
+    <div id="token-card" class="card">
+        <h2>Accesso</h2>
+        <p style="color:#9ca3af; font-size:0.9rem; line-height:1.6;">Incolla qui il tuo token GitHub (resta salvato solo in questo browser). Senza token nessuno può pubblicare nulla.</p>
+        <label for="token-input">Token GitHub</label>
+        <input type="password" id="token-input" autocomplete="off" placeholder="github_pat_...">
+        <div class="row-btns">
+            <button id="token-save" class="btn">Salva e accedi</button>
+        </div>
+    </div>
+
+    <!-- EDITOR -->
+    <div id="app" class="hidden">
+        <div class="card">
+            <h2 id="form-title">Nuovo articolo</h2>
+            <div id="editing-banner" class="editing-banner hidden"></div>
+
+            <label for="f-title">Titolo</label>
+            <input type="text" id="f-title">
+
+            <label for="f-author">Autore</label>
+            <input type="text" id="f-author" value="The Eurostep Editorial">
+
+            <label for="f-category">Categoria</label>
+            <select id="f-category">
+                <option value="NBA">NBA</option>
+                <option value="Euroleague">Euroleague</option>
+            </select>
+
+            <label for="f-tags">Tag (separati da virgola)</label>
+            <input type="text" id="f-tags" placeholder="Clippers, Defense, Scouting">
+
+            <label for="f-snippet">Estratto (2 righe, appare nelle anteprime)</label>
+            <textarea id="f-snippet"></textarea>
+
+            <label for="f-cover">Immagine di copertina</label>
+            <input type="file" id="f-cover" accept="image/png,image/jpeg,image/webp,image/gif">
+            <div id="cover-current" class="hint"></div>
+
+            <label>Testo dell'articolo</label>
+            <div class="toolbar">
+                <button type="button" class="tbtn" data-cmd="bold"><b>B</b></button>
+                <button type="button" class="tbtn" data-cmd="italic"><i>I</i></button>
+                <button type="button" class="tbtn" data-cmd="formatBlock" data-val="&lt;h2&gt;">Titolo H2</button>
+                <button type="button" class="tbtn" data-cmd="formatBlock" data-val="&lt;h3&gt;">Titolo H3</button>
+                <button type="button" class="tbtn" data-cmd="formatBlock" data-val="&lt;p&gt;">Paragrafo</button>
+                <button type="button" class="tbtn" data-cmd="insertUnorderedList">• Lista</button>
+                <button type="button" class="tbtn" data-cmd="formatBlock" data-val="&lt;blockquote&gt;">Citazione</button>
+                <button type="button" class="tbtn" id="btn-link">Link</button>
+                <button type="button" class="tbtn" id="btn-img">Immagine</button>
+                <button type="button" class="tbtn" data-cmd="removeFormat">Pulisci formato</button>
+            </div>
+            <input type="file" id="inline-img" accept="image/png,image/jpeg,image/webp,image/gif" class="hidden">
+            <div id="editor" contenteditable="true"></div>
+            <div class="hint">Incollando del testo viene incollato senza formattazione: usa i pulsanti sopra per titoli, grassetto, ecc. Le immagini inserite nel testo si vedono nell'anteprima solo dopo 1-2 minuti dalla pubblicazione.</div>
+
+            <div class="row-btns">
+                <button id="btn-preview" class="btn grey">Anteprima</button>
+                <button id="btn-publish" class="btn">Pubblica articolo</button>
+                <button id="btn-cancel-edit" class="btn grey hidden">Annulla modifica</button>
+            </div>
+            <div id="preview" class="hidden"></div>
+        </div>
+
+        <div class="card">
+            <h2>Articoli pubblicati</h2>
+            <div id="list">Caricamento...</div>
+        </div>
+
+        <div class="row-btns">
+            <button id="btn-logout" class="btn grey">Dimentica il token su questo browser</button>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    var OWNER = 'the-eurostep';
+    var REPO = 'the-eurostep.github.io';
+    var BRANCH = 'main';
+    var SITE = 'https://the-eurostep.github.io';
+    var TOKEN_KEY = 'eurostep_editor_token';
+    var JSON_PATH = 'data/articoli.json';
+
+    var articles = [];
+    var editingId = null;
+    var editingCover = '';
+    var lastRange = null;
+
+    function $(id) { return document.getElementById(id); }
+
+    /* ---------- utilità ---------- */
+    function getToken() { try { return localStorage.getItem(TOKEN_KEY) || ''; } catch (e) { return ''; } }
+    function storeToken(t) { try { localStorage.setItem(TOKEN_KEY, t); } catch (e) {} }
+    function forgetToken() { try { localStorage.removeItem(TOKEN_KEY); } catch (e) {} }
+
+    function setStatus(msg, type, html) {
+        var el = $('status');
+        el.className = 'status ' + (type || 'info');
+        if (html) { el.innerHTML = msg; } else { el.textContent = msg; }
+    }
+    function hideStatus() { $('status').className = 'status hidden'; }
+
+    function encPath(p) { return p.split('/').map(encodeURIComponent).join('/'); }
+
+    function textToB64(str) {
+        var bytes = new TextEncoder().encode(str);
+        var bin = '';
+        for (var i = 0; i < bytes.length; i++) { bin += String.fromCharCode(bytes[i]); }
+        return btoa(bin);
+    }
+    function b64ToText(b64) {
+        var bin = atob(b64.replace(/\s/g, ''));
+        var bytes = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) { bytes[i] = bin.charCodeAt(i); }
+        return new TextDecoder().decode(bytes);
+    }
+    function fileToB64(file) {
+        return new Promise(function (resolve, reject) {
+            var r = new FileReader();
+            r.onload = function () { resolve(String(r.result).split(',')[1]); };
+            r.onerror = function () { reject(new Error('Impossibile leggere il file')); };
+            r.readAsDataURL(file);
+        });
+    }
+
+    function slugify(s) {
+        return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80).replace(/-+$/g, '');
+    }
+    function uniqueId(base, list) {
+        var id = base || 'articolo';
+        var n = 2;
+        function exists(x) { return list.some(function (a) { return String(a.id) === x; }); }
+        while (exists(id)) { id = (base || 'articolo') + '-' + n; n++; }
+        return id;
+    }
+    function today() {
+        var d = new Date();
+        return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    }
+    function escAttr(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    /* ---------- GitHub API ---------- */
+    function gh(path, options) {
+        options = options || {};
+        var method = options.method || 'GET';
+        var url = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/' + encPath(path);
+        if (method === 'GET') { url += '?ref=' + BRANCH + '&t=' + Date.now(); }
+        var init = {
+            method: method,
+            headers: {
+                'Authorization': 'Bearer ' + getToken(),
+                'Accept': 'application/vnd.github+json'
+            }
+        };
+        if (options.body) {
+            init.body = options.body;
+            init.headers['Content-Type'] = 'application/json';
+        }
+        return fetch(url, init);
+    }
+
+    function check(r) {
+        if (r.ok) { return r; }
+        return r.json().catch(function () { return {}; }).then(function (j) {
+            var m = 'GitHub ' + r.status;
+            if (r.status === 401) { m += ' - token non valido o scaduto'; }
+            else if (r.status === 403) { m += ' - permesso negato (il token deve avere Contents: Read and write)'; }
+            else if (r.status === 404) { m += ' - non trovato (o il token non ha accesso a questo repository)'; }
+            else if (r.status === 409) { m += ' - conflitto: il file è cambiato nel frattempo, riprova'; }
+            if (j && j.message) { m += ' [' + j.message + ']'; }
+            throw new Error(m);
+        });
+    }
+
+    function getFile(path) {
+        return gh(path).then(function (r) {
+            if (r.status === 404) { return null; }
+            return check(r).then(function (rr) { return rr.json(); }).then(function (j) {
+                return { sha: j.sha, text: j.content ? b64ToText(j.content) : '' };
+            });
+        });
+    }
+
+    function getJson() {
+        return getFile(JSON_PATH).then(function (f) {
+            if (!f) { throw new Error('data/articoli.json non trovato, oppure il token non ha accesso al repository'); }
+            return { sha: f.sha, list: JSON.parse(f.text) };
+        });
+    }
+
+    function lookupSha(path) {
+        return gh(path).then(function (r) {
+            if (r.status === 404) { return null; }
+            return check(r).then(function (rr) { return rr.json(); }).then(function (j) { return j.sha; });
+        });
+    }
+
+    function putFile(path, b64, message, knownSha) {
+        var shaPromise = (knownSha !== undefined) ? Promise.resolve(knownSha) : lookupSha(path);
+        return shaPromise.then(function (sha) {
+            var body = { message: message, content: b64, branch: BRANCH };
+            if (sha) { body.sha = sha; }
+            return gh(path, { method: 'PUT', body: JSON.stringify(body) });
+        }).then(check).then(function (r) { return r.json(); });
+    }
+
+    function deleteFile(path, message) {
+        return lookupSha(path).then(function (sha) {
+            if (!sha) { return null; }
+            return gh(path, { method: 'DELETE', body: JSON.stringify({ message: message, sha: sha, branch: BRANCH }) }).then(check);
+        });
+    }
+
+    function uploadImage(file) {
+        if (file.size > 8 * 1024 * 1024) {
+            return Promise.reject(new Error('Immagine troppo grande (max 8 MB): riducila prima di caricarla.'));
+        }
+        var name = Date.now() + '-' + file.name.toLowerCase().replace(/[^a-z0-9.]+/g, '-');
+        var path = 'images/' + name;
+        return fileToB64(file).then(function (b64) {
+            return putFile(path, b64, 'Upload immagine ' + name);
+        }).then(function () { return path; });
+    }
+
+    /* ---------- pagina di condivisione (per anteprime social) ---------- */
+    function sharePage(a) {
+        var pageUrl = SITE + '/share/' + a.id + '.html';
+        var target = '../article.html?id=' + encodeURIComponent(a.id);
+        var img;
+        if (a.coverImage && /^https?:\/\//i.test(a.coverImage)) { img = a.coverImage; }
+        else if (a.coverImage) { img = SITE + '/' + a.coverImage.replace(/^\/+/, ''); }
+        else { img = SITE + '/the%20eurostep%20rounded.png'; }
+        var t = escAttr(a.title);
+        var d = escAttr(a.snippet || 'Tactical basketball breakdown by The Eurostep.');
+        return '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n' +
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+            '<title>' + t + ' | The Eurostep</title>\n' +
+            '<meta name="description" content="' + d + '">\n' +
+            '<meta property="og:type" content="article">\n' +
+            '<meta property="og:site_name" content="The Eurostep">\n' +
+            '<meta property="og:title" content="' + t + '">\n' +
+            '<meta property="og:description" content="' + d + '">\n' +
+            '<meta property="og:image" content="' + escAttr(img) + '">\n' +
+            '<meta property="og:url" content="' + escAttr(pageUrl) + '">\n' +
+            '<meta name="twitter:card" content="summary_large_image">\n' +
+            '<meta name="twitter:title" content="' + t + '">\n' +
+            '<meta name="twitter:description" content="' + d + '">\n' +
+            '<meta name="twitter:image" content="' + escAttr(img) + '">\n' +
+            '<scr' + 'ipt>location.replace(' + JSON.stringify(target) + ');<\/script>\n' +
+            '</head>\n<body style="background:#030508;color:#f3f4f6;font-family:sans-serif;padding:30px">\n' +
+            '<p>Apertura articolo... <a style="color:#60a5fa" href="' + escAttr(target) + '">Clicca qui se non parte automaticamente</a></p>\n' +
+            '</body>\n</html>\n';
+    }
+
+    /* ---------- lista articoli ---------- */
+    function renderList() {
+        var box = $('list');
+        box.innerHTML = '';
+        if (!articles.length) { box.textContent = 'Nessun articolo.'; return; }
+        articles.forEach(function (a) {
+            var row = document.createElement('div');
+            row.className = 'row';
+            var info = document.createElement('div');
+            info.className = 'row-info';
+            var t = document.createElement('strong');
+            t.textContent = a.title;
+            var m = document.createElement('span');
+            m.textContent = (a.category || '') + ' • ' + (a.date || '') + ' • id: ' + a.id;
+            info.appendChild(t);
+            info.appendChild(m);
+            var actions = document.createElement('div');
+            actions.className = 'row-actions';
+            var eb = document.createElement('button');
+            eb.className = 'btn grey'; eb.textContent = 'Modifica';
+            eb.addEventListener('click', function () { startEdit(a); });
+            var db = document.createElement('button');
+            db.className = 'btn red'; db.textContent = 'Elimina';
+            db.addEventListener('click', function () { removeArticle(a); });
+            actions.appendChild(eb);
+            actions.appendChild(db);
+            row.appendChild(info);
+            row.appendChild(actions);
+            box.appendChild(row);
+        });
+    }
+
+    function loadArticles() {
+        return getJson().then(function (r) {
+            articles = r.list;
+            renderList();
+        });
+    }
+
+    /* ---------- form ---------- */
+    function resetForm() {
+        editingId = null;
+        editingCover = '';
+        $('form-title').textContent = 'Nuovo articolo';
+        $('editing-banner').className = 'editing-banner hidden';
+        $('btn-cancel-edit').className = 'btn grey hidden';
+        $('btn-publish').textContent = 'Pubblica articolo';
+        $('f-title').value = '';
+        $('f-author').value = 'The Eurostep Editorial';
+        $('f-category').value = 'NBA';
+        $('f-tags').value = '';
+        $('f-snippet').value = '';
+        $('f-cover').value = '';
+        $('cover-current').textContent = '';
+        $('editor').innerHTML = '';
+        $('preview').className = 'hidden';
+    }
+
+    function startEdit(a) {
+        resetForm();
+        editingId = String(a.id);
+        editingCover = a.coverImage || '';
+        $('form-title').textContent = 'Modifica articolo';
+        $('editing-banner').textContent = 'Stai modificando: ' + a.title + ' (l\'indirizzo dell\'articolo resta invariato)';
+        $('editing-banner').className = 'editing-banner';
+        $('btn-cancel-edit').className = 'btn grey';
+        $('btn-publish').textContent = 'Salva modifiche';
+        $('f-title').value = a.title || '';
+        $('f-author').value = a.author || '';
+        $('f-category').value = a.category === 'Euroleague' ? 'Euroleague' : 'NBA';
+        $('f-tags').value = (a.tags || []).join(', ');
+        $('f-snippet').value = a.snippet || '';
+        $('cover-current').textContent = editingCover ? 'Copertina attuale: ' + editingCover + ' (scegli un nuovo file solo se vuoi cambiarla)' : 'Nessuna copertina attuale.';
+        $('editor').innerHTML = a.content || ('<p>' + escAttr(a.snippet || '') + '</p>');
+        hideStatus();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function buildArticle(list) {
+        var title = $('f-title').value.trim();
+        var snippet = $('f-snippet').value.trim();
+        var content = $('editor').innerHTML.trim();
+        var plain = $('editor').innerText.trim();
+        if (!title) { throw new Error('Inserisci il titolo.'); }
+        if (!snippet) { throw new Error('Inserisci l\'estratto.'); }
+        if (!plain && content.indexOf('<img') === -1) { throw new Error('Il testo dell\'articolo è vuoto.'); }
+        return {
+            title: title,
+            snippet: snippet,
+            content: content,
+            author: $('f-author').value.trim() || 'The Eurostep Editorial',
+            category: $('f-category').value,
+            tags: $('f-tags').value.split(',').map(function (s) { return s.trim(); }).filter(Boolean)
+        };
+    }
+
+    function publish() {
+        var btn = $('btn-publish');
+        var fields;
+        try { fields = buildArticle(); } catch (e) { setStatus(e.message, 'err'); return; }
+        btn.disabled = true;
+        setStatus('Pubblicazione in corso, non chiudere la pagina...', 'info');
+
+        var coverFile = $('f-cover').files[0];
+        var coverPromise = coverFile ? uploadImage(coverFile) : Promise.resolve(editingCover);
+        var saved;
+
+        coverPromise.then(function (cover) {
+            return getJson().then(function (r) {
+                var list = r.list;
+                var idx = editingId ? list.findIndex(function (a) { return String(a.id) === editingId; }) : -1;
+                var art;
+                if (idx >= 0) {
+                    var old = list[idx];
+                    art = {
+                        id: old.id, title: fields.title, snippet: fields.snippet, content: fields.content,
+                        author: fields.author, category: fields.category, tags: fields.tags, coverImage: cover,
+                        date: old.date || today(), ratingSum: old.ratingSum || 0, ratingCount: old.ratingCount || 0,
+                        comments: old.comments || []
+                    };
+                    list[idx] = art;
+                } else {
+                    art = {
+                        id: uniqueId(slugify(fields.title), list), title: fields.title, snippet: fields.snippet,
+                        content: fields.content, author: fields.author, category: fields.category, tags: fields.tags,
+                        coverImage: cover, date: today(), ratingSum: 0, ratingCount: 0, comments: []
+                    };
+                    list.unshift(art);
+                }
+                saved = art;
+                var msg = (idx >= 0 ? 'Modifica articolo ' : 'Nuovo articolo ') + art.id;
+                return putFile(JSON_PATH, textToB64(JSON.stringify(list, null, 2) + '\n'), msg, r.sha).then(function () {
+                    articles = list;
+                });
+            });
+        }).then(function () {
+            return putFile('share/' + saved.id + '.html', textToB64(sharePage(saved)), 'Pagina condivisione ' + saved.id);
+        }).then(function () {
+            renderList();
+            var link = SITE + '/article.html?id=' + encodeURIComponent(saved.id);
+            var shareLink = SITE + '/share/' + encodeURIComponent(saved.id) + '.html';
+            setStatus('Pubblicato! GitHub impiega 1-2 minuti ad aggiornare il sito.<br>Articolo: <a href="' + escAttr(link) + '" target="_blank" rel="noopener">' + escAttr(link) + '</a><br>Link per condividere sui social: <a href="' + escAttr(shareLink) + '" target="_blank" rel="noopener">' + escAttr(shareLink) + '</a>', 'ok', true);
+            resetForm();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }).catch(function (e) {
+            setStatus('Errore: ' + e.message, 'err');
+        }).then(function () {
+            btn.disabled = false;
+        });
+    }
+
+    function removeArticle(a) {
+        if (!confirm('Eliminare definitivamente "' + a.title + '"?')) { return; }
+        setStatus('Eliminazione in corso...', 'info');
+        getJson().then(function (r) {
+            var list = r.list.filter(function (x) { return String(x.id) !== String(a.id); });
+            return putFile(JSON_PATH, textToB64(JSON.stringify(list, null, 2) + '\n'), 'Elimina articolo ' + a.id, r.sha).then(function () {
+                articles = list;
+                renderList();
+            });
+        }).then(function () {
+            return deleteFile('share/' + a.id + '.html', 'Elimina pagina condivisione ' + a.id);
+        }).then(function () {
+            setStatus('Articolo eliminato. Il sito si aggiorna in 1-2 minuti.', 'ok');
+        }).catch(function (e) {
+            setStatus('Errore: ' + e.message, 'err');
+        });
+    }
+
+    /* ---------- anteprima ---------- */
+    function preview() {
+        var p = $('preview');
+        p.innerHTML = '';
+        var h = document.createElement('h1');
+        h.textContent = $('f-title').value || '(senza titolo)';
+        var body = document.createElement('div');
+        body.innerHTML = $('editor').innerHTML;
+        p.appendChild(h);
+        p.appendChild(body);
+        p.className = '';
+    }
+
+    /* ---------- editor di testo ---------- */
+    var editor = $('editor');
+
+    function saveRange() {
+        var sel = window.getSelection();
+        if (sel.rangeCount > 0 && editor.contains(sel.anchorNode)) { lastRange = sel.getRangeAt(0).cloneRange(); }
+    }
+    function restoreRange() {
+        editor.focus();
+        if (lastRange) {
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(lastRange);
+        }
+    }
+    ['keyup', 'mouseup', 'blur'].forEach(function (ev) { editor.addEventListener(ev, saveRange); });
+
+    editor.addEventListener('paste', function (e) {
+        e.preventDefault();
+        var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+        document.execCommand('insertText', false, text);
+    });
+
+    document.querySelectorAll('[data-cmd]').forEach(function (btn) {
+        btn.addEventListener('mousedown', function (e) { e.preventDefault(); });
+        btn.addEventListener('click', function () {
+            restoreRange();
+            document.execCommand(btn.getAttribute('data-cmd'), false, btn.getAttribute('data-val'));
+            saveRange();
+        });
+    });
+
+    $('btn-link').addEventListener('mousedown', function (e) { e.preventDefault(); });
+    $('btn-link').addEventListener('click', function () {
+        saveRange();
+        var url = prompt('Indirizzo del link (es. https://...):');
+        if (!url) { return; }
+        restoreRange();
+        document.execCommand('createLink', false, url);
+    });
+
+    $('btn-img').addEventListener('mousedown', function (e) { e.preventDefault(); });
+    $('btn-img').addEventListener('click', function () { saveRange(); $('inline-img').click(); });
+    $('inline-img').addEventListener('change', function () {
+        var f = this.files[0];
+        var input = this;
+        if (!f) { return; }
+        setStatus('Caricamento immagine...', 'info');
+        uploadImage(f).then(function (path) {
+            restoreRange();
+            document.execCommand('insertHTML', false, '<img src="' + escAttr(path) + '" alt="">');
+            hideStatus();
+        }).catch(function (e) {
+            setStatus('Errore: ' + e.message, 'err');
+        }).then(function () { input.value = ''; });
+    });
+
+    try { document.execCommand('defaultParagraphSeparator', false, 'p'); } catch (e) {}
+
+    /* ---------- accesso ---------- */
+    function showApp() {
+        $('token-card').className = 'card hidden';
+        $('app').className = '';
+    }
+    function showLogin() {
+        $('token-card').className = 'card';
+        $('app').className = 'hidden';
+    }
+
+    function enter() {
+        setStatus('Verifica accesso...', 'info');
+        loadArticles().then(function () {
+            hideStatus();
+            showApp();
+        }).catch(function (e) {
+            forgetToken();
+            showLogin();
+            setStatus('Accesso non riuscito: ' + e.message, 'err');
+        });
+    }
+
+    $('token-save').addEventListener('click', function () {
+        var t = $('token-input').value.trim();
+        if (!t) { setStatus('Incolla il token.', 'err'); return; }
+        storeToken(t);
+        $('token-input').value = '';
+        enter();
+    });
+    $('btn-logout').addEventListener('click', function () {
+        forgetToken();
+        showLogin();
+        hideStatus();
+    });
+    $('btn-publish').addEventListener('click', publish);
+    $('btn-preview').addEventListener('click', preview);
+    $('btn-cancel-edit').addEventListener('click', function () { resetForm(); hideStatus(); });
+
+    if (getToken()) { enter(); }
+})();
+</script>
+</body>
+</html>
