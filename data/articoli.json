@@ -1,0 +1,107 @@
+[
+  {
+    "id": "decoding-defensive-switches",
+    "title": "Decoding defensive switches and high-screen strategies in the modern Western Conference finals.",
+    "snippet": "An exhaustive tactical breakdown of how elite defenses counter heavy pick-and-roll systems, altering spatial geometry on the perimeter.",
+    "content": "<p>Il gioco moderno si basa sulla polivalenza difensiva. Quando le franchigie della Western Conference si scontrano nei playoff, la capacità di comunicare sui blocchi portanti (high-screen) diventa la discriminante tra una difesa d'élite e una in difficoltà.</p><p>Analizzando i possessi chiave, notiamo come i difensori sul perimetro non cerchino più solo di inseguire il palleggiatore, ma attuino transizioni preventive per evitare mismatch letali sotto canestro.</p>",
+    "author": "The Eurostep Editorial",
+    "category": "NBA",
+    "tags": ["NBA", "Defense", "Playoffs", "Western Conference"],
+    "coverImage": "",
+    "date": "2026-06-06",
+    "ratingSum": 20,
+    "ratingCount": 5,
+    "comments": [
+      {
+        "id": "c1",
+        "username": "HoopFan_IT",
+        "message": "Analisi spaziale pazzesca, non avevo notato il dettaglio sui raddoppi preventivi!",
+        "date": "2026-06-06"
+      }
+    ]
+  },
+  {
+    "id": "tactical-evolution-drop-coverages",
+    "title": "The tactical evolution of drop coverages across European powerhouses.",
+    "snippet": "Come le difese di Eurolega interpretano la marcatura arretrata per arginare i passaggi filtranti in area.",
+    "content": "<p>In Eurolega gli spazi sono più ristretti rispetto alla NBA a causa del campo leggermente più piccolo e della linea del tiro da tre punti più vicina. Questo costruisce scenari unici per l'utilizzo della drop coverage.</p>",
+    "author": "The Eurostep Editorial",
+    "category": "Euroleague",
+    "tags": ["Euroleague", "Tactics", "Defense"],
+    "coverImage": "",
+    "date": "2026-06-05",
+    "ratingSum": 12,
+    "ratingCount": 3,
+    "comments": []
+  },
+  {
+    "id": "next-gen-metrics-gravity",
+    "title": "Next-gen metrics: Evaluating off-ball gravity and tracking defensive impact.",
+    "snippet": "Un viaggio attraverso i dati avanzati per misurare ciò che le box score tradizionali non riescono a catturare.",
+    "content": "<p>La 'gravity' (la capacità di attrarre i difensori anche senza palla) è uno dei concetti più complessi da quantificare nella pallacanestro moderna. Grazie ai sistemi di tracking ottico, oggi possiamo mappare lo spazio liberato da un tiratore in movimento.</p>",
+    "author": "The Eurostep Editorial",
+    "category": "NBA",
+    "tags": ["Scouting", "Analytics", "Metrics"],
+    "coverImage": "",
+    "date": "2026-06-04",
+    "ratingSum": 8,
+    "ratingCount": 2,
+    "comments": []
+  },
+  {
+    "id": "pacing-mechanics-regular-season",
+    "title": "Why pacing mechanics are rewriting regular season offensive ceilings.",
+    "snippet": "Il ritmo ossessivo delle transizioni offensive sta cambiando radicalmente il modo in cui le squadre gestiscono le energie.",
+    "content": "<p>Aumentare i possessi per partita non significa solo correre di più, ma ottimizzare i primi 7 secondi dell'azione. Vediamo come i coaching staff gestiscono le rotazioni per mantenere alta l'efficienza offensiva.</p>",
+    "author": "The Eurostep Editorial",
+    "category": "NBA",
+    "tags": ["Opinion", "Offense", "Pacing"],
+    "coverImage": "",
+    "date": "2026-06-03",
+    "ratingSum": 15,
+    "ratingCount": 4,
+    "comments": []
+  },
+  {
+    "id": "corner-three-frequencies",
+    "title": "Pacing the floor: Corner three frequencies in transition offense.",
+    "snippet": "Il tiro dall'angolo in transizione è diventato il kill-shot per eccellenza nel basket contemporaneo.",
+    "content": "<p>Correre lungo le corsie laterali (lane filling) con i piedi già pronti sulla linea dei tre punti nell'angolo è lo schema più studiato e redditizio della pallacanestro moderna.</p>",
+    "author": "The Eurostep Editorial",
+    "category": "NBA",
+    "tags": ["NBA Analytics", "Shooting", "Transition"],
+    "coverImage": "",
+    "date": "2026-06-02",
+    "ratingSum": 10,
+    "ratingCount": 2,
+    "comments": []
+  },
+  {
+    "id": "decoding-defensive-rotations-paint",
+    "title": "Decoding defensive rotations inside the paint in tight clutch moments.",
+    "snippet": "La chimica e la sincronia dei raddoppi negli ultimi 2 minuti di partita.",
+    "content": "<p>Nei possessi decisivi la comunicazione verbale non basta: serve una memoria muscolare collettiva per chiudere le linee di penetrazione senza concedere scarichi puliti sul perimetro.</p>",
+    "author": "The Eurostep Editorial",
+    "category": "Euroleague",
+    "tags": ["Euroleague Focus", "Defense", "Clutch"],
+    "coverImage": "",
+    "date": "2026-06-01",
+    "ratingSum": 9,
+    "ratingCount": 2,
+    "comments": []
+  },
+  {
+    "id": "blueprint-modern-playmaking",
+    "title": "The blueprint of modern playmaking: Point guards masterclasses.",
+    "snippet": "Letture dei pick-and-roll e timing dei passaggi filtranti nei registi di alto livello.",
+    "content": "<p>Il playmaker moderno deve saper manipolare la linea di difesa con variazioni di velocità millimetriche, costringendo il lungo avversario a una scelta errata.</p>",
+    "author": "The Eurostep Editorial",
+    "category": "NBA",
+    "tags": ["Special Feature", "Playmaking", "Point Guards"],
+    "coverImage": "",
+    "date": "2026-05-31",
+    "ratingSum": 18,
+    "ratingCount": 4,
+    "comments": []
+  }
+]
