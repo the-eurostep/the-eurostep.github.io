@@ -232,13 +232,15 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
         }
 
         .filter-btn {
-            background: rgba(11, 15, 25, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(11, 15, 25, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 8px;
-            padding: 8px 18px;
+            padding: 10px 20px;
             color: #9ca3af;
             font-family: 'Orbitron', sans-serif;
             font-size: 0.8rem;
@@ -248,6 +250,13 @@
             transition: all 0.3s ease;
             text-decoration: none;
             text-transform: uppercase;
+            pointer-events: auto;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #ffffff;
         }
 
         .filter-btn:hover, .filter-btn.active {
