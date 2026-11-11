@@ -6,7 +6,7 @@
     <title id="page-title">Article | The Eurostep</title>
     <link rel="icon" type="image/png" href="the eurostep rounded.png">
     
-    <!-- Meta Tag Dinamici Open Graph -->
+    <!-- Meta Tag Open Graph per le anteprime social -->
     <meta property="og:title" id="og-title" content="The Eurostep | Basketball Analysis">
     <meta property="og:description" id="og-desc" content="Advanced basketball analysis, tactics, and insights.">
     <meta property="og:image" id="og-image" content="">
@@ -92,10 +92,6 @@
             list-style: none;
         }
 
-        .nav-item {
-            position: relative;
-        }
-
         .nav-link {
             color: #d1d5db;
             text-decoration: none;
@@ -113,103 +109,7 @@
             color: #ffffff;
         }
 
-        .dropdown-content {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: rgba(5, 8, 15, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            min-width: 210px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            padding: 10px 0;
-            z-index: 1100;
-        }
-
-        .nav-item:hover .dropdown-content {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .dropdown-content a {
-            display: block;
-            padding: 10px 20px;
-            color: #9ca3af;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-align: center;
-            transition: all 0.2s ease;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            text-transform: none;
-            letter-spacing: normal;
-        }
-
-        .dropdown-content a:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            padding-left: 20px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-bar-container {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 7px 12px;
-            gap: 8px;
-            width: 170px;
-            transition: all 0.3s ease;
-        }
-
-        .search-bar-container:focus-within {
-            border-color: rgba(255, 255, 255, 0.25);
-            background: rgba(255, 255, 255, 0.06);
-            width: 200px;
-        }
-
-        .search-icon {
-            display: flex;
-            align-items: center;
-            color: #9ca3af;
-        }
-
-        .search-icon svg {
-            width: 15px;
-            height: 15px;
-            stroke: currentColor;
-            stroke-width: 2;
-            fill: none;
-        }
-
-        .search-input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #f3f4f6;
-            font-size: 0.85rem;
-            width: 100%;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        .search-input::placeholder {
-            color: #6b7280;
-            letter-spacing: 0.5px;
-        }
-
-        /* Contenitore dell'articolo con spaziature corrette */
+        /* Contenitore principale dell'articolo */
         .article-container {
             max-width: 850px;
             margin: 50px auto;
@@ -224,7 +124,7 @@
         .article-header-section {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .article-meta-info {
@@ -244,22 +144,20 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 500;
             font-size: 0.9rem;
-            letter-spacing: normal;
-            text-transform: none;
         }
 
         .article-main-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.3rem;
+            font-size: 2.2rem;
             color: #ffffff;
             line-height: 1.25;
-            margin-top: 5px;
-            margin-bottom: 5px;
+            margin-top: 4px;
+            margin-bottom: 4px;
         }
 
         .article-cover-img {
             width: 100%;
-            height: 420px;
+            height: 400px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
@@ -289,15 +187,7 @@
             margin-bottom: 20px;
         }
 
-        .article-body-content h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: #ffffff;
-            font-size: 1.3rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-
-        /* Sezione Interattiva (Stelle + Condivisione) */
+        /* Sezione Interattiva (Stelle e Condivisione) */
         .interactive-section {
             display: flex;
             flex-direction: column;
@@ -521,23 +411,13 @@
                 font-size: 1.7rem;
             }
             .article-cover-img {
-                height: 250px;
+                height: 240px;
             }
             .article-body-content {
                 padding: 20px;
             }
             header {
                 padding: 15px 20px;
-                flex-wrap: wrap;
-                gap: 15px;
-            }
-            .nav-menu {
-                gap: 20px;
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                overflow-x: auto;
-                padding-bottom: 5px;
             }
         }
     </style>
@@ -551,66 +431,9 @@
             <img src="the eurostep rounded.png" alt="The Eurostep Logo" class="brand-logo">
             <span class="brand-title-text">The Eurostep</span>
         </a>
-
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="#" class="nav-link">NBA</a>
-                <div class="dropdown-content">
-                    <a href="see-more-articles.html?category=nba">Articles</a>
-                    <a href="nba-fantasy.html">Fantasy</a>
-                    <a href="nba-stats.html">Stats</a>
-                    <a href="nba-standings.html">Standings</a>
-                    <a href="nba-games.html">Games</a>
-                    <a href="nba-teams-players.html">Teams & Players</a>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">Euroleague</a>
-                <div class="dropdown-content">
-                    <a href="see-more-articles.html?category=euroleague">Articles</a>
-                    <a href="euroleague-fantasy.html">Fantasy</a>
-                    <a href="euroleague-stats.html">Stats</a>
-                    <a href="euroleague-standings.html">Standings</a>
-                    <a href="euroleague-games.html">Games</a>
-                    <a href="euroleague-teams-players.html">Teams & Players</a>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">Minigames</a>
-                <div class="dropdown-content">
-                    <a href="bracket-challenge.html">Bracket Challenge</a>
-                    <a href="draft/draft-board.html">Draft Board</a>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a href="contact.html" class="nav-link">Contact</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">Other</a>
-                <div class="dropdown-content">
-                    <a href="https://www.youtube.com/@the.eurostep" target="_blank" rel="noopener noreferrer">YouTube</a>
-                    <a href="https://www.instagram.com/the.eurostep/" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://www.patreon.com/theeurostep" target="_blank" rel="noopener noreferrer">Patreon</a>
-                    <a href="https://theeurostep.gumroad.com/" target="_blank" rel="noopener noreferrer">Gumroad</a>
-                </div>
-            </li>
+            <li><a href="index.html" class="nav-link">Back</a></li>
         </ul>
-
-        <div class="header-right">
-            <div class="search-bar-container">
-                <span class="search-icon">
-                    <svg viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </span>
-                <input type="text" id="search-input" class="search-input" placeholder="Search">
-            </div>
-        </div>
     </header>
 
     <main class="article-container">
@@ -632,7 +455,7 @@
             <p>Loading full tactical analysis...</p>
         </div>
 
-        <!-- Box Interattivo (Stelle + Condivisione) -->
+        <!-- Box Interattivo (Stelle Progressive + Condivisione) -->
         <div class="interactive-section">
             <div class="rating-box">
                 <div>
@@ -682,7 +505,7 @@
     </footer>
 
     <script>
-        // Sfondo 3D Three.js Reattivo al Mouse Al 100% (Standard di tutto il sito)
+        // Sfondo 3D Three.js Reattivo al Mouse (Standard unificato)
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -742,7 +565,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Script Logica Articolo, Ricerca, Stelline e Commenti
+        // Script Logica Articolo basato sugli Slug ID
         document.addEventListener('DOMContentLoaded', function() {
             var urlParams = new URLSearchParams(window.location.search);
             var articleId = urlParams.get('id');
@@ -750,9 +573,8 @@
             fetch('data/articoli.json')
                 .then(function(response) { return response.json(); })
                 .then(function(articles) {
-                    // Cerca l'articolo confrontando sia come stringa che come numero per massima robustezza
                     var article = articles.find(function(a) { 
-                        return String(a.id) === String(articleId) || String(a.slug) === String(articleId); 
+                        return String(a.id) === String(articleId); 
                     });
 
                     if (!article) {
@@ -761,7 +583,7 @@
                         return;
                     }
 
-                    // Popoliamo i campi visivi
+                    // Popolamento dei campi visivi
                     document.getElementById('page-title').textContent = article.title + ' | The Eurostep';
                     document.getElementById('article-category').textContent = (article.category || 'Analysis') + ' • ' + (article.tags ? article.tags.join(', ') : '');
                     document.getElementById('article-date').textContent = article.date || '';
@@ -775,21 +597,21 @@
                     }
 
                     var coverEl = document.getElementById('article-cover');
-                    if (article.coverImage) {
+                    if (article.coverImage && article.coverImage.trim() !== '') {
                         coverEl.style.backgroundImage = 'url(\'' + article.coverImage + '\')';
                         coverEl.textContent = '';
                     } else {
                         coverEl.textContent = '[ ARTICLE COVER IMAGE ]';
                     }
 
-                    // Aggiorniamo i Meta Tag Open Graph
+                    // Meta Tag Open Graph
                     document.getElementById('og-title').setAttribute('content', article.title);
                     document.getElementById('og-desc').setAttribute('content', article.snippet || 'Tactical basketball breakdown by The Eurostep.');
                     if (article.coverImage) {
                         document.getElementById('og-image').setAttribute('content', window.location.origin + '/' + article.coverImage);
                     }
 
-                    // Configurazione Condivisione Social
+                    // Condivisione Social
                     var currentUrl = window.location.href;
                     var encodedUrl = encodeURIComponent(currentUrl);
                     var encodedTitle = encodeURIComponent(article.title);
@@ -808,28 +630,15 @@
                         });
                     }
 
-                    // Inizializzazione moduli interattivi
+                    // Inizializzazione Stelline e Commenti
                     initRatingSystem(articleId);
-                    initCommentsSystem(articleId);
+                    initCommentsSystem(articleId, article);
                 })
                 .catch(function(err) {
                     console.error('Errore caricamento articolo:', err);
                     document.getElementById('article-title').textContent = 'Error loading article';
-                    document.getElementById('article-content').innerHTML = '<p>Could not load article data. Please check connection or JSON path.</p>';
+                    document.getElementById('article-content').innerHTML = '<p>Could not load article data.</p>';
                 });
-
-            // Search Bar Globale
-            var searchInput = document.getElementById('search-input');
-            if (searchInput) {
-                searchInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        var query = searchInput.value.trim();
-                        if (query) {
-                            window.location.href = 'see-more-articles.html?search=' + encodeURIComponent(query);
-                        }
-                    }
-                });
-            }
 
             // Sistema Stelline Progressive
             function initRatingSystem(id) {
@@ -884,8 +693,8 @@
                 });
             }
 
-            // Sistema Commenti Liberi (localStorage)
-            function initCommentsSystem(id) {
+            // Sistema Commenti (integra quelli nel JSON e quelli locali)
+            function initCommentsSystem(id, article) {
                 var storageKey = 'eurostep_comments_' + id;
                 var submitBtn = document.getElementById('submit-comment-btn');
                 var authorInput = document.getElementById('comment-author-input');
@@ -893,15 +702,20 @@
                 var listContainer = document.getElementById('comments-list');
 
                 function renderComments() {
-                    var comments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                    var localComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                    var jsonComments = article.comments ? article.comments.map(function(c) {
+                        return { author: c.username, text: c.message };
+                    }) : [];
+                    
+                    var allComments = localComments.concat(jsonComments);
                     listContainer.innerHTML = '';
 
-                    if (comments.length === 0) {
+                    if (allComments.length === 0) {
                         listContainer.innerHTML = '<p style="color: #6b7280; font-size: 0.9rem;">No comments yet. Be the first to share your thoughts!</p>';
                         return;
                     }
 
-                    comments.forEach(function(c) {
+                    allComments.forEach(function(c) {
                         var card = document.createElement('div');
                         card.className = 'comment-card';
                         card.innerHTML = 
@@ -920,9 +734,9 @@
                         return;
                     }
 
-                    var comments = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                    comments.unshift({ author: author, text: text });
-                    localStorage.setItem(storageKey, JSON.stringify(comments));
+                    var localComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                    localComments.unshift({ author: author, text: text });
+                    localStorage.setItem(storageKey, JSON.stringify(localComments));
 
                     authorInput.value = '';
                     textInput.value = '';
