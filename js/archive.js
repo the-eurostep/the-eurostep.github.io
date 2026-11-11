@@ -1,56 +1,54 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let allArticles = [];
-    let filteredArticles = [];
-    let currentPage = 1;
-    const articlesPerPage = 15;
+document.addEventListener('DOMContentLoaded', function() {
+    var allArticles = [];
+    var filteredArticles = [];
+    var currentPage = 1;
+    var articlesPerPage = 15;
 
-    const gridContainer = document.getElementById('archive-grid');
-    const prevBtn = document.getElementById('prev-page');
-    const nextBtn = document.getElementById('next-page');
-    const pageInfo = document.getElementById('page-info');
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const archiveHeading = document.getElementById('archive-heading');
-    const searchInput = document.getElementById('search-input');
-    const paginationContainer = document.getElementById('pagination-container');
+    var gridContainer = document.getElementById('archive-grid');
+    var prevBtn = document.getElementById('prev-page');
+    var nextBtn = document.getElementById('next-page');
+    var pageInfo = document.getElementById('page-info');
+    var filterButtons = document.querySelectorAll('.filter-btn');
+    var archiveHeading = document.getElementById('archive-heading');
+    var searchInput = document.getElementById('search-input');
+    var paginationContainer = document.getElementById('pagination-container');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    let currentCategory = (urlParams.get('category') || 'all').toLowerCase();
-    let searchQuery = urlParams.get('search') || '';
+    var urlParams = new URLSearchParams(window.location.search);
+    var currentCategory = (urlParams.get('category') || 'all').toLowerCase();
+    var searchQuery = urlParams.get('search') || '';
 
     if (searchQuery && searchInput) {
         searchInput.value = searchQuery;
     }
 
-    // Carichiamo gli articoli
+    // Caricamento dati JSON
     fetch('data/articoli.json')
-        .then(response => {
-            if (!response.ok) throw new Error("Impossibile trovare il file JSON");
+        .then(function(response) {
             return response.json();
         })
-        .then(articles => {
+        .then(function(articles) {
             allArticles = articles || [];
             applyFiltersAndSearch();
         })
-        .catch(err => {
-            console.error('Errore:', err);
-            // Fallimento di sicurezza: se il JSON non parte, creiamo almeno dei dati fittizi visibili
+        .catch(function(err) {
+            console.error('Errore caricamento:', err);
             allArticles = [];
             applyFiltersAndSearch();
         });
 
     function applyFiltersAndSearch() {
-        filteredArticles = allArticles.filter(art => {
-            let matchesCategory = true;
+        filteredArticles = allArticles.filter(function(art) {
+            var matchesCategory = true;
             if (currentCategory !== 'all') {
-                const artCat = art.category ? art.category.toLowerCase().trim() : '';
+                var artCat = art.category ? art.category.toLowerCase().trim() : '';
                 matchesCategory = (artCat === currentCategory);
             }
 
-            let matchesSearch = true;
+            var matchesSearch = true;
             if (searchQuery) {
-                const q = searchQuery.toLowerCase();
-                const titleMatch = art.title && art.title.toLowerCase().includes(q);
-                const snippetMatch = art.snippet && art.snippet.toLowerCase().includes(q);
+                var q = searchQuery.toLowerCase();
+                var titleMatch = art.title && art.title.toLowerCase().indexOf(q) !== -1;
+                var snippetMatch = art.snippet && art.snippet.toLowerCase().indexOf(q) !== -1;
                 matchesSearch = titleMatch || snippetMatch;
             }
 
@@ -66,33 +64,35 @@ document.addEventListener('DOMContentLoaded', () => {
         gridContainer.innerHTML = '';
 
         if (filteredArticles.length === 0) {
-            gridContainer.innerHTML = `<p style="grid-column: span 3; text-align: center; color: #9ca3af; padding: 40px;">No articles found.</p>`;
+            gridContainer.innerHTML = '<p style="grid-column: span 3; text-align: center; color: #9ca3af; padding: 40px;">No articles found.</p>';
             if (paginationContainer) paginationContainer.style.display = 'none';
             return;
         }
 
         if (paginationContainer) paginationContainer.style.display = 'flex';
 
-        const startIndex = (currentPage - 1) * articlesPerPage;
-        const endIndex = startIndex + articlesPerPage;
-        const paginatedArticles = filteredArticles.slice(startIndex, endIndex);
+        var startIndex = (currentPage - 1) * articlesPerPage;
+        var endIndex = startIndex + articlesPerPage;
+        var paginatedArticles = filteredArticles.slice(startIndex, endIndex);
 
-        paginatedArticles.forEach(art => {
-            const card = document.createElement('a');
-            card.href = `article.html?id=${art.id}`;
+        paginatedArticles.forEach(function(art) {
+            var card = document.createElement('a');
+            card.href = 'article.html?id=' + art.id;
             card.className = 'archive-card';
 
-            const imgBg = art.coverImage ? `style="background-image: url('${art.coverImage}')"` : '';
-            const imgText = art.coverImage ? '' : '[ ARTICLE THUMBNAIL ]';
+            var imgBg = art.coverImage ? 'style="background-image: url(\'' + art.coverImage + '\')"' : '';
+            var imgText = art.coverImage ? '' : '[ ARTICLE THUMBNAIL ]';
+            var categoryText = art.category ? art.category : 'Article';
+            var dateText = art.date ? art.date : '';
 
-            card.innerHTML = `
-                <div class="archive-img-placeholder" ${imgBg}>${imgText}</div>
-                <div class="archive-content">
-                    <div class="article-tag">${art.category || 'Article'} • ${art.date || ''}</div>
-                    <h3 class="archive-card-title">${art.title}</h3>
-                    <p class="archive-snippet">${art.snippet || ''}</p>
-                </div>
-            `;
+            card.innerHTML = 
+                '<div class="archive-img-placeholder" ' + imgBg + '>' + imgText + '</div>' +
+                '<div class="archive-content">' +
+                    '<div class="article-tag">' + categoryText + ' • ' + dateText + '</div>' +
+                    '<h3 class="archive-card-title">' + art.title + '</h3>' +
+                    '<p class="archive-snippet">' + (art.snippet || '') + '</p>' +
+                '</div>';
+
             gridContainer.appendChild(card);
         });
 
@@ -100,15 +100,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updatePaginationControls() {
-        const totalPages = Math.ceil(filteredArticles.length / articlesPerPage) || 1;
-        if (pageInfo) pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        var totalPages = Math.ceil(filteredArticles.length / articlesPerPage) || 1;
+        if (pageInfo) pageInfo.textContent = 'Page ' + currentPage + ' of ' + totalPages;
         
-        if (prevBtn) prevBtn.disabled = currentPage === 1;
-        if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+        if (prevBtn) prevBtn.disabled = (currentPage === 1);
+        if (nextBtn) nextBtn.disabled = (currentPage >= totalPages);
     }
 
     if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
+        prevBtn.addEventListener('click', function() {
             if (currentPage > 1) {
                 currentPage--;
                 renderPage();
@@ -118,8 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
+        nextBtn.addEventListener('click', function() {
+            var totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
             if (currentPage < totalPages) {
                 currentPage++;
                 renderPage();
@@ -128,23 +128,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // GESTIONE DEI PULTONI DI FILTRO (Risolve il problema del click)
-    filterButtons.forEach(btn => {
-        const filterVal = btn.getAttribute('data-filter');
+    filterButtons.forEach(function(btn) {
+        var filterVal = btn.getAttribute('data-filter');
         if (filterVal === currentCategory) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
         }
 
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', function(e) {
             e.preventDefault();
-            filterButtons.forEach(b => b.classList.remove('active'));
+            filterButtons.forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
             currentCategory = filterVal;
             
             if (archiveHeading) {
-                archiveHeading.textContent = currentCategory === 'all' ? 'All Articles' : `${currentCategory.toUpperCase()} Articles`;
+                archiveHeading.textContent = currentCategory === 'all' ? 'All Articles' : (currentCategory.toUpperCase() + ' Articles');
             }
 
             applyFiltersAndSearch();
@@ -152,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (searchInput) {
-        searchInput.addEventListener('keypress', (e) => {
+        searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 searchQuery = searchInput.value.trim();
                 applyFiltersAndSearch();
