@@ -12,7 +12,7 @@
         body { background: #030508; color: #f3f4f6; min-height: 100vh; padding: 30px 20px 60px; }
         .wrap { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
         h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 1.5px; text-transform: uppercase; }
-        h2 { font-family: 'Orbitron', sans-serif; font-size: 1rem; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 14px; }
+        h2.section { font-family: 'Orbitron', sans-serif; font-size: 1rem; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 14px; }
         .card { background: rgba(11, 15, 25, 0.85); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 24px; }
         .hidden { display: none !important; }
         label { display: block; font-size: 0.8rem; color: #9ca3af; margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 1px; }
@@ -32,26 +32,42 @@
         .btn.red { background: #b91c1c; }
         .btn.red:hover { background: #991b1b; }
         .row-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
-        .toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+
+        /* barra strumenti: resta visibile mentre scorri un articolo lungo */
+        .toolbar { position: sticky; top: 0; z-index: 40; background: #0b0f19; padding: 8px 0; margin-bottom: 8px;
+                   display: flex; flex-wrap: wrap; gap: 6px; }
         .tbtn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 6px; color: #f3f4f6;
                 padding: 6px 11px; font-size: 0.85rem; cursor: pointer; }
         .tbtn:hover { background: rgba(255,255,255,0.15); }
+
+        /* testo ricco: STESSE regole per editor e anteprima (e per article.html) */
+        .rich { line-height: 1.8; color: #d1d5db; }
+        .rich p { margin-bottom: 18px; }
+        .rich h2 { font-family: 'Orbitron', sans-serif; font-size: 1.7rem; line-height: 1.25; color: #ffffff; margin: 30px 0 14px;
+                   text-transform: none; letter-spacing: 0; }
+        .rich h3 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; line-height: 1.3; color: #93c5fd; margin: 24px 0 10px;
+                   text-transform: none; letter-spacing: 0; }
+        .rich blockquote { border-left: 4px solid #60a5fa; background: rgba(96,165,250,0.08); padding: 12px 20px; margin: 22px 0;
+                           color: #cbd5e1; font-style: italic; border-radius: 0 10px 10px 0; }
+        .rich blockquote p { margin-bottom: 8px; }
+        .rich ul, .rich ol { margin: 0 0 18px 28px; }
+        .rich li { margin-bottom: 6px; }
+        .rich img { display: block; max-width: 100%; height: auto; border-radius: 10px; margin: 22px auto; }
+        .rich a { color: #60a5fa; text-decoration: underline; }
+        .rich b, .rich strong { color: #ffffff; }
+
         #editor { min-height: 320px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px;
-                  padding: 16px; line-height: 1.7; color: #d1d5db; outline: none; }
+                  padding: 16px; outline: none; }
         #editor:focus { border-color: rgba(255,255,255,0.35); }
-        #editor p { margin-bottom: 14px; }
-        #editor h2, #editor h3 { font-family: 'Orbitron', sans-serif; color: #fff; margin: 18px 0 10px; text-transform: none; letter-spacing: 0; }
-        #editor blockquote { border-left: 3px solid #60a5fa; padding-left: 14px; margin: 14px 0; color: #9ca3af; }
-        #editor ul, #editor ol { margin: 0 0 14px 24px; }
-        #editor img, #preview img { max-width: 100%; border-radius: 10px; }
-        #editor a, #preview a { color: #60a5fa; }
-        #preview { background: rgba(11,15,25,0.9); border: 1px dashed rgba(255,255,255,0.2); border-radius: 10px; padding: 20px; line-height: 1.8; color: #d1d5db; margin-top: 16px; }
-        #preview h1 { font-size: 1.4rem; margin-bottom: 14px; }
-        #preview p { margin-bottom: 14px; }
-        .status { padding: 12px 14px; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; }
-        .status.info { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.5); }
-        .status.ok { background: rgba(22,163,74,0.15); border: 1px solid rgba(22,163,74,0.5); }
-        .status.err { background: rgba(220,38,38,0.15); border: 1px solid rgba(220,38,38,0.5); }
+        #preview { background: rgba(11,15,25,0.9); border: 1px dashed rgba(255,255,255,0.2); border-radius: 10px; padding: 20px; margin-top: 16px; }
+        #preview h1 { font-size: 1.6rem; margin-bottom: 18px; }
+
+        /* messaggi: restano visibili anche se sei scesa in fondo alla pagina */
+        .status { position: sticky; top: 10px; z-index: 100; padding: 12px 14px; border-radius: 8px; font-size: 0.9rem; line-height: 1.5;
+                  background: #0b0f19; }
+        .status.info { border: 1px solid rgba(37,99,235,0.7); }
+        .status.ok { border: 1px solid rgba(22,163,74,0.7); }
+        .status.err { border: 1px solid rgba(220,38,38,0.8); }
         .status a { color: #93c5fd; }
         .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); flex-wrap: wrap; }
         .row-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
@@ -69,7 +85,7 @@
 
     <!-- SCHERMATA TOKEN -->
     <div id="token-card" class="card">
-        <h2>Accesso</h2>
+        <h2 class="section">Accesso</h2>
         <p style="color:#9ca3af; font-size:0.9rem; line-height:1.6;">Incolla qui il tuo token GitHub (resta salvato solo in questo browser). Senza token nessuno può pubblicare nulla.</p>
         <label for="token-input">Token GitHub</label>
         <input type="password" id="token-input" autocomplete="off" placeholder="github_pat_...">
@@ -81,7 +97,7 @@
     <!-- EDITOR -->
     <div id="app" class="hidden">
         <div class="card">
-            <h2 id="form-title">Nuovo articolo</h2>
+            <h2 class="section" id="form-title">Nuovo articolo</h2>
             <div id="editing-banner" class="editing-banner hidden"></div>
 
             <label for="f-title">Titolo</label>
@@ -108,31 +124,32 @@
 
             <label>Testo dell'articolo</label>
             <div class="toolbar">
-                <button type="button" class="tbtn" data-cmd="bold"><b>B</b></button>
-                <button type="button" class="tbtn" data-cmd="italic"><i>I</i></button>
-                <button type="button" class="tbtn" data-cmd="formatBlock" data-val="&lt;h2&gt;">Titolo H2</button>
-                <button type="button" class="tbtn" data-cmd="formatBlock" data-val="&lt;h3&gt;">Titolo H3</button>
-                <button type="button" class="tbtn" data-cmd="formatBlock" data-val="&lt;p&gt;">Paragrafo</button>
+                <button type="button" class="tbtn" data-cmd="bold" title="Grassetto"><b>B</b></button>
+                <button type="button" class="tbtn" data-cmd="italic" title="Corsivo"><i>I</i></button>
+                <button type="button" class="tbtn" data-block="h2" title="Titolo grande di sezione">Titolo</button>
+                <button type="button" class="tbtn" data-block="h3" title="Titolo più piccolo">Sottotitolo</button>
+                <button type="button" class="tbtn" data-block="p" title="Riporta la riga a testo normale">Testo normale</button>
                 <button type="button" class="tbtn" data-cmd="insertUnorderedList">• Lista</button>
-                <button type="button" class="tbtn" data-cmd="formatBlock" data-val="&lt;blockquote&gt;">Citazione</button>
+                <button type="button" class="tbtn" data-cmd="insertOrderedList">1. Lista</button>
+                <button type="button" class="tbtn" data-block="quote" title="Clic per mettere, clic di nuovo per togliere">Citazione</button>
                 <button type="button" class="tbtn" id="btn-link">Link</button>
                 <button type="button" class="tbtn" id="btn-img">Immagine</button>
-                <button type="button" class="tbtn" data-cmd="removeFormat">Pulisci formato</button>
+                <button type="button" class="tbtn" id="btn-clear" title="Toglie grassetto, link, titolo e citazione">Pulisci formato</button>
             </div>
             <input type="file" id="inline-img" accept="image/png,image/jpeg,image/webp,image/gif" class="hidden">
-            <div id="editor" contenteditable="true"></div>
-            <div class="hint">Incollando del testo viene incollato senza formattazione: usa i pulsanti sopra per titoli, grassetto, ecc. Le immagini inserite nel testo si vedono nell'anteprima solo dopo 1-2 minuti dalla pubblicazione.</div>
+            <div id="editor" class="rich" contenteditable="true"></div>
+            <div class="hint">Il testo incollato perde la formattazione: usa i pulsanti per titoli, grassetto, ecc. Le immagini si vedono qui subito, sul sito compaiono 1-2 minuti dopo la pubblicazione. Per uscire da una citazione premi Invio due volte oppure clicca di nuovo "Citazione".</div>
 
             <div class="row-btns">
                 <button id="btn-preview" class="btn grey">Anteprima</button>
                 <button id="btn-publish" class="btn">Pubblica articolo</button>
                 <button id="btn-cancel-edit" class="btn grey hidden">Annulla modifica</button>
             </div>
-            <div id="preview" class="hidden"></div>
+            <div id="preview" class="rich hidden"></div>
         </div>
 
         <div class="card">
-            <h2>Articoli pubblicati</h2>
+            <h2 class="section">Articoli pubblicati</h2>
             <div id="list">Caricamento...</div>
         </div>
 
@@ -196,7 +213,7 @@
     }
 
     function slugify(s) {
-        return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+        return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
             .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80).replace(/-+$/g, '');
     }
     function uniqueId(base, list) {
@@ -287,6 +304,8 @@
         });
     }
 
+    // Carica un'immagine su GitHub. Restituisce { path, b64 }: il percorso nel repository
+    // e i dati, che servono a mostrare subito l'immagine nell'editor.
     function uploadImage(file) {
         if (file.size > 8 * 1024 * 1024) {
             return Promise.reject(new Error('Immagine troppo grande (max 8 MB): riducila prima di caricarla.'));
@@ -294,8 +313,10 @@
         var name = Date.now() + '-' + file.name.toLowerCase().replace(/[^a-z0-9.]+/g, '-');
         var path = 'images/' + name;
         return fileToB64(file).then(function (b64) {
-            return putFile(path, b64, 'Upload immagine ' + name);
-        }).then(function () { return path; });
+            return putFile(path, b64, 'Upload immagine ' + name).then(function () {
+                return { path: path, b64: b64 };
+            });
+        });
     }
 
     /* ---------- pagina di condivisione (per anteprime social) ---------- */
@@ -368,6 +389,8 @@
     }
 
     /* ---------- form ---------- */
+    var editor = $('editor');
+
     function resetForm() {
         editingId = null;
         editingCover = '';
@@ -382,8 +405,8 @@
         $('f-snippet').value = '';
         $('f-cover').value = '';
         $('cover-current').textContent = '';
-        $('editor').innerHTML = '';
-        $('preview').className = 'hidden';
+        editor.innerHTML = '';
+        $('preview').classList.add('hidden');
     }
 
     function startEdit(a) {
@@ -401,16 +424,35 @@
         $('f-tags').value = (a.tags || []).join(', ');
         $('f-snippet').value = a.snippet || '';
         $('cover-current').textContent = editingCover ? 'Copertina attuale: ' + editingCover + ' (scegli un nuovo file solo se vuoi cambiarla)' : 'Nessuna copertina attuale.';
-        $('editor').innerHTML = a.content || ('<p>' + escAttr(a.snippet || '') + '</p>');
+        editor.innerHTML = a.content || ('<p>' + escAttr(a.snippet || '') + '</p>');
         hideStatus();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function buildArticle(list) {
+    // Contenuto pulito da salvare: percorsi veri per le immagini, niente stili inline, niente righe vuote finali.
+    function cleanContent() {
+        var clone = editor.cloneNode(true);
+        Array.prototype.forEach.call(clone.querySelectorAll('img'), function (img) {
+            var p = img.getAttribute('data-path');
+            if (p) { img.setAttribute('src', p); img.removeAttribute('data-path'); }
+        });
+        Array.prototype.forEach.call(clone.querySelectorAll('[style]'), function (el) { el.removeAttribute('style'); });
+        Array.prototype.forEach.call(clone.querySelectorAll('[data-mark]'), function (el) { el.parentNode.removeChild(el); });
+        function isEmpty(el) { return !el.textContent.trim() && !el.querySelector('img'); }
+        Array.prototype.forEach.call(clone.querySelectorAll('blockquote'), function (q) { if (isEmpty(q)) { q.parentNode.removeChild(q); } });
+        while (clone.lastElementChild && /^(P|DIV)$/.test(clone.lastElementChild.tagName) && isEmpty(clone.lastElementChild)) {
+            clone.removeChild(clone.lastElementChild);
+        }
+        var html = clone.innerHTML.trim();
+        if (/src="data:/i.test(html)) { throw new Error('C\'è un\'immagine non ancora caricata: riprova a inserirla.'); }
+        return html;
+    }
+
+    function buildArticle() {
         var title = $('f-title').value.trim();
         var snippet = $('f-snippet').value.trim();
-        var content = $('editor').innerHTML.trim();
-        var plain = $('editor').innerText.trim();
+        var content = cleanContent();
+        var plain = editor.innerText.trim();
         if (!title) { throw new Error('Inserisci il titolo.'); }
         if (!snippet) { throw new Error('Inserisci l\'estratto.'); }
         if (!plain && content.indexOf('<img') === -1) { throw new Error('Il testo dell\'articolo è vuoto.'); }
@@ -432,7 +474,7 @@
         setStatus('Pubblicazione in corso, non chiudere la pagina...', 'info');
 
         var coverFile = $('f-cover').files[0];
-        var coverPromise = coverFile ? uploadImage(coverFile) : Promise.resolve(editingCover);
+        var coverPromise = coverFile ? uploadImage(coverFile).then(function (u) { return u.path; }) : Promise.resolve(editingCover);
         var saved;
 
         coverPromise.then(function (cover) {
@@ -504,28 +546,240 @@
         var h = document.createElement('h1');
         h.textContent = $('f-title').value || '(senza titolo)';
         var body = document.createElement('div');
-        body.innerHTML = $('editor').innerHTML;
+        body.innerHTML = editor.innerHTML;
         p.appendChild(h);
         p.appendChild(body);
-        p.className = '';
+        p.classList.remove('hidden');
     }
 
     /* ---------- editor di testo ---------- */
-    var editor = $('editor');
+    var BLOCK_RE = /^(P|H1|H2|H3|H4|H5|H6|UL|OL|BLOCKQUOTE|DIV|PRE|HR|TABLE)$/;
+    var LINE_RE = /^(P|H1|H2|H3|DIV|LI)$/;
+
+    function isBlockNode(n) { return n.nodeType === 1 && BLOCK_RE.test(n.tagName); }
 
     function saveRange() {
         var sel = window.getSelection();
-        if (sel.rangeCount > 0 && editor.contains(sel.anchorNode)) { lastRange = sel.getRangeAt(0).cloneRange(); }
+        if (sel.rangeCount > 0 && editor.contains(sel.anchorNode) && editor.contains(sel.focusNode)) {
+            lastRange = sel.getRangeAt(0).cloneRange();
+        }
     }
+    document.addEventListener('selectionchange', saveRange);
+
+    // Garantisce che ci sia un cursore dentro l'editor (altrimenti lo mette alla fine del testo).
+    function ensureSelection() {
+        var sel = window.getSelection();
+        if (sel.rangeCount && editor.contains(sel.anchorNode) && editor.contains(sel.focusNode)) { return; }
+        editor.focus();
+        var r = document.createRange();
+        if (lastRange && editor.contains(lastRange.startContainer) && editor.contains(lastRange.endContainer)) {
+            r = lastRange.cloneRange();
+        } else {
+            r.selectNodeContents(editor);
+            r.collapse(false);
+        }
+        sel.removeAllRanges();
+        sel.addRange(r);
+    }
+
     function restoreRange() {
         editor.focus();
-        if (lastRange) {
+        if (lastRange && editor.contains(lastRange.startContainer) && editor.contains(lastRange.endContainer)) {
             var sel = window.getSelection();
             sel.removeAllRanges();
             sel.addRange(lastRange);
+        } else {
+            ensureSelection();
         }
     }
-    ['keyup', 'mouseup', 'blur'].forEach(function (ev) { editor.addEventListener(ev, saveRange); });
+
+    // --- segnaposto invisibili: permettono di spostare i blocchi senza perdere la selezione ---
+    function makeMarker(which) {
+        var m = document.createElement('span');
+        m.setAttribute('data-mark', which);
+        return m;
+    }
+    function markSelection() {
+        var r = window.getSelection().getRangeAt(0);
+        var endR = r.cloneRange(); endR.collapse(false);
+        var startR = r.cloneRange(); startR.collapse(true);
+        endR.insertNode(makeMarker('e'));
+        startR.insertNode(makeMarker('s'));
+    }
+    function markerRange() {
+        var s = editor.querySelector('[data-mark="s"]');
+        var e = editor.querySelector('[data-mark="e"]');
+        var r = document.createRange();
+        r.setStartBefore(s);
+        r.setEndAfter(e);
+        return r;
+    }
+    function restoreMarks() {
+        var s = editor.querySelector('[data-mark="s"]');
+        var e = editor.querySelector('[data-mark="e"]');
+        if (!s || !e) {
+            [s, e].forEach(function (m) { if (m && m.parentNode) { m.parentNode.removeChild(m); } });
+            return;
+        }
+        var r = document.createRange();
+        if (s.compareDocumentPosition(e) & Node.DOCUMENT_POSITION_PRECEDING) { r.setStartBefore(e); r.setEndAfter(s); }
+        else { r.setStartBefore(s); r.setEndAfter(e); }
+        var ps = s.parentNode, pe = e.parentNode;
+        ps.removeChild(s);
+        pe.removeChild(e);
+        [ps, pe].forEach(function (p) {
+            if (p !== editor && !p.firstChild && LINE_RE.test(p.tagName)) { p.appendChild(document.createElement('br')); }
+        });
+        editor.normalize();
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+    }
+
+    // Racchiude in un paragrafo il testo "sciolto" (fuori da qualunque blocco).
+    function wrapInlineRuns(container) {
+        var run = null;
+        Array.prototype.slice.call(container.childNodes).forEach(function (n) {
+            if (isBlockNode(n)) { run = null; return; }
+            if (n.nodeType === 3 && !n.nodeValue.trim() && !run) { return; }
+            if (!run) {
+                run = document.createElement('p');
+                container.insertBefore(run, n);
+            }
+            run.appendChild(n);
+        });
+    }
+    function wrapAll() {
+        wrapInlineRuns(editor);
+        Array.prototype.forEach.call(editor.querySelectorAll('blockquote'), wrapInlineRuns);
+    }
+
+    // Se la selezione termina proprio all'inizio dell'ultimo blocco (succede col triplo clic), quel blocco non va toccato.
+    function dropTrailingUntouched(list) {
+        if (list.length < 2) { return list; }
+        var last = list[list.length - 1];
+        var e = editor.querySelector('[data-mark="e"]');
+        var pre = document.createRange();
+        pre.setStart(last, 0);
+        pre.setEndBefore(e);
+        if (pre.toString() === '' && !pre.cloneContents().querySelector('img')) { return list.slice(0, -1); }
+        return list;
+    }
+
+    function toParagraph(el) {
+        if (!/^H[1-6]$/.test(el.tagName)) { return el; }
+        var p = document.createElement('p');
+        while (el.firstChild) { p.appendChild(el.firstChild); }
+        el.parentNode.replaceChild(p, el);
+        return p;
+    }
+
+    // Porta una riga fuori dalla citazione (spezzando la citazione se serve).
+    function unwrapItem(item) {
+        var q = item.parentNode;
+        var after = [];
+        for (var n = item.nextSibling; n; n = n.nextSibling) { after.push(n); }
+        if (after.length) {
+            var q2 = document.createElement('blockquote');
+            after.forEach(function (x) { q2.appendChild(x); });
+            q.parentNode.insertBefore(q2, q.nextSibling);
+        }
+        q.parentNode.insertBefore(item, q.nextSibling);
+        if (!q.firstChild) { q.parentNode.removeChild(q); }
+    }
+
+    function quoteItemsInRange(r) {
+        var items = Array.prototype.filter.call(editor.querySelectorAll('blockquote > *'), function (n) { return r.intersectsNode(n); });
+        return dropTrailingUntouched(items);
+    }
+
+    function unquoteSelection() {
+        markSelection();
+        wrapAll();
+        quoteItemsInRange(markerRange()).forEach(unwrapItem);
+        restoreMarks();
+    }
+
+    function toggleQuote() {
+        ensureSelection();
+        markSelection();
+        wrapAll();
+        var r = markerRange();
+        var tops = dropTrailingUntouched(Array.prototype.filter.call(editor.children, function (n) { return r.intersectsNode(n); }));
+        if (tops.length) {
+            var allQuoted = tops.every(function (n) { return n.tagName === 'BLOCKQUOTE'; });
+            if (allQuoted) {
+                quoteItemsInRange(r).forEach(unwrapItem);
+            } else {
+                var cur = null;
+                tops.forEach(function (t) {
+                    if (t.tagName === 'BLOCKQUOTE') { cur = null; return; }
+                    if (!cur) {
+                        cur = document.createElement('blockquote');
+                        editor.insertBefore(cur, t);
+                    }
+                    cur.appendChild(toParagraph(t));
+                });
+            }
+        }
+        restoreMarks();
+    }
+
+    function currentBlockTag() {
+        var n = window.getSelection().anchorNode;
+        while (n && n !== editor) {
+            if (n.nodeType === 1 && /^(P|H1|H2|H3|DIV|LI|BLOCKQUOTE)$/.test(n.tagName)) { return n.tagName.toLowerCase(); }
+            n = n.parentNode;
+        }
+        return '';
+    }
+
+    function setBlock(tag) {
+        ensureSelection();
+        // un secondo clic su Titolo/Sottotitolo riporta la riga a testo normale
+        if ((tag === 'h2' || tag === 'h3') && currentBlockTag() === tag) { tag = 'p'; }
+        unquoteSelection();
+        document.execCommand('formatBlock', false, '<' + tag + '>');
+    }
+
+    function clearFormat() {
+        ensureSelection();
+        var sel = window.getSelection();
+        if (sel.isCollapsed) {
+            var n = sel.anchorNode;
+            while (n && n !== editor) {
+                if (n.nodeType === 1 && LINE_RE.test(n.tagName)) { sel.selectAllChildren(n); break; }
+                n = n.parentNode;
+            }
+        }
+        document.execCommand('removeFormat');
+        document.execCommand('unlink');
+        unquoteSelection();
+        document.execCommand('formatBlock', false, '<p>');
+    }
+
+    // Invio su una riga vuota dentro una citazione = esci dalla citazione.
+    editor.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' || e.shiftKey) { return; }
+        var sel = window.getSelection();
+        if (!sel.rangeCount || !sel.isCollapsed) { return; }
+        var el = sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentNode;
+        var item = null;
+        while (el && el !== editor) {
+            if (el.parentNode && el.parentNode.tagName === 'BLOCKQUOTE') { item = el; break; }
+            el = el.parentNode;
+        }
+        if (!item) { return; }
+        if (item.textContent.trim() !== '' || item.querySelector('img')) { return; }
+        e.preventDefault();
+        unwrapItem(item);
+        if (!item.firstChild) { item.appendChild(document.createElement('br')); }
+        var r = document.createRange();
+        r.setStart(item, 0);
+        r.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r);
+    });
 
     editor.addEventListener('paste', function (e) {
         e.preventDefault();
@@ -533,17 +787,29 @@
         document.execCommand('insertText', false, text);
     });
 
-    document.querySelectorAll('[data-cmd]').forEach(function (btn) {
+    // i pulsanti non devono togliere il cursore dal testo
+    Array.prototype.forEach.call(document.querySelectorAll('.tbtn'), function (btn) {
         btn.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-cmd]'), function (btn) {
         btn.addEventListener('click', function () {
-            restoreRange();
-            document.execCommand(btn.getAttribute('data-cmd'), false, btn.getAttribute('data-val'));
-            saveRange();
+            ensureSelection();
+            document.execCommand(btn.getAttribute('data-cmd'), false, null);
         });
     });
 
-    $('btn-link').addEventListener('mousedown', function (e) { e.preventDefault(); });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-block]'), function (btn) {
+        btn.addEventListener('click', function () {
+            var kind = btn.getAttribute('data-block');
+            if (kind === 'quote') { toggleQuote(); } else { setBlock(kind); }
+        });
+    });
+
+    $('btn-clear').addEventListener('click', clearFormat);
+
     $('btn-link').addEventListener('click', function () {
+        ensureSelection();
         saveRange();
         var url = prompt('Indirizzo del link (es. https://...):');
         if (!url) { return; }
@@ -551,16 +817,30 @@
         document.execCommand('createLink', false, url);
     });
 
-    $('btn-img').addEventListener('mousedown', function (e) { e.preventDefault(); });
-    $('btn-img').addEventListener('click', function () { saveRange(); $('inline-img').click(); });
+    $('btn-img').addEventListener('click', function () {
+        ensureSelection();
+        saveRange();
+        $('inline-img').click();
+    });
     $('inline-img').addEventListener('change', function () {
         var f = this.files[0];
         var input = this;
         if (!f) { return; }
         setStatus('Caricamento immagine...', 'info');
-        uploadImage(f).then(function (path) {
+        uploadImage(f).then(function (u) {
+            var img = document.createElement('img');
+            img.src = 'data:' + (f.type || 'image/png') + ';base64,' + u.b64;
+            img.setAttribute('data-path', u.path);
+            img.alt = 'Immagine';
             restoreRange();
-            document.execCommand('insertHTML', false, '<img src="' + escAttr(path) + '" alt="">');
+            var sel = window.getSelection();
+            var r = sel.getRangeAt(0);
+            r.deleteContents();
+            r.insertNode(img);
+            r.setStartAfter(img);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
             hideStatus();
         }).catch(function (e) {
             setStatus('Errore: ' + e.message, 'err');
