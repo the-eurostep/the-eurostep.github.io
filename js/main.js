@@ -1,92 +1,118 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Carichiamo gli articoli dal file JSON
-    fetch('data/articoli.json')
-        .then(response => response.json())
-        .then(articles => {
-            if (!articles || articles.length === 0) return;
+document.addEventListener('DOMContentLoaded', function () {
 
-            // 1. Articolo in Evidenza (Il più recente -> primo elemento dell'array)
-            const featured = articles[0];
-            const featuredLink = document.getElementById('featured-article-link');
-            const featuredTag = document.getElementById('featured-tag');
-            const featuredTitle = document.getElementById('featured-title');
-            const featuredSnippet = document.getElementById('featured-snippet');
-            const featuredImg = document.getElementById('featured-img');
+    // Percorso immagine -> valore CSS sicuro (niente virgolette che rompono lo stile)
+    function cssUrl(path) {
+        return 'url("' + String(path).replace(/["\\\r\n]/g, '').replace(/ /g, '%20') + '")';
+    }
+
+    // Dal più recente al meno recente; a parità di data vale l'ordine nel file (il nuovo sta in cima)
+    function sortArticles(list) {
+        return list
+            .map(function (a, i) { return { a: a, i: i }; })
+            .sort(function (x, y) {
+                var dx = x.a.date || '';
+                var dy = y.a.date || '';
+                if (dx !== dy) { return dx < dy ? 1 : -1; }
+                return x.i - y.i;
+            })
+            .map(function (o) { return o.a; });
+    }
+
+    // Costruisce una scheda articolo con il DOM (il testo non viene mai interpretato come HTML)
+    function buildCard(art, cls) {
+        var card = document.createElement('a');
+        card.href = 'article.html?id=' + encodeURIComponent(art.id);
+        card.className = cls.card;
+
+        var img = document.createElement('div');
+        img.className = cls.img;
+        if (art.coverImage) {
+            img.style.backgroundImage = cssUrl(art.coverImage);
+        } else {
+            img.textContent = '[ ARTICLE THUMBNAIL ]';
+        }
+
+        var content = document.createElement('div');
+        content.className = cls.content;
+
+        var tag = document.createElement('div');
+        tag.className = 'article-tag';
+        tag.textContent = art.category || '';
+
+        var title = document.createElement('h3');
+        title.className = cls.title;
+        title.textContent = art.title || '';
+
+        content.appendChild(tag);
+        content.appendChild(title);
+        card.appendChild(img);
+        card.appendChild(content);
+        return card;
+    }
+
+    fetch('data/articoli.json')
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+            if (!data || data.length === 0) { return; }
+            var articles = sortArticles(data);
+
+            // 1. Articolo in evidenza (il più recente)
+            var featured = articles[0];
+            var featuredLink = document.getElementById('featured-article-link');
+            var featuredTag = document.getElementById('featured-tag');
+            var featuredTitle = document.getElementById('featured-title');
+            var featuredSnippet = document.getElementById('featured-snippet');
+            var featuredImg = document.getElementById('featured-img');
 
             if (featuredLink && featured) {
-                featuredLink.href = `article.html?id=${featured.id}`;
-                featuredTag.textContent = `${featured.category} • ${featured.tags[0] || 'Analysis'}`;
-                featuredTitle.textContent = featured.title;
-                featuredSnippet.textContent = featured.snippet;
+                featuredLink.href = 'article.html?id=' + encodeURIComponent(featured.id);
+                var firstTag = (featured.tags && featured.tags[0]) ? featured.tags[0] : 'Analysis';
+                featuredTag.textContent = (featured.category || 'Article') + ' • ' + firstTag;
+                featuredTitle.textContent = featured.title || '';
+                featuredSnippet.textContent = featured.snippet || '';
 
                 if (featured.coverImage) {
-                    featuredImg.style.backgroundImage = `url('${featured.coverImage}')`;
+                    featuredImg.style.backgroundImage = cssUrl(featured.coverImage);
                     featuredImg.textContent = '';
                 } else {
                     featuredImg.textContent = '[ FEATURED ARTICLE IMAGE ]';
                 }
             }
 
-            // 2. Colonna Laterale (Prossimi 3 articoli: indice 1, 2, 3)
-            const sideContainer = document.getElementById('side-articles-container');
+            // 2. Colonna laterale (articoli 2, 3, 4)
+            var sideContainer = document.getElementById('side-articles-container');
             if (sideContainer) {
-                sideContainer.innerHTML = ''; // Puliamo il container
-                const sideArticles = articles.slice(1, 4);
-
-                sideArticles.forEach(art => {
-                    const sideCard = document.createElement('a');
-                    sideCard.href = `article.html?id=${art.id}`;
-                    sideCard.className = 'side-article-card';
-
-                    const imgBg = art.coverImage ? `style="background-image: url('${art.coverImage}')"` : '';
-                    const imgText = art.coverImage ? '' : '[ ARTICLE THUMBNAIL ]';
-
-                    sideCard.innerHTML = `
-                        <div class="side-img-placeholder" ${imgBg}>${imgText}</div>
-                        <div class="side-content">
-                            <div class="article-tag">${art.category}</div>
-                            <h3 class="side-article-title">${art.title}</h3>
-                        </div>
-                    `;
-                    sideContainer.appendChild(sideCard);
+                sideContainer.innerHTML = '';
+                articles.slice(1, 4).forEach(function (art) {
+                    sideContainer.appendChild(buildCard(art, {
+                        card: 'side-article-card', img: 'side-img-placeholder',
+                        content: 'side-content', title: 'side-article-title'
+                    }));
                 });
             }
 
-            // 3. Griglia Secondaria in Basso (Prossimi 3 articoli: indice 4, 5, 6)
-            const gridContainer = document.getElementById('secondary-articles-container');
+            // 3. Griglia in basso (articoli 5, 6, 7)
+            var gridContainer = document.getElementById('secondary-articles-container');
             if (gridContainer) {
-                gridContainer.innerHTML = ''; // Puliamo il container
-                const gridArticles = articles.slice(4, 7);
-
-                gridArticles.forEach(art => {
-                    const gridCard = document.createElement('a');
-                    gridCard.href = `article.html?id=${art.id}`;
-                    gridCard.className = 'grid-article-card';
-
-                    const imgBg = art.coverImage ? `style="background-image: url('${art.coverImage}')"` : '';
-                    const imgText = art.coverImage ? '' : '[ ARTICLE THUMBNAIL ]';
-
-                    gridCard.innerHTML = `
-                        <div class="grid-img-placeholder" ${imgBg}>${imgText}</div>
-                        <div class="grid-content">
-                            <div class="article-tag">${art.category}</div>
-                            <h3 class="grid-title">${art.title}</h3>
-                        </div>
-                    `;
-                    gridContainer.appendChild(gridCard);
+                gridContainer.innerHTML = '';
+                articles.slice(4, 7).forEach(function (art) {
+                    gridContainer.appendChild(buildCard(art, {
+                        card: 'grid-article-card', img: 'grid-img-placeholder',
+                        content: 'grid-content', title: 'grid-title'
+                    }));
                 });
             }
         })
-        .catch(err => console.error('Errore nel caricamento degli articoli:', err));
+        .catch(function (err) { console.error('Errore nel caricamento degli articoli:', err); });
 
-    // Gestione della Barra di Ricerca (Searchbar)
-    const searchInput = document.getElementById('search-input');
+    // Barra di ricerca: Invio -> pagina dei risultati
+    var searchInput = document.getElementById('search-input');
     if (searchInput) {
-        searchInput.addEventListener('keypress', (e) => {
+        searchInput.addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
-                const query = searchInput.value.trim();
+                var query = searchInput.value.trim();
                 if (query) {
-                    window.location.href = `see-more-articles.html?search=${encodeURIComponent(query)}`;
+                    window.location.href = 'see-more-articles.html?search=' + encodeURIComponent(query);
                 }
             }
         });
