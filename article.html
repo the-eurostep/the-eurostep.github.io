@@ -244,6 +244,118 @@
             color: #ffffff;
         }
 
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tags-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-right: 4px;
+        }
+
+        .tag-chip {
+            background: rgba(96, 165, 250, 0.12);
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            border-radius: 999px;
+            padding: 5px 13px;
+            color: #93c5fd;
+            font-size: 0.82rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .tag-chip:hover {
+            background: rgba(96, 165, 250, 0.25);
+            color: #ffffff;
+        }
+
+        .read-also {
+            background: rgba(11, 15, 25, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .read-also-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .read-also-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .ra-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .ra-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .ra-img {
+            height: 100px;
+            background: rgba(255, 255, 255, 0.03);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .ra-body {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .ra-cat {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            color: #60a5fa;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .ra-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: #ffffff;
+            line-height: 1.35;
+        }
+
         .interactive-section {
             display: flex;
             flex-direction: column;
@@ -510,6 +622,8 @@
             <p>Loading full tactical analysis...</p>
         </div>
 
+        <div id="article-tags" class="article-tags" style="display: none;"></div>
+
         <div class="interactive-section">
             <div class="rating-box">
                 <div>
@@ -536,6 +650,11 @@
             </div>
         </div>
 
+        <section id="read-also" class="read-also" style="display: none;">
+            <h3 class="read-also-title">Read Also</h3>
+            <div id="read-also-grid" class="read-also-grid"></div>
+        </section>
+
         <div class="comments-wrapper">
             <h3 class="comments-title">Discussion & Comments</h3>
             
@@ -557,6 +676,7 @@
     </footer>
 
     <script>
+        if (typeof THREE !== 'undefined') {
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -616,15 +736,32 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             var urlParams = new URLSearchParams(window.location.search);
             var articleId = urlParams.get('id');
 
+            function cssUrl(path) {
+                return 'url("' + String(path).replace(/["\\\r\n]/g, '').replace(/ /g, '%20') + '")';
+            }
+            function norm(s) {
+                return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+            }
+            function uniq(arr) {
+                return arr.filter(function(x, i) { return x && arr.indexOf(x) === i; });
+            }
+            function escapeHtml(str) {
+                var d = document.createElement('div');
+                d.textContent = String(str);
+                return d.innerHTML;
+            }
+
             fetch('data/articoli.json')
                 .then(function(response) { return response.json(); })
                 .then(function(articles) {
-                    var article = articles.find(function(a) { 
-                        return String(a.id) === String(articleId); 
+                    var article = articles.find(function(a) {
+                        return String(a.id) === String(articleId);
                     });
 
                     if (!article) {
@@ -634,20 +771,47 @@
                     }
 
                     document.getElementById('page-title').textContent = article.title + ' | The Eurostep';
-                    document.getElementById('article-category').textContent = (article.category || 'Analysis') + ' • ' + (article.tags ? article.tags.join(', ') : '');
+                    document.getElementById('article-category').textContent = article.category || 'Analysis';
                     document.getElementById('article-date').textContent = article.date || '';
                     document.getElementById('article-title').textContent = article.title;
                     document.getElementById('article-author').textContent = 'By ' + (article.author || 'The Eurostep Staff');
-                    
+
+                    var contentEl = document.getElementById('article-content');
                     if (article.content) {
-                        document.getElementById('article-content').innerHTML = article.content;
+                        contentEl.innerHTML = article.content;
                     } else if (article.snippet) {
-                        document.getElementById('article-content').innerHTML = '<p>' + article.snippet + '</p>';
+                        contentEl.innerHTML = '';
+                        var snippetP = document.createElement('p');
+                        snippetP.textContent = article.snippet;
+                        contentEl.appendChild(snippetP);
+                    }
+                    // i link dentro l'articolo si aprono in una nuova scheda
+                    Array.prototype.forEach.call(contentEl.querySelectorAll('a[href]'), function(a) {
+                        a.setAttribute('target', '_blank');
+                        a.setAttribute('rel', 'noopener noreferrer');
+                    });
+
+                    // tag cliccabili: portano all'elenco degli articoli con quel tag
+                    var tags = uniq(Array.isArray(article.tags) ? article.tags.map(function(t) { return String(t).trim(); }) : []);
+                    var tagsBox = document.getElementById('article-tags');
+                    if (tags.length) {
+                        var label = document.createElement('span');
+                        label.className = 'tags-label';
+                        label.textContent = 'Tags';
+                        tagsBox.appendChild(label);
+                        tags.forEach(function(t) {
+                            var chip = document.createElement('a');
+                            chip.className = 'tag-chip';
+                            chip.href = 'see-more-articles.html?tag=' + encodeURIComponent(t);
+                            chip.textContent = t;
+                            tagsBox.appendChild(chip);
+                        });
+                        tagsBox.style.display = 'flex';
                     }
 
                     var coverEl = document.getElementById('article-cover');
                     if (article.coverImage && article.coverImage.trim() !== '') {
-                        coverEl.style.backgroundImage = 'url(\'' + article.coverImage + '\')';
+                        coverEl.style.backgroundImage = cssUrl(article.coverImage.trim());
                         coverEl.textContent = '';
                     } else {
                         coverEl.textContent = '[ ARTICLE COVER IMAGE ]';
@@ -659,32 +823,98 @@
                         document.getElementById('og-image').setAttribute('content', window.location.origin + '/' + article.coverImage);
                     }
 
-                    var currentUrl = window.location.href;
-                    var encodedUrl = encodeURIComponent(currentUrl);
-                    var encodedTitle = encodeURIComponent(article.title);
+                    // Condivisione: se esiste la pagina share/<id>.html (la crea l'editor) si condivide quella,
+                    // perché è l'unica che mostra titolo e immagine nelle anteprime di WhatsApp, Telegram e X.
+                    var canonicalUrl = window.location.origin + window.location.pathname + '?id=' + encodeURIComponent(article.id);
+                    var shareUrl = new URL('share/' + encodeURIComponent(article.id) + '.html', window.location.href).href;
+                    var shareTarget = canonicalUrl;
 
-                    document.getElementById('whatsapp-share').href = 'https://api.whatsapp.com/send?text=' + encodedTitle + '%20-%20' + encodedUrl;
-                    document.getElementById('telegram-share').href = 'https://t.me/share/url?url=' + encodedUrl + '&text=' + encodedTitle;
-                    document.getElementById('twitter-share').href = 'https://twitter.com/intent/tweet?url=' + encodedUrl + '&text=' + encodedTitle;
+                    function applyShare(url) {
+                        shareTarget = url;
+                        var encodedUrl = encodeURIComponent(url);
+                        var encodedTitle = encodeURIComponent(article.title);
+                        document.getElementById('whatsapp-share').href = 'https://api.whatsapp.com/send?text=' + encodedTitle + '%20-%20' + encodedUrl;
+                        document.getElementById('telegram-share').href = 'https://t.me/share/url?url=' + encodedUrl + '&text=' + encodedTitle;
+                        document.getElementById('twitter-share').href = 'https://twitter.com/intent/tweet?url=' + encodedUrl + '&text=' + encodedTitle;
+                    }
+                    applyShare(canonicalUrl);
+                    fetch(shareUrl, { method: 'HEAD', cache: 'no-store' })
+                        .then(function(r) { if (r.ok) { applyShare(shareUrl); } })
+                        .catch(function() {});
 
                     var copyBtn = document.getElementById('copy-link-btn');
                     if (copyBtn) {
                         copyBtn.addEventListener('click', function() {
-                            navigator.clipboard.writeText(currentUrl).then(function() {
+                            navigator.clipboard.writeText(shareTarget).then(function() {
                                 copyBtn.textContent = 'Link Copied!';
                                 setTimeout(function() { copyBtn.textContent = 'Copy Link'; }, 2000);
+                            }).catch(function() {
+                                window.prompt('Copy this link:', shareTarget);
                             });
                         });
                     }
 
                     initRatingSystem(articleId);
                     initCommentsSystem(articleId, article);
+                    renderReadAlso(articles, article);
                 })
                 .catch(function(err) {
                     console.error('Errore caricamento articolo:', err);
                     document.getElementById('article-title').textContent = 'Error loading article';
                     document.getElementById('article-content').innerHTML = '<p>Could not load article data.</p>';
                 });
+
+            // "Read Also": fino a 5 articoli; prima quelli con più tag in comune, poi i più recenti
+            function renderReadAlso(articles, current) {
+                var curTags = uniq((current.tags || []).map(norm));
+                var scored = articles
+                    .filter(function(a) { return String(a.id) !== String(current.id); })
+                    .map(function(a, i) {
+                        var shared = uniq((a.tags || []).map(norm)).filter(function(t) { return curTags.indexOf(t) !== -1; }).length;
+                        return { a: a, i: i, score: shared };
+                    });
+                scored.sort(function(x, y) {
+                    if (y.score !== x.score) { return y.score - x.score; }
+                    var dx = x.a.date || '';
+                    var dy = y.a.date || '';
+                    if (dx !== dy) { return dx < dy ? 1 : -1; }
+                    return x.i - y.i;
+                });
+                var picked = scored.slice(0, 5);
+                if (!picked.length) { return; }
+
+                var grid = document.getElementById('read-also-grid');
+                picked.forEach(function(o) {
+                    var art = o.a;
+                    var card = document.createElement('a');
+                    card.className = 'ra-card';
+                    card.href = 'article.html?id=' + encodeURIComponent(art.id);
+
+                    var img = document.createElement('div');
+                    img.className = 'ra-img';
+                    if (art.coverImage) {
+                        img.style.backgroundImage = cssUrl(art.coverImage);
+                    } else {
+                        img.textContent = '[ ARTICLE THUMBNAIL ]';
+                    }
+
+                    var body = document.createElement('div');
+                    body.className = 'ra-body';
+                    var cat = document.createElement('div');
+                    cat.className = 'ra-cat';
+                    cat.textContent = art.category || '';
+                    var title = document.createElement('h4');
+                    title.className = 'ra-title';
+                    title.textContent = art.title || '';
+
+                    body.appendChild(cat);
+                    body.appendChild(title);
+                    card.appendChild(img);
+                    card.appendChild(body);
+                    grid.appendChild(card);
+                });
+                document.getElementById('read-also').style.display = 'flex';
+            }
 
             function initRatingSystem(id) {
                 var stars = document.querySelectorAll('.star-icon');
@@ -750,7 +980,7 @@
                     var jsonComments = article.comments ? article.comments.map(function(c) {
                         return { author: c.username, text: c.message };
                     }) : [];
-                    
+
                     var allComments = localComments.concat(jsonComments);
                     listContainer.innerHTML = '';
 
@@ -762,7 +992,7 @@
                     allComments.forEach(function(c) {
                         var card = document.createElement('div');
                         card.className = 'comment-card';
-                        card.innerHTML = 
+                        card.innerHTML =
                             '<div class="comment-author">' + escapeHtml(c.author) + '</div>' +
                             '<div class="comment-text">' + escapeHtml(c.text) + '</div>';
                         listContainer.appendChild(card);
@@ -789,12 +1019,6 @@
 
                 renderComments();
             }
-
-            function escapeHtml(str) {
-    var d = document.createElement('div');
-    d.textContent = String(str);
-    return d.innerHTML;
-}
         });
     </script>
 </body>
