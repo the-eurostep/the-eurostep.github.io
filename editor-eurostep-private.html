@@ -437,6 +437,10 @@
             if (p) { img.setAttribute('src', p); img.removeAttribute('data-path'); }
         });
         Array.prototype.forEach.call(clone.querySelectorAll('[style]'), function (el) { el.removeAttribute('style'); });
+        Array.prototype.forEach.call(clone.querySelectorAll('a[href]'), function (a) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener noreferrer');
+        });
         Array.prototype.forEach.call(clone.querySelectorAll('[data-mark]'), function (el) { el.parentNode.removeChild(el); });
         function isEmpty(el) { return !el.textContent.trim() && !el.querySelector('img'); }
         Array.prototype.forEach.call(clone.querySelectorAll('blockquote'), function (q) { if (isEmpty(q)) { q.parentNode.removeChild(q); } });
@@ -654,16 +658,59 @@
         Array.prototype.forEach.call(editor.querySelectorAll('blockquote'), wrapInlineRuns);
     }
 
-    // Se la selezione termina proprio all'inizio dell'ultimo blocco (succede col triplo clic), quel blocco non va toccato.
-    function dropTrailingUntouched(list) {
-        if (list.length < 2) { return list; }
-        var last = list[list.length - 1];
+    function isEmptyRange(r) {
+        return r.toString() === '' && !r.cloneContents().querySelector('img');
+    }
+    function markerAtBlockStart(block, m) {
+        var r = document.createRange();
+        r.setStart(block, 0);
+        r.setEndBefore(m);
+        return isEmptyRange(r);
+    }
+    function markerAtBlockEnd(block, m) {
+        var r = document.createRange();
+        r.setStartAfter(m);
+        r.setEnd(block, block.childNodes.length);
+        return isEmptyRange(r);
+    }
+
+    // Se la selezione inizia a fine riga o termina a inizio riga (succede col triplo clic o trascinando),
+    // quella riga non fa parte della selezione e non va toccata.
+    function trimUntouched(list) {
+        var s = editor.querySelector('[data-mark="s"]');
         var e = editor.querySelector('[data-mark="e"]');
-        var pre = document.createRange();
-        pre.setStart(last, 0);
-        pre.setEndBefore(e);
-        if (pre.toString() === '' && !pre.cloneContents().querySelector('img')) { return list.slice(0, -1); }
+        if (list.length >= 2 && list[list.length - 1].contains(e) && markerAtBlockStart(list[list.length - 1], e)) { list = list.slice(0, -1); }
+        if (list.length >= 2 && list[0].contains(s) && markerAtBlockEnd(list[0], s)) { list = list.slice(1); }
         return list;
+    }
+
+    function isEmptyEl(el) { return !el.textContent.trim() && !el.querySelector('img'); }
+    function trimBr(el) {
+        var n;
+        while ((n = el.firstChild) && (n.nodeName === 'BR' || (n.nodeType === 3 && !n.nodeValue))) { el.removeChild(n); }
+        while ((n = el.lastChild) && (n.nodeName === 'BR' || (n.nodeType === 3 && !n.nodeValue))) { el.removeChild(n); }
+    }
+    function isSplittable(el) { return /^(P|H[1-6]|DIV)$/.test(el.tagName); }
+
+    // Spezza un paragrafo: il testo prima del segnaposto diventa un paragrafo a parte.
+    function splitBefore(block, m) {
+        var r = document.createRange();
+        r.setStart(block, 0);
+        r.setEndBefore(m);
+        var piece = block.cloneNode(false);
+        piece.appendChild(r.extractContents());
+        trimBr(piece);
+        if (!isEmptyEl(piece)) { block.parentNode.insertBefore(piece, block); }
+    }
+    // ...e il testo dopo il segnaposto diventa un altro paragrafo.
+    function splitAfter(block, m) {
+        var r = document.createRange();
+        r.setStartAfter(m);
+        r.setEnd(block, block.childNodes.length);
+        var piece = block.cloneNode(false);
+        piece.appendChild(r.extractContents());
+        trimBr(piece);
+        if (!isEmptyEl(piece)) { block.parentNode.insertBefore(piece, block.nextSibling); }
     }
 
     function toParagraph(el) {
@@ -690,7 +737,7 @@
 
     function quoteItemsInRange(r) {
         var items = Array.prototype.filter.call(editor.querySelectorAll('blockquote > *'), function (n) { return r.intersectsNode(n); });
-        return dropTrailingUntouched(items);
+        return trimUntouched(items);
     }
 
     function unquoteSelection() {
@@ -700,17 +747,32 @@
         restoreMarks();
     }
 
+    function blocksIntersecting(r) {
+        return Array.prototype.filter.call(editor.children, function (n) { return r.intersectsNode(n); });
+    }
+
     function toggleQuote() {
         ensureSelection();
+        var partial = !window.getSelection().isCollapsed;
         markSelection();
         wrapAll();
         var r = markerRange();
-        var tops = dropTrailingUntouched(Array.prototype.filter.call(editor.children, function (n) { return r.intersectsNode(n); }));
+        var tops = trimUntouched(blocksIntersecting(r));
         if (tops.length) {
             var allQuoted = tops.every(function (n) { return n.tagName === 'BLOCKQUOTE'; });
             if (allQuoted) {
                 quoteItemsInRange(r).forEach(unwrapItem);
             } else {
+                if (partial) {
+                    // cita solo il testo selezionato: spezza il primo e l'ultimo paragrafo ai bordi della selezione
+                    var s = editor.querySelector('[data-mark="s"]');
+                    var e = editor.querySelector('[data-mark="e"]');
+                    var first = tops[0], last = tops[tops.length - 1];
+                    if (first.contains(s) && isSplittable(first)) { splitBefore(first, s); }
+                    if (last.contains(e) && isSplittable(last)) { splitAfter(last, e); }
+                    r = markerRange();
+                    tops = trimUntouched(blocksIntersecting(r));
+                }
                 var cur = null;
                 tops.forEach(function (t) {
                     if (t.tagName === 'BLOCKQUOTE') { cur = null; return; }
@@ -784,6 +846,7 @@
     editor.addEventListener('paste', function (e) {
         e.preventDefault();
         var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+        text = text.replace(/\r\n?/g, '\n').replace(/\n(\s*\n)+/g, '\n');
         document.execCommand('insertText', false, text);
     });
 
@@ -815,6 +878,10 @@
         if (!url) { return; }
         restoreRange();
         document.execCommand('createLink', false, url);
+        Array.prototype.forEach.call(editor.querySelectorAll('a[href]'), function (a) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener noreferrer');
+        });
     });
 
     $('btn-img').addEventListener('click', function () {
