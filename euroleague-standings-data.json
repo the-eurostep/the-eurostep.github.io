@@ -25,14 +25,6 @@
             "raw_win_pct": 0.7
         },
         {
-            "Team": "FENERBAHCE S.K.",
-            "GP": 10,
-            "W": 7,
-            "L": 3,
-            "WinPct": ".700",
-            "raw_win_pct": 0.7
-        },
-        {
             "Team": "OLYMPIACOS B.C.",
             "GP": 10,
             "W": 7,
@@ -55,6 +47,14 @@
             "L": 3,
             "WinPct": ".700",
             "raw_win_pct": 0.7
+        },
+        {
+            "Team": "FENERBAHCE S.K.",
+            "GP": 11,
+            "W": 7,
+            "L": 4,
+            "WinPct": ".636",
+            "raw_win_pct": 0.636
         },
         {
             "Team": "REAL MADRID BALONCESTO",
@@ -82,11 +82,19 @@
         },
         {
             "Team": "PARTIZAN MOZZART BET",
-            "GP": 10,
-            "W": 5,
+            "GP": 11,
+            "W": 6,
             "L": 5,
-            "WinPct": ".500",
-            "raw_win_pct": 0.5
+            "WinPct": ".545",
+            "raw_win_pct": 0.545
+        },
+        {
+            "Team": "PARIS BASKETBALL",
+            "GP": 11,
+            "W": 5,
+            "L": 6,
+            "WinPct": ".455",
+            "raw_win_pct": 0.455
         },
         {
             "Team": "ANADOLU EFES",
@@ -98,14 +106,6 @@
         },
         {
             "Team": "BESIKTAS",
-            "GP": 10,
-            "W": 4,
-            "L": 6,
-            "WinPct": ".400",
-            "raw_win_pct": 0.4
-        },
-        {
-            "Team": "PARIS BASKETBALL",
             "GP": 10,
             "W": 4,
             "L": 6,
@@ -154,11 +154,11 @@
         },
         {
             "Team": "BASKONIA",
-            "GP": 10,
+            "GP": 11,
             "W": 1,
-            "L": 9,
-            "WinPct": ".100",
-            "raw_win_pct": 0.1
+            "L": 10,
+            "WinPct": ".091",
+            "raw_win_pct": 0.091
         }
     ]
 }
