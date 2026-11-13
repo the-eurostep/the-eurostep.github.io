@@ -241,7 +241,8 @@
 
         .article-img-placeholder {
             width: 100%;
-            height: 320px;
+            flex: 1 1 auto;
+            min-height: 320px;
             background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
             display: flex;
             align-items: center;
@@ -282,6 +283,10 @@
             font-size: 0.95rem;
             line-height: 1.6;
             font-weight: 400;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .side-articles-column {
@@ -652,7 +657,5 @@
 
     <!-- Carichiamo lo script che gestirà la dinamicità degli articoli -->
     <script src="js/main.js"></script>
-
-    <script src="js/search.js"></script>
 </body>
 </html>
