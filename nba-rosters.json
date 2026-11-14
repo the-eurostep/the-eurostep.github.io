@@ -1910,6 +1910,18 @@
         "experience": "6 yrs"
       },
       {
+        "id": 1176770,
+        "name": "Orlando",
+        "surname": "Robinson",
+        "number": "0",
+        "position": "C",
+        "height": "7' 0\"",
+        "weight": "235 lbs",
+        "birthDate": "2000-07-10",
+        "birthPlace": "Las Vegas, Nevada, United States",
+        "experience": "Rookie"
+      },
+      {
         "id": 1193432,
         "name": "Isaac",
         "surname": "Okoro",
@@ -4191,7 +4203,7 @@
         "id": 510790,
         "name": "Mason",
         "surname": "Plumlee",
-        "number": "45",
+        "number": "24",
         "position": "C",
         "height": "7' 0\"",
         "weight": "254 lbs",
@@ -5580,6 +5592,18 @@
         "experience": "3 yrs"
       },
       {
+        "id": 1231975,
+        "name": "Johni",
+        "surname": "Broome",
+        "number": "12",
+        "position": "C",
+        "height": "6' 9\"",
+        "weight": "244 lbs",
+        "birthDate": "2002-07-19",
+        "birthPlace": "Plant City, Florida, United States",
+        "experience": "1 yr"
+      },
+      {
         "id": 1257420,
         "name": "LaMelo",
         "surname": "Ball",
@@ -5911,7 +5935,7 @@
         "id": 1232529,
         "name": "Nique",
         "surname": "Clifford",
-        "number": "10",
+        "number": "18",
         "position": "SG",
         "height": "6' 5\"",
         "weight": "210 lbs",
