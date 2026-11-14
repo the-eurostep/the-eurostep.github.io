@@ -3,10 +3,14 @@
     "id": "test-editor",
     "title": "Test editor",
     "snippet": "Estratto of this testo per l'anteprima chiacchiere da bar, sempre forza juve, viva gesù, viva la fica. Allora, parliamo della situazione socio-economica del mondo, fanculo Jaden Smith. WETBANANAS. Kanye West! TUTUTUTUTUTU, bam bam adebayo",
-    "content": "<h2>I'm tired of this</h2><h3>like, honestly&nbsp;</h3><p><br></p><p>It's the <i>third </i>time I'm doing this. <b>Fuck </b>that!</p><p></p><ul><li>Damn</li><li>Man</li></ul><p></p><ol><li>That's crazy</li><li>You know</li></ol><p><a href=\"https://the-eurostep.github.io/editor-eurostep-private.html\" target=\"_blank\" rel=\"noopener noreferrer\">https://the-eurostep.github.io/editor-eurostep-private.html</a><br><br><img src=\"images/1794485450306-2.webp\" alt=\"Immagine\"><br></p>",
+    "content": "<h2>I'm tired of this</h2><h3>like, honestly&nbsp;</h3><p><br></p><p>It's the <i>third&nbsp;&nbsp;</i>time I'm doing this. <b>Fuck </b>that!</p><p></p><ul><li>Damn</li><li>Man</li></ul><p></p><ol><li>That's crazy</li><li>You know</li></ol><blockquote><p>Salam Alaikum</p></blockquote><p><a href=\"https://the-eurostep.github.io/editor-eurostep-private.html\" target=\"_blank\" rel=\"noopener noreferrer\">https://the-eurostep.github.io/editor-eurostep-private.html</a><br><br><img src=\"images/1794485450306-2.webp\" alt=\"Immagine\"><br></p>",
     "author": "Federico Genta Meinardi",
     "category": "Euroleague",
-    "tags": [],
+    "tags": [
+      "Defense",
+      "Salary Cap",
+      "Partizan"
+    ],
     "coverImage": "images/1794485485372-copertina-video-youtube.png",
     "date": "2026-11-12",
     "ratingSum": 0,
