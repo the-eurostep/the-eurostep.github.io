@@ -153,12 +153,32 @@
             <div id="list">Caricamento...</div>
         </div>
 
+        <div class="card" id="mod-card">
+            <h2 class="section">Moderazione commenti</h2>
+            <p style="color:#9ca3af; font-size:0.9rem; line-height:1.6;">Qui puoi vedere gli ultimi commenti lasciati dai lettori e cancellare quelli inadatti. Serve la tua chiave di moderazione (la crei una volta sola, vedi la guida).</p>
+            <label for="admin-key">Chiave di moderazione</label>
+            <input type="password" id="admin-key" autocomplete="off" placeholder="la chiave lunga che hai creato">
+            <div class="row-btns">
+                <button id="btn-gen-key" class="btn grey">Genera una nuova chiave</button>
+                <button id="btn-load-comments" class="btn">Salva chiave e carica commenti</button>
+            </div>
+            <div id="gen-key-box" class="hidden" style="margin-top:16px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:8px; padding:14px; font-size:0.85rem; line-height:1.6;">
+                <div style="color:#9ca3af; margin-bottom:8px;">1. Copia questa riga ed eseguila in Supabase (SQL Editor &rarr; incolla &rarr; Run). 2. Poi incolla la chiave qui sopra e premi "Salva chiave e carica commenti".</div>
+                <textarea id="gen-key-sql" readonly style="min-height:60px; font-family:monospace;"></textarea>
+                <div class="row-btns" style="margin-top:10px;"><button id="btn-copy-sql" class="btn grey">Copia la riga</button></div>
+                <div style="color:#fbbf24; margin-top:8px;">Conserva la chiave in un posto sicuro (gestore di password): non viene mostrata di nuovo.</div>
+            </div>
+            <div id="mod-msg" style="margin-top:14px; font-size:0.9rem; color:#9ca3af;"></div>
+            <div id="mod-list" style="margin-top:10px; display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+
         <div class="row-btns">
-            <button id="btn-logout" class="btn grey">Dimentica il token su questo browser</button>
+            <button id="btn-logout" class="btn grey">Dimentica token e chiave su questo browser</button>
         </div>
     </div>
 </div>
 
+<script src="js/supabase-config.js"></script>
 <script>
 (function () {
     'use strict';
@@ -938,6 +958,109 @@
         });
     }
 
+
+    /* ---------- moderazione commenti (Supabase) ---------- */
+    var ADMIN_KEY = 'eurostep_admin_key';
+    function getAdminKey() { try { return localStorage.getItem(ADMIN_KEY) || ''; } catch (e) { return ''; } }
+    function storeAdminKey(k) { try { localStorage.setItem(ADMIN_KEY, k); } catch (e) {} }
+    function forgetAdminKey() { try { localStorage.removeItem(ADMIN_KEY); } catch (e) {} }
+
+    function rpc(name, args) {
+        var cfg = window.EUROSTEP_SUPABASE || {};
+        if (!cfg.url || !cfg.key) { return Promise.reject(new Error('not_configured')); }
+        return fetch(String(cfg.url).replace(/\/+$/, '') + '/rest/v1/rpc/' + name, {
+            method: 'POST',
+            headers: { 'apikey': cfg.key, 'Content-Type': 'application/json' },
+            body: JSON.stringify(args)
+        }).then(function (r) {
+            return r.json().catch(function () { return null; }).then(function (body) {
+                if (!r.ok) { throw new Error((body && body.message) ? String(body.message) : ('http_' + r.status)); }
+                return body;
+            });
+        });
+    }
+
+    function modMsg(text, isErr) {
+        var el = $('mod-msg');
+        el.textContent = text || '';
+        el.style.color = isErr ? '#f87171' : '#9ca3af';
+    }
+    function modError(err) {
+        var m = String(err && err.message);
+        if (m === 'not_configured') { return 'Manca la configurazione: compila il file js/supabase-config.js (vedi la guida).'; }
+        if (m === 'forbidden') { return 'Chiave di moderazione errata, oppure non ancora impostata in Supabase.'; }
+        return 'Non riesco a collegarmi a Supabase (' + m + ').';
+    }
+    function titleOf(articleId) {
+        for (var i = 0; i < articles.length; i++) {
+            if (String(articles[i].id) === String(articleId)) { return articles[i].title || articleId; }
+        }
+        return articleId;
+    }
+
+    function renderModList(rows) {
+        var box = $('mod-list');
+        box.innerHTML = '';
+        rows.forEach(function (c) {
+            var item = document.createElement('div');
+            item.style.cssText = 'background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:12px;';
+            var head = document.createElement('div');
+            head.style.cssText = 'font-size:0.8rem; color:#9ca3af; margin-bottom:6px;';
+            var when = '';
+            try { when = new Date(c.created_at).toLocaleString('it-IT'); } catch (e) {}
+            head.textContent = c.username + '  ·  ' + when + '  ·  su: ' + titleOf(c.article_id);
+            var msg = document.createElement('div');
+            msg.style.cssText = 'white-space:pre-wrap; word-break:break-word; margin-bottom:8px;';
+            msg.textContent = c.message;
+            var del = document.createElement('button');
+            del.className = 'btn red';
+            del.textContent = 'Elimina';
+            del.addEventListener('click', function () {
+                if (!window.confirm('Eliminare definitivamente questo commento?')) { return; }
+                del.disabled = true;
+                rpc('admin_delete_comment', { p_secret: getAdminKey(), p_comment_id: c.id }).then(function (res) {
+                    if (res && res.deleted) { item.remove(); modMsg('Commento eliminato.', false); }
+                    else { modMsg('Il commento non esiste più (forse era già stato eliminato).', false); item.remove(); }
+                }).catch(function (err) { del.disabled = false; modMsg(modError(err), true); });
+            });
+            item.appendChild(head); item.appendChild(msg); item.appendChild(del);
+            box.appendChild(item);
+        });
+    }
+
+    function loadComments() {
+        var key = $('admin-key').value.trim() || getAdminKey();
+        if (!key) { modMsg('Incolla la chiave di moderazione.', true); return; }
+        modMsg('Carico i commenti…', false);
+        rpc('admin_list_comments', { p_secret: key, p_limit: 100 }).then(function (rows) {
+            storeAdminKey(key);
+            $('admin-key').value = '';
+            $('btn-load-comments').textContent = 'Ricarica commenti';
+            rows = Array.isArray(rows) ? rows : [];
+            renderModList(rows);
+            modMsg(rows.length ? ('Collegamento riuscito. Ultimi ' + rows.length + ' commenti (dal più recente).') : 'Collegamento riuscito. Non ci sono ancora commenti.', false);
+        }).catch(function (err) { $('mod-list').innerHTML = ''; modMsg(modError(err), true); });
+    }
+
+    function randomKey() {
+        var a = new Uint8Array(24);
+        crypto.getRandomValues(a);
+        return Array.prototype.map.call(a, function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+    }
+    $('btn-gen-key').addEventListener('click', function () {
+        var k = randomKey();
+        $('gen-key-sql').value = "select public.admin_set_secret('" + k + "');\n-- LA TUA CHIAVE: " + k;
+        $('gen-key-box').classList.remove('hidden');
+    });
+    $('btn-copy-sql').addEventListener('click', function () {
+        var line = $('gen-key-sql').value.split('\n')[0];
+        var done = function () { modMsg('Riga copiata. Incollala in Supabase (SQL Editor) e premi Run.', false); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(line).then(done).catch(function () { $('gen-key-sql').select(); modMsg('Selezionata: premi Ctrl+C (Cmd+C su Mac) per copiarla.', false); });
+        } else { $('gen-key-sql').select(); modMsg('Selezionata: premi Ctrl+C (Cmd+C su Mac) per copiarla.', false); }
+    });
+    $('btn-load-comments').addEventListener('click', loadComments);
+
     $('token-save').addEventListener('click', function () {
         var t = $('token-input').value.trim();
         if (!t) { setStatus('Incolla il token.', 'err'); return; }
@@ -947,6 +1070,7 @@
     });
     $('btn-logout').addEventListener('click', function () {
         forgetToken();
+        forgetAdminKey();
         showLogin();
         hideStatus();
     });
