@@ -1,15 +1,15 @@
 {
     "standings": [
         {
-            "Team": "PANATHINAIKOS B.C.",
-            "GP": 10,
+            "Team": "VALENCIA BASKET CLUB",
+            "GP": 11,
             "W": 8,
-            "L": 2,
-            "WinPct": ".800",
-            "raw_win_pct": 0.8
+            "L": 3,
+            "WinPct": ".727",
+            "raw_win_pct": 0.727
         },
         {
-            "Team": "VALENCIA BASKET CLUB",
+            "Team": "PANATHINAIKOS B.C.",
             "GP": 11,
             "W": 8,
             "L": 3,
@@ -26,11 +26,11 @@
         },
         {
             "Team": "FC BARCELONA BASQUET",
-            "GP": 10,
-            "W": 7,
+            "GP": 11,
+            "W": 8,
             "L": 3,
-            "WinPct": ".700",
-            "raw_win_pct": 0.7
+            "WinPct": ".727",
+            "raw_win_pct": 0.727
         },
         {
             "Team": "REAL MADRID BALONCESTO",
@@ -89,6 +89,22 @@
             "raw_win_pct": 0.545
         },
         {
+            "Team": "ANADOLU EFES",
+            "GP": 11,
+            "W": 5,
+            "L": 6,
+            "WinPct": ".455",
+            "raw_win_pct": 0.455
+        },
+        {
+            "Team": "BESIKTAS",
+            "GP": 11,
+            "W": 5,
+            "L": 6,
+            "WinPct": ".455",
+            "raw_win_pct": 0.455
+        },
+        {
             "Team": "PARIS BASKETBALL",
             "GP": 11,
             "W": 5,
@@ -97,36 +113,20 @@
             "raw_win_pct": 0.455
         },
         {
-            "Team": "ANADOLU EFES",
-            "GP": 10,
+            "Team": "LDLC ASVEL",
+            "GP": 11,
             "W": 4,
-            "L": 6,
-            "WinPct": ".400",
-            "raw_win_pct": 0.4
-        },
-        {
-            "Team": "BESIKTAS",
-            "GP": 10,
-            "W": 4,
-            "L": 6,
-            "WinPct": ".400",
-            "raw_win_pct": 0.4
+            "L": 7,
+            "WinPct": ".364",
+            "raw_win_pct": 0.364
         },
         {
             "Team": "VIRTUS OLIDATA BOLOGNA",
-            "GP": 10,
+            "GP": 11,
             "W": 4,
-            "L": 6,
-            "WinPct": ".400",
-            "raw_win_pct": 0.4
-        },
-        {
-            "Team": "LDLC ASVEL",
-            "GP": 10,
-            "W": 4,
-            "L": 6,
-            "WinPct": ".400",
-            "raw_win_pct": 0.4
+            "L": 7,
+            "WinPct": ".364",
+            "raw_win_pct": 0.364
         },
         {
             "Team": "MACCABI RAPYD TEL AVIV",
