@@ -628,7 +628,8 @@
             <div class="rating-box">
                 <div>
                     <div class="rating-title">Rate this analysis</div>
-                    <div id="rating-status" class="rating-score">Click to cast your vote</div>
+                    <div id="rating-average" class="rating-score" style="color:#f59e0b; margin-bottom:4px;"></div>
+                    <div id="rating-status" class="rating-score">Click a star to cast your vote</div>
                 </div>
                 <div class="stars-container" id="stars-wrapper">
                     <span class="star-icon" data-value="1">★</span>
@@ -659,9 +660,10 @@
             <h3 class="comments-title">Discussion & Comments</h3>
             
             <div class="comment-form">
-                <input type="text" id="comment-author-input" class="comment-input" placeholder="Your Name / Nickname">
-                <textarea id="comment-text-input" class="comment-textarea" placeholder="Write your thoughts about this tactical analysis..."></textarea>
+                <input type="text" id="comment-author-input" class="comment-input" placeholder="Your Name / Nickname" maxlength="40">
+                <textarea id="comment-text-input" class="comment-textarea" placeholder="Write your thoughts about this tactical analysis..." maxlength="1000"></textarea>
                 <button id="submit-comment-btn" class="submit-comment-btn">Post Comment</button>
+                <div id="comment-form-msg" class="rating-score" style="min-height:1.2em;"></div>
             </div>
 
             <div id="comments-list" class="comments-list">
@@ -675,6 +677,7 @@
         <a href="privacy.html">Privacy Policy</a>
     </footer>
 
+    <script src="js/supabase-config.js"></script>
     <script>
         if (typeof THREE !== 'undefined') {
         const container = document.getElementById('webgl-container');
@@ -864,7 +867,7 @@
                     document.getElementById('article-content').innerHTML = '<p>Could not load article data.</p>';
                 });
 
-            // "Read Also": fino a 5 articoli; prima quelli con più tag in comune, poi i più recenti
+            // "Read Also": fino a 3 articoli; prima quelli con più tag in comune, poi i più recenti
             function renderReadAlso(articles, current) {
                 var curTags = uniq((current.tags || []).map(norm));
                 var scored = articles
@@ -880,7 +883,7 @@
                     if (dx !== dy) { return dx < dy ? 1 : -1; }
                     return x.i - y.i;
                 });
-                var picked = scored.slice(0, 5);
+                var picked = scored.slice(0, 3);
                 if (!picked.length) { return; }
 
                 var grid = document.getElementById('read-also-grid');
@@ -916,108 +919,221 @@
                 document.getElementById('read-also').style.display = 'flex';
             }
 
+            /* ---------- Stelle e commenti condivisi (Supabase) ---------- */
+
+            function getVoterId() {
+                var key = 'eurostep_voter_id';
+                try {
+                    var saved = localStorage.getItem(key);
+                    if (saved && saved.length >= 16 && saved.length <= 64) { return saved; }
+                } catch (e) {}
+                var id = '';
+                try {
+                    if (window.crypto && crypto.randomUUID) { id = crypto.randomUUID(); }
+                } catch (e) {}
+                if (!id) {
+                    id = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+                }
+                id = id.slice(0, 64);
+                try { localStorage.setItem(key, id); } catch (e) {}
+                return id;
+            }
+
+            function rpc(name, args) {
+                var cfg = window.EUROSTEP_SUPABASE || {};
+                if (!cfg.url || !cfg.key) { return Promise.reject(new Error('not_configured')); }
+                return fetch(String(cfg.url).replace(/\/+$/, '') + '/rest/v1/rpc/' + name, {
+                    method: 'POST',
+                    headers: { 'apikey': cfg.key, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(args)
+                }).then(function(r) {
+                    return r.json().catch(function() { return null; }).then(function(body) {
+                        if (!r.ok) {
+                            throw new Error((body && body.message) ? String(body.message) : ('http_' + r.status));
+                        }
+                        return body;
+                    });
+                });
+            }
+
+            function formatDate(iso) {
+                try {
+                    var d = new Date(iso);
+                    if (isNaN(d.getTime())) { return ''; }
+                    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                } catch (e) { return ''; }
+            }
+
             function initRatingSystem(id) {
+                var voterId = getVoterId();
                 var stars = document.querySelectorAll('.star-icon');
+                var avgText = document.getElementById('rating-average');
                 var statusText = document.getElementById('rating-status');
-                var storageKey = 'eurostep_voted_art_' + id;
-                var userVoted = localStorage.getItem(storageKey);
+                var yourValue = null;
+                var available = false;
+                var busy = false;
 
                 function paintStars(val) {
                     stars.forEach(function(s) {
-                        if (parseInt(s.getAttribute('data-value')) <= val) {
-                            s.classList.add('hovered');
-                        } else {
-                            s.classList.remove('hovered');
-                        }
+                        if (parseInt(s.getAttribute('data-value'), 10) <= val) { s.classList.add('hovered'); }
+                        else { s.classList.remove('hovered'); }
                     });
                 }
+                function clearHover() { stars.forEach(function(s) { s.classList.remove('hovered'); }); }
 
-                function clearHover() {
-                    stars.forEach(function(s) { s.classList.remove('hovered'); });
-                }
+                function show(data) {
+                    var votes = Number(data && data.votes) || 0;
+                    var avg = data && data.avg !== null && data.avg !== undefined ? Number(data.avg) : null;
+                    yourValue = (data && data.your_value) ? Number(data.your_value) : null;
 
-                if (userVoted) {
-                    var v = parseInt(userVoted);
+                    if (votes > 0 && avg !== null && !isNaN(avg)) {
+                        avgText.textContent = 'Average ' + avg.toFixed(1) + ' ★ · ' + votes + (votes === 1 ? ' vote' : ' votes');
+                    } else {
+                        avgText.textContent = 'No ratings yet';
+                    }
                     stars.forEach(function(s) {
-                        if (parseInt(s.getAttribute('data-value')) <= v) s.classList.add('active');
+                        var on = yourValue && parseInt(s.getAttribute('data-value'), 10) <= yourValue;
+                        if (on) { s.classList.add('active'); } else { s.classList.remove('active'); }
                     });
-                    statusText.textContent = 'You rated this article ' + v + ' ★';
+                    statusText.textContent = yourValue ? ('You rated this article ' + yourValue + ' ★') : 'Click a star to cast your vote';
                 }
+
+                avgText.textContent = 'Loading ratings…';
+                rpc('get_article_rating', { p_article_id: String(id), p_voter_id: voterId })
+                    .then(function(data) { available = true; show(data); })
+                    .catch(function(err) {
+                        console.error('Ratings unavailable:', err);
+                        avgText.textContent = 'Ratings are temporarily unavailable';
+                        statusText.textContent = '';
+                    });
 
                 stars.forEach(function(star) {
-                    var val = parseInt(star.getAttribute('data-value'));
-
-                    star.addEventListener('mouseenter', function() { paintStars(val); });
-                    star.addEventListener('mouseleave', function() { clearHover(); });
-
+                    var val = parseInt(star.getAttribute('data-value'), 10);
+                    star.addEventListener('mouseenter', function() { if (!yourValue && available) { paintStars(val); } });
+                    star.addEventListener('mouseleave', clearHover);
                     star.addEventListener('click', function() {
-                        if (localStorage.getItem(storageKey)) {
-                            statusText.textContent = 'You have already rated this article!';
-                            return;
-                        }
-                        localStorage.setItem(storageKey, val);
-                        stars.forEach(function(s) {
-                            if (parseInt(s.getAttribute('data-value')) <= val) {
-                                s.classList.add('active');
-                            } else {
-                                s.classList.remove('active');
-                            }
-                        });
-                        statusText.textContent = 'Thank you! Rating saved (' + val + ' ★)';
+                        if (!available) { statusText.textContent = 'Ratings are temporarily unavailable.'; return; }
+                        if (yourValue) { statusText.textContent = 'You have already rated this article!'; return; }
+                        if (busy) { return; }
+                        busy = true;
+                        statusText.textContent = 'Saving…';
+                        rpc('submit_rating', { p_article_id: String(id), p_voter_id: voterId, p_value: val })
+                            .then(function(data) {
+                                clearHover();
+                                show(data);
+                                if (data && data.accepted === false) {
+                                    statusText.textContent = 'You have already rated this article!';
+                                } else {
+                                    statusText.textContent = 'Thank you! Rating saved (' + val + ' ★)';
+                                }
+                            })
+                            .catch(function(err) {
+                                clearHover();
+                                statusText.textContent = (String(err.message) === 'rate_limit')
+                                    ? 'Too many votes in a short time. Please try again later.'
+                                    : 'Could not save your rating. Please try again.';
+                            })
+                            .then(function() { busy = false; });
                     });
                 });
             }
 
             function initCommentsSystem(id, article) {
-                var storageKey = 'eurostep_comments_' + id;
+                var voterId = getVoterId();
                 var submitBtn = document.getElementById('submit-comment-btn');
                 var authorInput = document.getElementById('comment-author-input');
                 var textInput = document.getElementById('comment-text-input');
                 var listContainer = document.getElementById('comments-list');
+                var formMsg = document.getElementById('comment-form-msg');
+                var comments = [];
+                var loaded = false;
+
+                function setMsg(text, isError) {
+                    if (!formMsg) { return; }
+                    formMsg.textContent = text || '';
+                    formMsg.style.color = isError ? '#f87171' : '#9ca3af';
+                }
+
+                function note(text) {
+                    listContainer.innerHTML = '';
+                    var p = document.createElement('p');
+                    p.style.cssText = 'color: #6b7280; font-size: 0.9rem;';
+                    p.textContent = text;
+                    listContainer.appendChild(p);
+                }
 
                 function renderComments() {
-                    var localComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                    var jsonComments = article.comments ? article.comments.map(function(c) {
-                        return { author: c.username, text: c.message };
-                    }) : [];
-
-                    var allComments = localComments.concat(jsonComments);
-                    listContainer.innerHTML = '';
-
-                    if (allComments.length === 0) {
-                        listContainer.innerHTML = '<p style="color: #6b7280; font-size: 0.9rem;">No comments yet. Be the first to share your thoughts!</p>';
+                    if (comments.length === 0) {
+                        note('No comments yet. Be the first to share your thoughts!');
                         return;
                     }
-
-                    allComments.forEach(function(c) {
+                    listContainer.innerHTML = '';
+                    comments.forEach(function(c) {
                         var card = document.createElement('div');
                         card.className = 'comment-card';
-                        card.innerHTML =
-                            '<div class="comment-author">' + escapeHtml(c.author) + '</div>' +
-                            '<div class="comment-text">' + escapeHtml(c.text) + '</div>';
+                        var who = document.createElement('div');
+                        who.className = 'comment-author';
+                        who.textContent = c.username || '';
+                        var when = formatDate(c.created_at);
+                        if (when) {
+                            var span = document.createElement('span');
+                            span.style.cssText = 'font-weight: 400; color: #6b7280; margin-left: 10px; font-size: 0.8em;';
+                            span.textContent = when;
+                            who.appendChild(span);
+                        }
+                        var text = document.createElement('div');
+                        text.className = 'comment-text';
+                        text.textContent = c.message || '';
+                        card.appendChild(who);
+                        card.appendChild(text);
                         listContainer.appendChild(card);
                     });
                 }
+
+                note('Loading comments…');
+                rpc('get_comments', { p_article_id: String(id) })
+                    .then(function(data) {
+                        loaded = true;
+                        comments = Array.isArray(data) ? data : [];
+                        renderComments();
+                    })
+                    .catch(function(err) {
+                        console.error('Comments unavailable:', err);
+                        note('Comments are temporarily unavailable.');
+                    });
+
+                var errorTexts = {
+                    rate_limit: 'You are commenting too fast. Please wait a few minutes.',
+                    rate_limit_global: 'Too many comments right now. Please try again later.',
+                    duplicate: 'You have already posted this comment.',
+                    invalid_username: 'Please enter a name (max 40 characters).',
+                    invalid_message: 'Please enter a comment (max 1000 characters).'
+                };
 
                 submitBtn.addEventListener('click', function() {
                     var author = authorInput.value.trim();
                     var text = textInput.value.trim();
 
-                    if (!author || !text) {
-                        alert('Please fill in both your name and comment.');
-                        return;
-                    }
+                    if (!author || !text) { setMsg('Please fill in both your name and comment.', true); return; }
+                    if (author.length > 40) { setMsg('Your name is too long (max 40 characters).', true); return; }
+                    if (text.length > 1000) { setMsg('Your comment is too long (max 1000 characters).', true); return; }
+                    if (!loaded) { setMsg('Comments are temporarily unavailable.', true); return; }
+                    if (submitBtn.disabled) { return; }
 
-                    var localComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                    localComments.unshift({ author: author, text: text });
-                    localStorage.setItem(storageKey, JSON.stringify(localComments));
-
-                    authorInput.value = '';
-                    textInput.value = '';
-                    renderComments();
+                    submitBtn.disabled = true;
+                    setMsg('Posting…', false);
+                    rpc('submit_comment', { p_article_id: String(id), p_voter_id: voterId, p_username: author, p_message: text })
+                        .then(function(c) {
+                            comments.unshift(c);
+                            renderComments();
+                            textInput.value = '';
+                            setMsg('Comment posted. Thank you!', false);
+                        })
+                        .catch(function(err) {
+                            setMsg(errorTexts[String(err.message)] || 'Could not post your comment. Please try again.', true);
+                        })
+                        .then(function() { submitBtn.disabled = false; });
                 });
-
-                renderComments();
             }
         });
     </script>
