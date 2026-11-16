@@ -160,13 +160,25 @@
         let allSeasonData = {};
         let currentRound = 1;
 
+        // Ultimo turno in cui è stata giocata almeno una partita (altrimenti usa il valore del file, altrimenti il turno 1)
+        function findLatestPlayedRound(data) {
+            const rounds = data.rounds || {};
+            let latest = 0;
+            Object.keys(rounds).forEach(k => {
+                const n = parseInt(k, 10);
+                const list = rounds[k] || [];
+                if (!isNaN(n) && n > latest && list.some(m => m.status === 'played')) latest = n;
+            });
+            return latest || data.currentRound || 1;
+        }
+
         async function loadGameCenterData() {
             try {
                 const response = await fetch('euroleague-games-data.json?v=' + new Date().getTime());
                 if (!response.ok) throw new Error('File dati non trovato');
                 allSeasonData = await response.json();
                 
-                currentRound = allSeasonData.currentRound || 1;
+                currentRound = findLatestPlayedRound(allSeasonData);
                 
                 buildRoundsSelector();
                 selectRound(currentRound);
