@@ -197,9 +197,14 @@
                 nbaData = data.dates || {};
                 
                 const availableDates = Object.keys(nbaData).sort();
-                if (availableDates.length > 0 && !nbaData[selectedDate]) {
+                // Si apre sull'ultimo giorno in cui è stata giocata almeno una partita
+                const playedDates = availableDates.filter(d => (nbaData[d] || []).some(g => g.status === 'played'));
+                if (playedDates.length > 0) {
+                    selectedDate = playedDates[playedDates.length - 1];
+                } else if (availableDates.length > 0 && !nbaData[selectedDate]) {
                     selectedDate = availableDates[0];
                 }
+                popupDate = new Date(selectedDate);
                 
                 renderDateBar();
                 renderGames();
