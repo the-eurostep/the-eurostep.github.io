@@ -65674,7 +65674,7 @@
         "17": [
             {
                 "date": "15/12/2026",
-                "time": "17:30 CET",
+                "time": "17:15 CET",
                 "status": "upcoming",
                 "homeTeam": "Anadolu Efes Istanbul",
                 "homeLogo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png",
@@ -65686,7 +65686,7 @@
             },
             {
                 "date": "15/12/2026",
-                "time": "17:45 CET",
+                "time": "19:15 CET",
                 "status": "upcoming",
                 "homeTeam": "Fenerbahce Tarfin Istanbul",
                 "homeLogo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
@@ -65796,18 +65796,6 @@
         "18": [
             {
                 "date": "17/12/2026",
-                "time": "17:45 CET",
-                "status": "upcoming",
-                "homeTeam": "Fenerbahce Tarfin Istanbul",
-                "homeLogo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
-                "homeScore": 0,
-                "awayTeam": "Maccabi Rapyd Tel Aviv",
-                "awayLogo": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png",
-                "awayScore": 0,
-                "boxscore": null
-            },
-            {
-                "date": "17/12/2026",
                 "time": "18:00 CET",
                 "status": "upcoming",
                 "homeTeam": "Hapoel IBI Tel Aviv",
@@ -65827,6 +65815,18 @@
                 "homeScore": 0,
                 "awayTeam": "Dubai Basketball",
                 "awayLogo": "https://media-cdn.incrowdsports.com/1efae090-16e2-4963-ae47-4b94f249c244.png",
+                "awayScore": 0,
+                "boxscore": null
+            },
+            {
+                "date": "17/12/2026",
+                "time": "19:00 CET",
+                "status": "upcoming",
+                "homeTeam": "Fenerbahce Tarfin Istanbul",
+                "homeLogo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
+                "homeScore": 0,
+                "awayTeam": "Maccabi Rapyd Tel Aviv",
+                "awayLogo": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png",
                 "awayScore": 0,
                 "boxscore": null
             },
