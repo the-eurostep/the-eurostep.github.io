@@ -2,35 +2,59 @@
     "standings": [
         {
             "Team": "VALENCIA BASKET CLUB",
-            "GP": 11,
-            "W": 8,
+            "GP": 12,
+            "W": 9,
             "L": 3,
-            "WinPct": ".727",
-            "raw_win_pct": 0.727
-        },
-        {
-            "Team": "PANATHINAIKOS B.C.",
-            "GP": 11,
-            "W": 8,
-            "L": 3,
-            "WinPct": ".727",
-            "raw_win_pct": 0.727
+            "WinPct": ".750",
+            "raw_win_pct": 0.75
         },
         {
             "Team": "OLYMPIACOS B.C.",
-            "GP": 11,
-            "W": 8,
+            "GP": 12,
+            "W": 9,
             "L": 3,
-            "WinPct": ".727",
-            "raw_win_pct": 0.727
+            "WinPct": ".750",
+            "raw_win_pct": 0.75
+        },
+        {
+            "Team": "FENERBAHCE S.K.",
+            "GP": 12,
+            "W": 8,
+            "L": 4,
+            "WinPct": ".667",
+            "raw_win_pct": 0.667
+        },
+        {
+            "Team": "PANATHINAIKOS B.C.",
+            "GP": 12,
+            "W": 8,
+            "L": 4,
+            "WinPct": ".667",
+            "raw_win_pct": 0.667
+        },
+        {
+            "Team": "BC ZALGIRIS",
+            "GP": 12,
+            "W": 8,
+            "L": 4,
+            "WinPct": ".667",
+            "raw_win_pct": 0.667
         },
         {
             "Team": "FC BARCELONA BASQUET",
-            "GP": 11,
+            "GP": 12,
             "W": 8,
-            "L": 3,
-            "WinPct": ".727",
-            "raw_win_pct": 0.727
+            "L": 4,
+            "WinPct": ".667",
+            "raw_win_pct": 0.667
+        },
+        {
+            "Team": "DUBAI",
+            "GP": 12,
+            "W": 8,
+            "L": 4,
+            "WinPct": ".667",
+            "raw_win_pct": 0.667
         },
         {
             "Team": "REAL MADRID BALONCESTO",
@@ -42,59 +66,35 @@
         },
         {
             "Team": "RED STAR BELGRADE",
-            "GP": 11,
+            "GP": 12,
             "W": 7,
-            "L": 4,
-            "WinPct": ".636",
-            "raw_win_pct": 0.636
-        },
-        {
-            "Team": "FENERBAHCE S.K.",
-            "GP": 11,
-            "W": 7,
-            "L": 4,
-            "WinPct": ".636",
-            "raw_win_pct": 0.636
-        },
-        {
-            "Team": "BC ZALGIRIS",
-            "GP": 11,
-            "W": 7,
-            "L": 4,
-            "WinPct": ".636",
-            "raw_win_pct": 0.636
-        },
-        {
-            "Team": "DUBAI",
-            "GP": 11,
-            "W": 7,
-            "L": 4,
-            "WinPct": ".636",
-            "raw_win_pct": 0.636
+            "L": 5,
+            "WinPct": ".583",
+            "raw_win_pct": 0.583
         },
         {
             "Team": "HAPOEL TEL AVIV B.C.",
-            "GP": 11,
-            "W": 6,
+            "GP": 12,
+            "W": 7,
             "L": 5,
-            "WinPct": ".545",
-            "raw_win_pct": 0.545
+            "WinPct": ".583",
+            "raw_win_pct": 0.583
         },
         {
             "Team": "PARTIZAN MOZZART BET",
-            "GP": 11,
+            "GP": 12,
             "W": 6,
-            "L": 5,
-            "WinPct": ".545",
-            "raw_win_pct": 0.545
+            "L": 6,
+            "WinPct": ".500",
+            "raw_win_pct": 0.5
         },
         {
-            "Team": "ANADOLU EFES",
-            "GP": 11,
-            "W": 5,
+            "Team": "PARIS BASKETBALL",
+            "GP": 12,
+            "W": 6,
             "L": 6,
-            "WinPct": ".455",
-            "raw_win_pct": 0.455
+            "WinPct": ".500",
+            "raw_win_pct": 0.5
         },
         {
             "Team": "BESIKTAS",
@@ -105,60 +105,60 @@
             "raw_win_pct": 0.455
         },
         {
-            "Team": "PARIS BASKETBALL",
-            "GP": 11,
+            "Team": "ANADOLU EFES",
+            "GP": 12,
             "W": 5,
-            "L": 6,
-            "WinPct": ".455",
-            "raw_win_pct": 0.455
-        },
-        {
-            "Team": "LDLC ASVEL",
-            "GP": 11,
-            "W": 4,
             "L": 7,
-            "WinPct": ".364",
-            "raw_win_pct": 0.364
+            "WinPct": ".417",
+            "raw_win_pct": 0.417
         },
         {
             "Team": "VIRTUS OLIDATA BOLOGNA",
-            "GP": 11,
-            "W": 4,
+            "GP": 12,
+            "W": 5,
             "L": 7,
-            "WinPct": ".364",
-            "raw_win_pct": 0.364
+            "WinPct": ".417",
+            "raw_win_pct": 0.417
+        },
+        {
+            "Team": "LDLC ASVEL",
+            "GP": 12,
+            "W": 4,
+            "L": 8,
+            "WinPct": ".333",
+            "raw_win_pct": 0.333
         },
         {
             "Team": "MACCABI RAPYD TEL AVIV",
-            "GP": 11,
+            "GP": 12,
             "W": 3,
-            "L": 8,
-            "WinPct": ".273",
-            "raw_win_pct": 0.273
+            "L": 9,
+            "WinPct": ".250",
+            "raw_win_pct": 0.25
         },
         {
             "Team": "BAYERN MUNCHEN",
-            "GP": 11,
+            "GP": 12,
             "W": 3,
-            "L": 8,
-            "WinPct": ".273",
-            "raw_win_pct": 0.273
+            "L": 9,
+            "WinPct": ".250",
+            "raw_win_pct": 0.25
         },
         {
             "Team": "EA7 EMPORIO ARMANI MILANO",
-            "GP": 11,
-            "W": 1,
+            "GP": 12,
+            "W": 2,
             "L": 10,
-            "WinPct": ".091",
-            "raw_win_pct": 0.091
+            "WinPct": ".167",
+            "raw_win_pct": 0.167
         },
         {
             "Team": "BASKONIA",
-            "GP": 11,
+            "GP": 12,
             "W": 1,
-            "L": 10,
-            "WinPct": ".091",
-            "raw_win_pct": 0.091
+            "L": 11,
+            "WinPct": ".083",
+            "raw_win_pct": 0.083
         }
     ]
 }
