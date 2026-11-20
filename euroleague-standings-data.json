@@ -58,11 +58,11 @@
         },
         {
             "Team": "REAL MADRID BALONCESTO",
-            "GP": 11,
+            "GP": 12,
             "W": 7,
-            "L": 4,
-            "WinPct": ".636",
-            "raw_win_pct": 0.636
+            "L": 5,
+            "WinPct": ".583",
+            "raw_win_pct": 0.583
         },
         {
             "Team": "RED STAR BELGRADE",
@@ -89,7 +89,7 @@
             "raw_win_pct": 0.5
         },
         {
-            "Team": "PARIS BASKETBALL",
+            "Team": "BESIKTAS",
             "GP": 12,
             "W": 6,
             "L": 6,
@@ -97,12 +97,12 @@
             "raw_win_pct": 0.5
         },
         {
-            "Team": "BESIKTAS",
-            "GP": 11,
-            "W": 5,
+            "Team": "PARIS BASKETBALL",
+            "GP": 12,
+            "W": 6,
             "L": 6,
-            "WinPct": ".455",
-            "raw_win_pct": 0.455
+            "WinPct": ".500",
+            "raw_win_pct": 0.5
         },
         {
             "Team": "ANADOLU EFES",
