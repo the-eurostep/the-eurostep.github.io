@@ -2,11 +2,11 @@
     "standings": [
         {
             "Team": "VALENCIA BASKET CLUB",
-            "GP": 12,
-            "W": 9,
+            "GP": 13,
+            "W": 10,
             "L": 3,
-            "WinPct": ".750",
-            "raw_win_pct": 0.75
+            "WinPct": ".769",
+            "raw_win_pct": 0.769
         },
         {
             "Team": "OLYMPIACOS B.C.",
@@ -17,28 +17,20 @@
             "raw_win_pct": 0.75
         },
         {
-            "Team": "FENERBAHCE S.K.",
-            "GP": 12,
-            "W": 8,
-            "L": 4,
-            "WinPct": ".667",
-            "raw_win_pct": 0.667
-        },
-        {
             "Team": "PANATHINAIKOS B.C.",
-            "GP": 12,
-            "W": 8,
+            "GP": 13,
+            "W": 9,
             "L": 4,
-            "WinPct": ".667",
-            "raw_win_pct": 0.667
+            "WinPct": ".692",
+            "raw_win_pct": 0.692
         },
         {
-            "Team": "BC ZALGIRIS",
-            "GP": 12,
-            "W": 8,
+            "Team": "DUBAI",
+            "GP": 13,
+            "W": 9,
             "L": 4,
-            "WinPct": ".667",
-            "raw_win_pct": 0.667
+            "WinPct": ".692",
+            "raw_win_pct": 0.692
         },
         {
             "Team": "FC BARCELONA BASQUET",
@@ -49,12 +41,20 @@
             "raw_win_pct": 0.667
         },
         {
-            "Team": "DUBAI",
-            "GP": 12,
+            "Team": "FENERBAHCE S.K.",
+            "GP": 13,
             "W": 8,
-            "L": 4,
-            "WinPct": ".667",
-            "raw_win_pct": 0.667
+            "L": 5,
+            "WinPct": ".615",
+            "raw_win_pct": 0.615
+        },
+        {
+            "Team": "BC ZALGIRIS",
+            "GP": 13,
+            "W": 8,
+            "L": 5,
+            "WinPct": ".615",
+            "raw_win_pct": 0.615
         },
         {
             "Team": "REAL MADRID BALONCESTO",
@@ -74,11 +74,19 @@
         },
         {
             "Team": "HAPOEL TEL AVIV B.C.",
-            "GP": 12,
+            "GP": 13,
             "W": 7,
-            "L": 5,
-            "WinPct": ".583",
-            "raw_win_pct": 0.583
+            "L": 6,
+            "WinPct": ".538",
+            "raw_win_pct": 0.538
+        },
+        {
+            "Team": "PARIS BASKETBALL",
+            "GP": 13,
+            "W": 7,
+            "L": 6,
+            "WinPct": ".538",
+            "raw_win_pct": 0.538
         },
         {
             "Team": "PARTIZAN MOZZART BET",
@@ -97,14 +105,6 @@
             "raw_win_pct": 0.5
         },
         {
-            "Team": "PARIS BASKETBALL",
-            "GP": 12,
-            "W": 6,
-            "L": 6,
-            "WinPct": ".500",
-            "raw_win_pct": 0.5
-        },
-        {
             "Team": "ANADOLU EFES",
             "GP": 12,
             "W": 5,
@@ -114,11 +114,11 @@
         },
         {
             "Team": "VIRTUS OLIDATA BOLOGNA",
-            "GP": 12,
+            "GP": 13,
             "W": 5,
-            "L": 7,
-            "WinPct": ".417",
-            "raw_win_pct": 0.417
+            "L": 8,
+            "WinPct": ".385",
+            "raw_win_pct": 0.385
         },
         {
             "Team": "LDLC ASVEL",
@@ -129,36 +129,36 @@
             "raw_win_pct": 0.333
         },
         {
-            "Team": "MACCABI RAPYD TEL AVIV",
-            "GP": 12,
-            "W": 3,
-            "L": 9,
-            "WinPct": ".250",
-            "raw_win_pct": 0.25
-        },
-        {
             "Team": "BAYERN MUNCHEN",
-            "GP": 12,
-            "W": 3,
+            "GP": 13,
+            "W": 4,
             "L": 9,
-            "WinPct": ".250",
-            "raw_win_pct": 0.25
+            "WinPct": ".308",
+            "raw_win_pct": 0.308
         },
         {
             "Team": "EA7 EMPORIO ARMANI MILANO",
-            "GP": 12,
-            "W": 2,
+            "GP": 13,
+            "W": 3,
             "L": 10,
-            "WinPct": ".167",
-            "raw_win_pct": 0.167
+            "WinPct": ".231",
+            "raw_win_pct": 0.231
+        },
+        {
+            "Team": "MACCABI RAPYD TEL AVIV",
+            "GP": 13,
+            "W": 3,
+            "L": 10,
+            "WinPct": ".231",
+            "raw_win_pct": 0.231
         },
         {
             "Team": "BASKONIA",
-            "GP": 12,
+            "GP": 13,
             "W": 1,
-            "L": 11,
-            "WinPct": ".083",
-            "raw_win_pct": 0.083
+            "L": 12,
+            "WinPct": ".077",
+            "raw_win_pct": 0.077
         }
     ]
 }
