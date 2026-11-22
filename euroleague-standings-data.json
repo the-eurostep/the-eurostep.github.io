@@ -10,11 +10,11 @@
         },
         {
             "Team": "OLYMPIACOS B.C.",
-            "GP": 12,
-            "W": 9,
+            "GP": 13,
+            "W": 10,
             "L": 3,
-            "WinPct": ".750",
-            "raw_win_pct": 0.75
+            "WinPct": ".769",
+            "raw_win_pct": 0.769
         },
         {
             "Team": "PANATHINAIKOS B.C.",
@@ -33,15 +33,23 @@
             "raw_win_pct": 0.692
         },
         {
-            "Team": "FC BARCELONA BASQUET",
-            "GP": 12,
+            "Team": "FENERBAHCE S.K.",
+            "GP": 13,
             "W": 8,
-            "L": 4,
-            "WinPct": ".667",
-            "raw_win_pct": 0.667
+            "L": 5,
+            "WinPct": ".615",
+            "raw_win_pct": 0.615
         },
         {
-            "Team": "FENERBAHCE S.K.",
+            "Team": "RED STAR BELGRADE",
+            "GP": 13,
+            "W": 8,
+            "L": 5,
+            "WinPct": ".615",
+            "raw_win_pct": 0.615
+        },
+        {
+            "Team": "FC BARCELONA BASQUET",
             "GP": 13,
             "W": 8,
             "L": 5,
@@ -58,22 +66,22 @@
         },
         {
             "Team": "REAL MADRID BALONCESTO",
-            "GP": 12,
+            "GP": 13,
             "W": 7,
-            "L": 5,
-            "WinPct": ".583",
-            "raw_win_pct": 0.583
-        },
-        {
-            "Team": "RED STAR BELGRADE",
-            "GP": 12,
-            "W": 7,
-            "L": 5,
-            "WinPct": ".583",
-            "raw_win_pct": 0.583
+            "L": 6,
+            "WinPct": ".538",
+            "raw_win_pct": 0.538
         },
         {
             "Team": "HAPOEL TEL AVIV B.C.",
+            "GP": 13,
+            "W": 7,
+            "L": 6,
+            "WinPct": ".538",
+            "raw_win_pct": 0.538
+        },
+        {
+            "Team": "PARTIZAN MOZZART BET",
             "GP": 13,
             "W": 7,
             "L": 6,
@@ -89,28 +97,20 @@
             "raw_win_pct": 0.538
         },
         {
-            "Team": "PARTIZAN MOZZART BET",
-            "GP": 12,
+            "Team": "ANADOLU EFES",
+            "GP": 13,
             "W": 6,
-            "L": 6,
-            "WinPct": ".500",
-            "raw_win_pct": 0.5
+            "L": 7,
+            "WinPct": ".462",
+            "raw_win_pct": 0.462
         },
         {
             "Team": "BESIKTAS",
-            "GP": 12,
+            "GP": 13,
             "W": 6,
-            "L": 6,
-            "WinPct": ".500",
-            "raw_win_pct": 0.5
-        },
-        {
-            "Team": "ANADOLU EFES",
-            "GP": 12,
-            "W": 5,
             "L": 7,
-            "WinPct": ".417",
-            "raw_win_pct": 0.417
+            "WinPct": ".462",
+            "raw_win_pct": 0.462
         },
         {
             "Team": "VIRTUS OLIDATA BOLOGNA",
@@ -121,15 +121,15 @@
             "raw_win_pct": 0.385
         },
         {
-            "Team": "LDLC ASVEL",
-            "GP": 12,
+            "Team": "BAYERN MUNCHEN",
+            "GP": 13,
             "W": 4,
-            "L": 8,
-            "WinPct": ".333",
-            "raw_win_pct": 0.333
+            "L": 9,
+            "WinPct": ".308",
+            "raw_win_pct": 0.308
         },
         {
-            "Team": "BAYERN MUNCHEN",
+            "Team": "LDLC ASVEL",
             "GP": 13,
             "W": 4,
             "L": 9,
