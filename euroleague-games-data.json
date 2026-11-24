@@ -77097,6 +77097,18 @@
                 "boxscore": null
             },
             {
+                "date": "03/12/2026",
+                "time": "20:00 CET",
+                "status": "upcoming",
+                "homeTeam": "Kosner Baskonia Vitoria-Gasteiz",
+                "homeLogo": "https://media-cdn.cortextech.io/cbc49cb0-99ce-4462-bdb7-56983ee03cf4.png",
+                "homeScore": 0,
+                "awayTeam": "Maccabi Rapyd Tel Aviv",
+                "awayLogo": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png",
+                "awayScore": 0,
+                "boxscore": null
+            },
+            {
                 "date": "04/12/2026",
                 "time": "17:00 CET",
                 "status": "upcoming",
@@ -77129,18 +77141,6 @@
                 "homeScore": 0,
                 "awayTeam": "LDLC ASVEL Villeurbanne",
                 "awayLogo": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png",
-                "awayScore": 0,
-                "boxscore": null
-            },
-            {
-                "date": "04/12/2026",
-                "time": "19:30 CET",
-                "status": "upcoming",
-                "homeTeam": "Kosner Baskonia Vitoria-Gasteiz",
-                "homeLogo": "https://media-cdn.cortextech.io/cbc49cb0-99ce-4462-bdb7-56983ee03cf4.png",
-                "homeScore": 0,
-                "awayTeam": "Maccabi Rapyd Tel Aviv",
-                "awayLogo": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png",
                 "awayScore": 0,
                 "boxscore": null
             }
@@ -77270,6 +77270,18 @@
         "17": [
             {
                 "date": "15/12/2026",
+                "time": "17:00 CET",
+                "status": "upcoming",
+                "homeTeam": "Maccabi Rapyd Tel Aviv",
+                "homeLogo": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png",
+                "homeScore": 0,
+                "awayTeam": "Zalgiris Kaunas",
+                "awayLogo": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png",
+                "awayScore": 0,
+                "boxscore": null
+            },
+            {
+                "date": "15/12/2026",
                 "time": "17:15 CET",
                 "status": "upcoming",
                 "homeTeam": "Anadolu Efes Istanbul",
@@ -77337,18 +77349,6 @@
                 "homeScore": 0,
                 "awayTeam": "Olympiacos Piraeus",
                 "awayLogo": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
-                "awayScore": 0,
-                "boxscore": null
-            },
-            {
-                "date": "15/12/2026",
-                "time": "20:00 CET",
-                "status": "upcoming",
-                "homeTeam": "Maccabi Rapyd Tel Aviv",
-                "homeLogo": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png",
-                "homeScore": 0,
-                "awayTeam": "Zalgiris Kaunas",
-                "awayLogo": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png",
                 "awayScore": 0,
                 "boxscore": null
             },
@@ -77648,7 +77648,7 @@
             },
             {
                 "date": "29/12/2026",
-                "time": "18:00 CET",
+                "time": "19:00 CET",
                 "status": "upcoming",
                 "homeTeam": "Hapoel IBI Tel Aviv",
                 "homeLogo": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png",
@@ -78086,18 +78086,6 @@
             },
             {
                 "date": "15/01/2027",
-                "time": "19:15 CET",
-                "status": "upcoming",
-                "homeTeam": "Olympiacos Piraeus",
-                "homeLogo": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
-                "homeScore": 0,
-                "awayTeam": "Paris Basketball",
-                "awayLogo": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png",
-                "awayScore": 0,
-                "boxscore": null
-            },
-            {
-                "date": "15/01/2027",
                 "time": "19:30 CET",
                 "status": "upcoming",
                 "homeTeam": "Virtus Bologna",
@@ -78117,6 +78105,18 @@
                 "homeScore": 0,
                 "awayTeam": "Fenerbahce Tarfin Istanbul",
                 "awayLogo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
+                "awayScore": 0,
+                "boxscore": null
+            },
+            {
+                "date": "26/01/2027",
+                "time": "19:15 CET",
+                "status": "upcoming",
+                "homeTeam": "Olympiacos Piraeus",
+                "homeLogo": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+                "homeScore": 0,
+                "awayTeam": "Paris Basketball",
+                "awayLogo": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png",
                 "awayScore": 0,
                 "boxscore": null
             }
@@ -79600,7 +79600,7 @@
             },
             {
                 "date": "06/04/2027",
-                "time": "17:45 CET",
+                "time": "17:30 CET",
                 "status": "upcoming",
                 "homeTeam": "Fenerbahce Tarfin Istanbul",
                 "homeLogo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
@@ -79662,23 +79662,23 @@
                 "date": "06/04/2027",
                 "time": "18:45 CET",
                 "status": "upcoming",
-                "homeTeam": "Paris Basketball",
-                "homeLogo": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png",
-                "homeScore": 0,
-                "awayTeam": "Anadolu Efes Istanbul",
-                "awayLogo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png",
-                "awayScore": 0,
-                "boxscore": null
-            },
-            {
-                "date": "06/04/2027",
-                "time": "18:45 CET",
-                "status": "upcoming",
                 "homeTeam": "FC Barcelona",
                 "homeLogo": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png",
                 "homeScore": 0,
                 "awayTeam": "FC Bayern Munich",
                 "awayLogo": "https://media-cdn.incrowdsports.com/817b0e58-d595-4b09-ab0b-1e7cc26249ff.png",
+                "awayScore": 0,
+                "boxscore": null
+            },
+            {
+                "date": "06/04/2027",
+                "time": "19:00 CET",
+                "status": "upcoming",
+                "homeTeam": "Paris Basketball",
+                "homeLogo": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png",
+                "homeScore": 0,
+                "awayTeam": "Anadolu Efes Istanbul",
+                "awayLogo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png",
                 "awayScore": 0,
                 "boxscore": null
             },
