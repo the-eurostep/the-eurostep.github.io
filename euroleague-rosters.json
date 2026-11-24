@@ -524,6 +524,18 @@
     ],
     "BES": [
       {
+        "code": "015550",
+        "name": "MADY",
+        "surname": "SISSOKO",
+        "number": "44",
+        "position": "Center",
+        "height": 206,
+        "weight": 113,
+        "nationality": "Mali",
+        "birthDate": "2000-12-20T00:00:00",
+        "image": ""
+      },
+      {
         "code": "013403",
         "name": "LONNIE",
         "surname": "WALKER IV",
@@ -2025,6 +2037,18 @@
       }
     ],
     "BAS": [
+      {
+        "code": "011579",
+        "name": "ZACHARIE",
+        "surname": "PERRIN",
+        "number": "52",
+        "position": "Center",
+        "height": 208,
+        "weight": 109,
+        "nationality": "France",
+        "birthDate": "2004-08-30T00:00:00",
+        "image": ""
+      },
       {
         "code": "008325",
         "name": "KENAN",
@@ -3975,6 +3999,30 @@
       }
     ],
     "VIR": [
+      {
+        "code": "003527",
+        "name": "AWUDU",
+        "surname": "ABASS",
+        "number": "50",
+        "position": "Forward",
+        "height": 200,
+        "weight": 100,
+        "nationality": "Italy",
+        "birthDate": "1993-01-27T00:00:00",
+        "image": ""
+      },
+      {
+        "code": "012113",
+        "name": "ACHILLE",
+        "surname": "LONATI",
+        "number": "22",
+        "position": "Guard",
+        "height": 195,
+        "weight": 85,
+        "nationality": "Italy",
+        "birthDate": "2007-01-22T00:00:00",
+        "image": ""
+      },
       {
         "code": "013028",
         "name": "MATTEO",
