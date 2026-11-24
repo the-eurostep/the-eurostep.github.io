@@ -4236,6 +4236,18 @@
         "experience": "10 yrs"
       },
       {
+        "id": 851253,
+        "name": "Gabe",
+        "surname": "Vincent",
+        "number": "10",
+        "position": "PG",
+        "height": "6' 2\"",
+        "weight": "200 lbs",
+        "birthDate": "1996-06-14",
+        "birthPlace": "Modesto, California, United States",
+        "experience": "Rookie"
+      },
+      {
         "id": 886391,
         "name": "Ben",
         "surname": "Simmons",
