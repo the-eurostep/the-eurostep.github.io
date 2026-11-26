@@ -15,6 +15,19 @@
         },
         {
             "Team": "BOSTON CELTICS",
+            "W": 12,
+            "L": 6,
+            "WinPct": ".667",
+            "raw_win_pct": 0.667,
+            "Home": "0-0",
+            "Road": "0-0",
+            "Last10": "0-0",
+            "Streak": "",
+            "GB": "2",
+            "raw_gb": 2.0
+        },
+        {
+            "Team": "NEW YORK KNICKS",
             "W": 11,
             "L": 6,
             "WinPct": ".647",
@@ -27,7 +40,7 @@
             "raw_gb": 2.5
         },
         {
-            "Team": "NEW YORK KNICKS",
+            "Team": "DETROIT PISTONS",
             "W": 11,
             "L": 6,
             "WinPct": ".647",
@@ -51,19 +64,6 @@
             "Streak": "",
             "GB": "2.5",
             "raw_gb": 2.5
-        },
-        {
-            "Team": "DETROIT PISTONS",
-            "W": 10,
-            "L": 6,
-            "WinPct": ".625",
-            "raw_win_pct": 0.625,
-            "Home": "0-0",
-            "Road": "0-0",
-            "Last10": "0-0",
-            "Streak": "",
-            "GB": "3",
-            "raw_gb": 3.0
         },
         {
             "Team": "MIAMI HEAT",
@@ -94,28 +94,28 @@
         {
             "Team": "ORLANDO MAGIC",
             "W": 7,
-            "L": 9,
-            "WinPct": ".438",
-            "raw_win_pct": 0.438,
+            "L": 10,
+            "WinPct": ".412",
+            "raw_win_pct": 0.412,
             "Home": "0-0",
             "Road": "0-0",
             "Last10": "0-0",
             "Streak": "",
-            "GB": "6",
-            "raw_gb": 6.0
+            "GB": "6.5",
+            "raw_gb": 6.5
         },
         {
             "Team": "WASHINGTON WIZARDS",
             "W": 7,
-            "L": 11,
-            "WinPct": ".389",
-            "raw_win_pct": 0.389,
+            "L": 12,
+            "WinPct": ".368",
+            "raw_win_pct": 0.368,
             "Home": "0-0",
             "Road": "0-0",
             "Last10": "0-0",
             "Streak": "",
-            "GB": "7",
-            "raw_gb": 7.0
+            "GB": "7.5",
+            "raw_gb": 7.5
         },
         {
             "Team": "TORONTO RAPTORS",
@@ -276,30 +276,30 @@
             "raw_gb": 3.5
         },
         {
-            "Team": "DENVER NUGGETS",
-            "W": 10,
-            "L": 5,
-            "WinPct": ".667",
-            "raw_win_pct": 0.667,
+            "Team": "DALLAS MAVERICKS",
+            "W": 11,
+            "L": 7,
+            "WinPct": ".611",
+            "raw_win_pct": 0.611,
             "Home": "0-0",
             "Road": "0-0",
             "Last10": "0-0",
             "Streak": "",
-            "GB": "3.5",
-            "raw_gb": 3.5
+            "GB": "4",
+            "raw_gb": 4.0
         },
         {
-            "Team": "DALLAS MAVERICKS",
+            "Team": "DENVER NUGGETS",
             "W": 10,
-            "L": 7,
-            "WinPct": ".588",
-            "raw_win_pct": 0.588,
+            "L": 6,
+            "WinPct": ".625",
+            "raw_win_pct": 0.625,
             "Home": "0-0",
             "Road": "0-0",
             "Last10": "0-0",
             "Streak": "",
-            "GB": "4.5",
-            "raw_gb": 4.5
+            "GB": "4",
+            "raw_gb": 4.0
         },
         {
             "Team": "OKLAHOMA CITY THUNDER",
