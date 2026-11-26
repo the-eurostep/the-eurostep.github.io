@@ -1,14 +1,6 @@
 {
     "standings": [
         {
-            "Team": "VALENCIA BASKET CLUB",
-            "GP": 13,
-            "W": 10,
-            "L": 3,
-            "WinPct": ".769",
-            "raw_win_pct": 0.769
-        },
-        {
             "Team": "OLYMPIACOS B.C.",
             "GP": 13,
             "W": 10,
@@ -17,12 +9,20 @@
             "raw_win_pct": 0.769
         },
         {
-            "Team": "PANATHINAIKOS B.C.",
-            "GP": 13,
-            "W": 9,
+            "Team": "VALENCIA BASKET CLUB",
+            "GP": 14,
+            "W": 10,
             "L": 4,
-            "WinPct": ".692",
-            "raw_win_pct": 0.692
+            "WinPct": ".714",
+            "raw_win_pct": 0.714
+        },
+        {
+            "Team": "PANATHINAIKOS B.C.",
+            "GP": 14,
+            "W": 10,
+            "L": 4,
+            "WinPct": ".714",
+            "raw_win_pct": 0.714
         },
         {
             "Team": "DUBAI",
@@ -34,27 +34,11 @@
         },
         {
             "Team": "FENERBAHCE S.K.",
-            "GP": 13,
-            "W": 8,
+            "GP": 14,
+            "W": 9,
             "L": 5,
-            "WinPct": ".615",
-            "raw_win_pct": 0.615
-        },
-        {
-            "Team": "RED STAR BELGRADE",
-            "GP": 13,
-            "W": 8,
-            "L": 5,
-            "WinPct": ".615",
-            "raw_win_pct": 0.615
-        },
-        {
-            "Team": "FC BARCELONA BASQUET",
-            "GP": 13,
-            "W": 8,
-            "L": 5,
-            "WinPct": ".615",
-            "raw_win_pct": 0.615
+            "WinPct": ".643",
+            "raw_win_pct": 0.643
         },
         {
             "Team": "BC ZALGIRIS",
@@ -63,6 +47,30 @@
             "L": 5,
             "WinPct": ".615",
             "raw_win_pct": 0.615
+        },
+        {
+            "Team": "RED STAR BELGRADE",
+            "GP": 14,
+            "W": 8,
+            "L": 6,
+            "WinPct": ".571",
+            "raw_win_pct": 0.571
+        },
+        {
+            "Team": "FC BARCELONA BASQUET",
+            "GP": 14,
+            "W": 8,
+            "L": 6,
+            "WinPct": ".571",
+            "raw_win_pct": 0.571
+        },
+        {
+            "Team": "PARIS BASKETBALL",
+            "GP": 14,
+            "W": 8,
+            "L": 6,
+            "WinPct": ".571",
+            "raw_win_pct": 0.571
         },
         {
             "Team": "REAL MADRID BALONCESTO",
@@ -89,14 +97,6 @@
             "raw_win_pct": 0.538
         },
         {
-            "Team": "PARIS BASKETBALL",
-            "GP": 13,
-            "W": 7,
-            "L": 6,
-            "WinPct": ".538",
-            "raw_win_pct": 0.538
-        },
-        {
             "Team": "ANADOLU EFES",
             "GP": 13,
             "W": 6,
@@ -105,52 +105,52 @@
             "raw_win_pct": 0.462
         },
         {
-            "Team": "BESIKTAS",
-            "GP": 13,
-            "W": 6,
-            "L": 7,
-            "WinPct": ".462",
-            "raw_win_pct": 0.462
-        },
-        {
             "Team": "VIRTUS OLIDATA BOLOGNA",
-            "GP": 13,
-            "W": 5,
+            "GP": 14,
+            "W": 6,
             "L": 8,
-            "WinPct": ".385",
-            "raw_win_pct": 0.385
+            "WinPct": ".429",
+            "raw_win_pct": 0.429
         },
         {
-            "Team": "BAYERN MUNCHEN",
-            "GP": 13,
-            "W": 4,
-            "L": 9,
-            "WinPct": ".308",
-            "raw_win_pct": 0.308
-        },
-        {
-            "Team": "LDLC ASVEL",
-            "GP": 13,
-            "W": 4,
-            "L": 9,
-            "WinPct": ".308",
-            "raw_win_pct": 0.308
+            "Team": "BESIKTAS",
+            "GP": 14,
+            "W": 6,
+            "L": 8,
+            "WinPct": ".429",
+            "raw_win_pct": 0.429
         },
         {
             "Team": "EA7 EMPORIO ARMANI MILANO",
-            "GP": 13,
-            "W": 3,
+            "GP": 14,
+            "W": 4,
             "L": 10,
-            "WinPct": ".231",
-            "raw_win_pct": 0.231
+            "WinPct": ".286",
+            "raw_win_pct": 0.286
+        },
+        {
+            "Team": "BAYERN MUNCHEN",
+            "GP": 14,
+            "W": 4,
+            "L": 10,
+            "WinPct": ".286",
+            "raw_win_pct": 0.286
         },
         {
             "Team": "MACCABI RAPYD TEL AVIV",
-            "GP": 13,
-            "W": 3,
+            "GP": 14,
+            "W": 4,
             "L": 10,
-            "WinPct": ".231",
-            "raw_win_pct": 0.231
+            "WinPct": ".286",
+            "raw_win_pct": 0.286
+        },
+        {
+            "Team": "LDLC ASVEL",
+            "GP": 14,
+            "W": 4,
+            "L": 10,
+            "WinPct": ".286",
+            "raw_win_pct": 0.286
         },
         {
             "Team": "BASKONIA",
